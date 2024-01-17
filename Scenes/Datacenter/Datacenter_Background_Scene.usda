@@ -1,0 +1,3916 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary audio2faceSettings = {
+            int export_fps = 60
+        }
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (0, 0, 50000)
+                double radius = 500
+            }
+            dictionary Perspective = {
+                double3 position = (-355.0201148145084, 301.60786986340787, -377.65737592878446)
+                double3 target = (662.1852138646193, 88.29558064135949, 90.19456146849257)
+            }
+            dictionary Right = {
+                double3 position = (-50000, 0, 0)
+                double radius = 500
+            }
+            dictionary Top = {
+                double3 position = (669.6435721525824, 49997.687211669974, -63.64746235230684)
+                double radius = 1361.84169921875
+            }
+            string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary omni_layer = {
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+            float3 "rtx:debugView:pixelDebug:textColor" = (0, 1e18, 0)
+            bool "rtx:directLighting:sampledLighting:autoEnable" = 0
+            float3 "rtx:dynamicDiffuseGI:probeCounts" = (6, 6, 6)
+            float3 "rtx:dynamicDiffuseGI:probeGridOrigin" = (-210, -250, -10)
+            float3 "rtx:dynamicDiffuseGI:volumeSize" = (600, 440, 300)
+            bool "rtx:flow:enabled" = 1
+            bool "rtx:flow:pathTracingEnabled" = 1
+            bool "rtx:flow:rayTracedReflectionsEnabled" = 1
+            bool "rtx:flow:rayTracedTranslucencyEnabled" = 1
+            float3 "rtx:fog:fogColor" = (0.75, 0.75, 0.75)
+            float3 "rtx:iray:environment_dome_ground_position" = (0, 0, 0)
+            float3 "rtx:iray:environment_dome_ground_reflectivity" = (0, 0, 0)
+            float3 "rtx:iray:environment_dome_rotation_axis" = (0, 1, 0)
+            float3 "rtx:lightspeed:material:overrideAlbedo" = (0.5, 0.5, 0.5)
+            float3 "rtx:lightspeed:material:overrideEmissiveColor" = (0.5, 0.5, 0.5)
+            float3 "rtx:post:backgroundZeroAlpha:backgroundDefaultColor" = (0, 0, 0)
+            float3 "rtx:post:colorcorr:contrast" = (1, 1, 1)
+            float3 "rtx:post:colorcorr:gain" = (1, 1, 1)
+            float3 "rtx:post:colorcorr:gamma" = (1, 1, 1)
+            float3 "rtx:post:colorcorr:offset" = (0, 0, 0)
+            float3 "rtx:post:colorcorr:saturation" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:blackpoint" = (0, 0, 0)
+            float3 "rtx:post:colorgrad:contrast" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:gain" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:gamma" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:lift" = (0, 0, 0)
+            float3 "rtx:post:colorgrad:multiply" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:offset" = (0, 0, 0)
+            float3 "rtx:post:colorgrad:whitepoint" = (1, 1, 1)
+            float3 "rtx:post:lensDistortion:lensFocalLengthArray" = (10, 30, 50)
+            float3 "rtx:post:lensFlares:anisoFlareFalloffX" = (450, 475, 500)
+            float3 "rtx:post:lensFlares:anisoFlareFalloffY" = (10, 10, 10)
+            float3 "rtx:post:lensFlares:cutoffPoint" = (2, 2, 2)
+            float3 "rtx:post:lensFlares:haloFlareFalloff" = (10, 10, 10)
+            float3 "rtx:post:lensFlares:haloFlareRadius" = (75, 75, 75)
+            float3 "rtx:post:lensFlares:isotropicFlareFalloff" = (50, 50, 50)
+            float3 "rtx:post:tonemap:whitepoint" = (1, 1, 1)
+            float3 "rtx:raytracing:inscattering:singleScatteringAlbedo" = (0.9, 0.9, 0.9)
+            float3 "rtx:raytracing:inscattering:transmittanceColor" = (0.5, 0.5, 0.5)
+            bool "rtx:raytracing:subsurface:enabled" = 1
+            int "rtx:raytracing:subsurface:maxSamplePerFrame" = 52
+            bool "rtx:raytracing:subsurface:transmission:enabled" = 0
+            float3 "rtx:sceneDb:ambientLightColor" = (0.1, 0.1, 0.1)
+        }
+    }
+    defaultPrim = "World"
+    endTimeCode = 100
+    metersPerUnit = 0.01
+    startTimeCode = 0
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def Xform "World" (
+    variants = {
+        string moodVariant = "mood1"
+    }
+    prepend variantSets = "moodVariant"
+)
+{
+    def Scope "Looks"
+    {
+        def Material "OmniGlass"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/OmniGlass/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/OmniGlass/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/OmniGlass/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniGlass.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniGlass"
+                float inputs:frosting_roughness = 0 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Roughness"
+                    displayName = "Glass Roughness"
+                    doc = "Sets the roughness of the glass material "
+                    hidden = false
+                )
+                float inputs:glass_ior = 1.14 (
+                    customData = {
+                        float default = 1.491
+                        dictionary soft_range = {
+                            float max = 4
+                            float min = 1
+                        }
+                    }
+                    displayGroup = "Refraction"
+                    displayName = "Glass IOR"
+                    doc = "Sets IOR of the glass material "
+                    hidden = false
+                )
+                color3f inputs:reflection_color = (1, 1, 1) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Reflection"
+                    displayName = "Reflection Color"
+                    hidden = false
+                )
+                float inputs:roughness_texture_influence = 1 (
+                    customData = {
+                        float default = 1
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Roughness"
+                    displayName = "Roughness Texture Influence"
+                    hidden = false
+                )
+                bool inputs:thin_walled = 1 (
+                    customData = {
+                        bool default = 0
+                    }
+                    displayGroup = "Refraction"
+                    displayName = "Thin Walled"
+                    doc = "When enabled, the material is considered thin-walled. Use this, when you have glass surfaces that are modeled with a single plane"
+                    hidden = false
+                )
+                token outputs:out
+            }
+        }
+
+        def Material "superpod_Fake" (
+            customData = {
+                dictionary ui = {
+                    dictionary nodegraph = {
+                        dictionary node = {
+                            dictionary pos = {
+                                double2 output = (-27.22187614440918, -1.6775151491165161)
+                            }
+                        }
+                    }
+                }
+            }
+        )
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/superpod_Fake/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/superpod_Fake/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/superpod_Fake/Shader.outputs:out>
+
+            def Shader "Shader" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (0.2, 0.2, 0.2) (
+                    customData = {
+                        float3 default = (0.2, 0.2, 0.2)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Base Color"
+                    doc = "This is the base color"
+                    hidden = false
+                )
+                asset inputs:diffuse_texture = @./textures/Superpod_Fake_Albedo.png@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Map"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint = (1, 1, 1) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Color Tint"
+                    doc = "When enabled, this color value is multiplied over the final albedo color"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint.connect = </World/Looks/superpod_Fake/data_lookup_color.outputs:out>
+                asset inputs:metallic_texture = @./textures/Superpod_Fake_Metal.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Metallic Map"
+                    hidden = false
+                )
+                float inputs:metallic_texture_influence = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Metallic Map Influence"
+                    doc = "Blends between the constant value and the lookup of the metallic texture"
+                    hidden = false
+                )
+                float inputs:reflection_roughness_texture_influence = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map Influence"
+                    doc = "Blends between the constant value and the lookup of the roughness texture"
+                    hidden = false
+                )
+                asset inputs:reflectionroughness_texture = @./textures/Superpod_Fake_Roughness.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map"
+                    hidden = false
+                )
+                float2 inputs:texture_translate = (0, 0) (
+                    customData = {
+                        float2 default = (0, 0)
+                    }
+                    displayGroup = "UV"
+                    displayName = "Texture Translate"
+                    doc = "Controls position of texture."
+                    hidden = false
+                )
+                token outputs:out
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-331.94412, 46.04514)
+            }
+
+            def Shader "data_lookup_color" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:name", "inputs:default_value"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color(string,color)"
+                color3f inputs:default_value = (0.72200775, 0.72200054, 0.72200054) (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                string inputs:name = "sceneColor2" (
+                    hidden = false
+                    renderType = "string"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-667.2439, 219.9161)
+            }
+        }
+
+        def Material "EOS_ServerCabinet"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/EOS_ServerCabinet/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/EOS_ServerCabinet/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/EOS_ServerCabinet/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (0.2, 0.2, 0.2) (
+                    customData = {
+                        float3 default = (0.2, 0.2, 0.2)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Base Color"
+                    doc = "This is the base color"
+                    hidden = false
+                )
+                color3f inputs:diffuse_color_constant.connect = </World/Looks/EOS_ServerCabinet/data_lookup_color.outputs:out>
+                token outputs:out
+                uniform token ui:nodegraph:node:expansionState = "open"
+            }
+
+            def Shader "data_lookup_color" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:name", "inputs:default_value"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color"
+                color3f inputs:default_value = (0.14743368, 0.20620015, 0.8301158) (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                string inputs:name = "sceneColor1" (
+                    hidden = false
+                    renderType = "string"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-898.2199, 75.1386)
+            }
+        }
+
+        def Material "Floor"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/Floor/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/Floor/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/Floor/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                float inputs:bump_factor = 0.4 (
+                    customData = {
+                        float default = 1
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Normal"
+                    displayName = "Normal Map Strength"
+                    doc = "Strength of normal map."
+                    hidden = false
+                )
+                color3f inputs:diffuse_color_constant = (0.2, 0.2, 0.2) (
+                    customData = {
+                        float3 default = (0.2, 0.2, 0.2)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Base Color"
+                    doc = "This is the base color"
+                    hidden = false
+                )
+                color3f inputs:diffuse_color_constant.connect = </World/Looks/Floor/data_lookup_color.outputs:out>
+                asset inputs:normalmap_texture = @./textures/FloorTile_Normal.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Normal"
+                    displayName = "Normal Map"
+                    doc = "Enables the usage of the normalmap texture"
+                    hidden = false
+                )
+                float inputs:reflection_roughness_texture_influence = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map Influence"
+                    doc = "Blends between the constant value and the lookup of the roughness texture"
+                    hidden = false
+                )
+                asset inputs:reflectionroughness_texture = @./textures/FloorTile_Roughness.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map"
+                    hidden = false
+                )
+                float2 inputs:texture_scale = (30, 30) (
+                    customData = {
+                        float2 default = (1, 1)
+                    }
+                    displayGroup = "UV"
+                    displayName = "Texture Scale"
+                    doc = "Larger number increases size of texture."
+                    hidden = false
+                )
+                token outputs:out
+                uniform token ui:nodegraph:node:expansionState = "open"
+            }
+
+            def Shader "data_lookup_color" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:name", "inputs:default_value"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color"
+                color3f inputs:default_value = (0.39737037, 0.7511501, 0.8648649) (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                string inputs:name = "sceneColor3" (
+                    hidden = false
+                    renderType = "string"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-849.9558, 103.05786)
+            }
+        }
+
+        def Material "H100_LowRes"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/H100_LowRes/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/H100_LowRes/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/H100_LowRes/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                asset inputs:diffuse_texture = @./textures/DGX_H100_LowRes_Difuse.png@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Map"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint = (1, 1, 1) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Color Tint"
+                    doc = "When enabled, this color value is multiplied over the final albedo color"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint.connect = </World/Looks/H100_LowRes/data_lookup_color.outputs:out>
+                float inputs:metallic_constant = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Metallic Amount"
+                    doc = "Metallic Material"
+                    hidden = false
+                )
+                asset inputs:normalmap_texture = @./textures/DGX_H100_LowRes_Norm.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Normal"
+                    displayName = "Normal Map"
+                    doc = "Enables the usage of the normalmap texture"
+                    hidden = false
+                )
+                float inputs:reflection_roughness_texture_influence = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map Influence"
+                    doc = "Blends between the constant value and the lookup of the roughness texture"
+                    hidden = false
+                )
+                asset inputs:reflectionroughness_texture = @./textures/DGX_H100_LowRes_Roughness.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map"
+                    hidden = false
+                )
+                token outputs:out
+                uniform token ui:nodegraph:node:expansionState = "open"
+            }
+
+            def Shader "data_lookup_color" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:name", "inputs:default_value"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color"
+                color3f inputs:default_value = (1, 0.9224423, 0.68976897) (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                string inputs:name = "sceneColor2" (
+                    hidden = false
+                    renderType = "string"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1026.7347, 143.43307)
+            }
+        }
+
+        def Material "superpod_Fake_colored" (
+            customData = {
+                dictionary ui = {
+                    dictionary nodegraph = {
+                        dictionary node = {
+                            dictionary pos = {
+                                double2 output = (-27.22187614440918, -1.6775151491165161)
+                            }
+                        }
+                    }
+                }
+            }
+        )
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/superpod_Fake_colored/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/superpod_Fake_colored/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/superpod_Fake_colored/Shader.outputs:out>
+
+            def Shader "Shader" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (0.2, 0.2, 0.2) (
+                    customData = {
+                        float3 default = (0.2, 0.2, 0.2)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Base Color"
+                    doc = "This is the base color"
+                    hidden = false
+                )
+                asset inputs:diffuse_texture = @./textures/Superpod_Fake_Albedo.png@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Map"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint = (1, 1, 1) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Color Tint"
+                    doc = "When enabled, this color value is multiplied over the final albedo color"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint.connect = </World/Looks/superpod_Fake_colored/data_lookup_color.outputs:out>
+                asset inputs:metallic_texture = @./textures/Superpod_Fake_Metal.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Metallic Map"
+                    hidden = false
+                )
+                float inputs:metallic_texture_influence = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Metallic Map Influence"
+                    doc = "Blends between the constant value and the lookup of the metallic texture"
+                    hidden = false
+                )
+                float inputs:reflection_roughness_texture_influence = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map Influence"
+                    doc = "Blends between the constant value and the lookup of the roughness texture"
+                    hidden = false
+                )
+                asset inputs:reflectionroughness_texture = @./textures/Superpod_Fake_Roughness.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map"
+                    hidden = false
+                )
+                float2 inputs:texture_translate = (0, 0) (
+                    customData = {
+                        float2 default = (0, 0)
+                    }
+                    displayGroup = "UV"
+                    displayName = "Texture Translate"
+                    doc = "Controls position of texture."
+                    hidden = false
+                )
+                token outputs:out
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-331.94412, 46.04514)
+            }
+
+            def Shader "data_lookup_color" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:name", "inputs:default_value"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color(string,color)"
+                color3f inputs:default_value = (0.5651104, 1, 0.35135138) (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                string inputs:name = "sceneColor1" (
+                    hidden = false
+                    renderType = "string"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-646.84125, 201.59064)
+            }
+        }
+
+        def Material "Rack"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/Rack/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/Rack/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/Rack/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                float inputs:albedo_add = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = -1
+                        }
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Add"
+                    doc = "Adds a constant value to the diffuse color "
+                    hidden = false
+                )
+                float inputs:albedo_brightness = 1 (
+                    customData = {
+                        float default = 1
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Brightness"
+                    doc = "Multiplier for the diffuse color "
+                    hidden = false
+                )
+                color3f inputs:diffuse_color_constant = (0.2, 0.2, 0.2) (
+                    customData = {
+                        float3 default = (0.2, 0.2, 0.2)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Base Color"
+                    doc = "This is the base color"
+                    hidden = false
+                )
+                asset inputs:diffuse_texture = @./textures/Numbers.png@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Map"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint = (1, 1, 1) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Color Tint"
+                    doc = "When enabled, this color value is multiplied over the final albedo color"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint.connect = </World/Looks/Rack/data_lookup_color.outputs:out>
+                token outputs:out
+                uniform token ui:nodegraph:node:expansionState = "open"
+            }
+
+            def Shader "data_lookup_color" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:name", "inputs:default_value"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color"
+                color3f inputs:default_value = (0.14743368, 0.20620015, 0.8301158) (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                string inputs:name = "sceneColor1" (
+                    hidden = false
+                    renderType = "string"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-898.2199, 75.1386)
+            }
+        }
+
+        def Material "Server_Inside"
+        {
+            token outputs:mdl:surface.connect = </World/Looks/Server_Inside/mdl/Shader.outputs:out>
+            token outputs:surface.connect = </World/Looks/Server_Inside/preview/Principled_BSDF.outputs:surface>
+            custom string userProperties:blenderName:data = "Server_Inside"
+
+            def Scope "mdl"
+            {
+                def Shader "Shader"
+                {
+                    uniform token info:implementationSource = "sourceAsset"
+                    uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                    uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                    float inputs:albedo_add = 0 (
+                        customData = {
+                            float default = 0
+                            dictionary soft_range = {
+                                float max = 1
+                                float min = -1
+                            }
+                        }
+                        displayGroup = "Albedo"
+                        displayName = "Albedo Add"
+                        doc = "Adds a constant value to the diffuse color "
+                        hidden = false
+                    )
+                    float inputs:albedo_brightness = 1 (
+                        customData = {
+                            float default = 1
+                            dictionary soft_range = {
+                                float max = 1
+                                float min = 0
+                            }
+                        }
+                        displayGroup = "Albedo"
+                        displayName = "Albedo Brightness"
+                        doc = "Multiplier for the diffuse color "
+                        hidden = false
+                    )
+                    float inputs:albedo_desaturation = 0 (
+                        customData = {
+                            float default = 0
+                            dictionary soft_range = {
+                                float max = 1
+                                float min = 0
+                            }
+                        }
+                        displayGroup = "Albedo"
+                        displayName = "Albedo Desaturation"
+                        doc = "Desaturates the diffuse color"
+                        hidden = false
+                    )
+                    asset inputs:ao_texture = @@ (
+                        colorSpace = "raw"
+                        customData = {
+                            asset default = @@
+                        }
+                        displayGroup = "AO"
+                        displayName = "Ambient Occlusion Map"
+                        doc = "The Ambient Occlusion texture for the material"
+                        hidden = false
+                    )
+                    float inputs:ao_to_diffuse = 0 (
+                        customData = {
+                            float default = 0
+                            dictionary range = {
+                                float max = 1
+                                float min = 0
+                            }
+                        }
+                        displayGroup = "AO"
+                        displayName = "AO to Diffuse"
+                        doc = "Controls the amount of ambient occlusion multiplied into the diffuse color channel"
+                        hidden = false
+                    )
+                    float inputs:bump_factor = 1 (
+                        customData = {
+                            float default = 1
+                            dictionary soft_range = {
+                                float max = 1
+                                float min = 0
+                            }
+                        }
+                        displayGroup = "Normal"
+                        displayName = "Normal Map Strength"
+                        doc = "Strength of normal map."
+                        hidden = false
+                    )
+                    float inputs:detail_bump_factor = 1 (
+                        customData = {
+                            float default = 0.3
+                            dictionary soft_range = {
+                                float max = 1
+                                float min = 0
+                            }
+                        }
+                        displayGroup = "Normal"
+                        displayName = "Detail Normal Strength"
+                        doc = "Strength of the detail normal"
+                        hidden = false
+                    )
+                    asset inputs:detail_normalmap_texture = @@ (
+                        colorSpace = "raw"
+                        customData = {
+                            asset default = @@
+                        }
+                        displayGroup = "Normal"
+                        displayName = "Detail Normal Map"
+                        hidden = false
+                    )
+                    float inputs:detail_texture_rotate = -0 (
+                        customData = {
+                            float default = 0
+                        }
+                        displayGroup = "UV"
+                        displayName = "Detail Texture Rotate"
+                        doc = "Rotates angle of the detail texture in degrees."
+                        hidden = false
+                    )
+                    float2 inputs:detail_texture_scale = (1, 1) (
+                        customData = {
+                            float2 default = (1, 1)
+                        }
+                        displayGroup = "UV"
+                        displayName = "Detail Texture Scale"
+                        doc = "Larger numbers increase the size of the detail texture"
+                        hidden = false
+                    )
+                    float2 inputs:detail_texture_translate = (0, 0) (
+                        customData = {
+                            float2 default = (0, 0)
+                        }
+                        displayGroup = "UV"
+                        displayName = "Detail Texture Translate"
+                        doc = "Controls the position of the detail texture."
+                        hidden = false
+                    )
+                    color3f inputs:diffuse_color_constant = (0.6, 0.6, 0.6) (
+                        customData = {
+                            float3 default = (0.2, 0.2, 0.2)
+                        }
+                        displayGroup = "Albedo"
+                        displayName = "Base Color"
+                        doc = "This is the base color"
+                        hidden = false
+                    )
+                    asset inputs:diffuse_texture = @@ (
+                        colorSpace = "raw"
+                        customData = {
+                            asset default = @@
+                        }
+                        displayGroup = "Albedo"
+                        displayName = "Albedo Map"
+                        hidden = false
+                    )
+                    color3f inputs:diffuse_tint = (1, 1, 1) (
+                        customData = {
+                            float3 default = (1, 1, 1)
+                        }
+                        displayGroup = "Albedo"
+                        displayName = "Color Tint"
+                        doc = "When enabled, this color value is multiplied over the final albedo color"
+                        hidden = false
+                    )
+                    color3f inputs:emissive_color = (0, 0, 0) (
+                        customData = {
+                            float3 default = (1, 0.1, 0.1)
+                        }
+                        displayGroup = "Emissive"
+                        displayName = "Emissive Color"
+                        doc = "The emission color"
+                        hidden = false
+                    )
+                    asset inputs:emissive_color_texture = @@ (
+                        colorSpace = "raw"
+                        customData = {
+                            asset default = @@
+                        }
+                        displayGroup = "Emissive"
+                        displayName = "Emissive Color map"
+                        doc = "The emissive color texture"
+                        hidden = false
+                    )
+                    float inputs:emissive_intensity = 27320.537 (
+                        customData = {
+                            float default = 40
+                        }
+                        displayGroup = "Emissive"
+                        displayName = "Emissive Intensity"
+                        doc = "Intensity of the emission"
+                        hidden = false
+                    )
+                    asset inputs:emissive_mask_texture = @@ (
+                        colorSpace = "raw"
+                        customData = {
+                            asset default = @@
+                        }
+                        displayGroup = "Emissive"
+                        displayName = "Emissive Mask map"
+                        doc = "The texture masking the emissive color"
+                        hidden = false
+                    )
+                    bool inputs:enable_emission = 0 (
+                        customData = {
+                            bool default = 0
+                        }
+                        displayGroup = "Emissive"
+                        displayName = "Enable Emission"
+                        doc = "Enables the emission of light from the material"
+                        hidden = false
+                    )
+                    bool inputs:enable_opacity = 0 (
+                        customData = {
+                            bool default = 0
+                        }
+                        displayGroup = "Opacity"
+                        displayName = "Enable Opacity"
+                        doc = "Enables the use of cutout opacity"
+                        hidden = false
+                    )
+                    bool inputs:enable_opacity_texture = 0 (
+                        customData = {
+                            bool default = 0
+                        }
+                        displayGroup = "Opacity"
+                        displayName = "Enable Opacity Texture"
+                        doc = "Enables or disables the usage of the opacity texture map"
+                        hidden = false
+                    )
+                    bool inputs:enable_ORM_texture = 0 (
+                        customData = {
+                            bool default = 0
+                        }
+                        displayGroup = "Reflectivity"
+                        displayName = "Enable ORM Texture"
+                        doc = "When True the ORM texture will be used to extract the Occlusion, Roughness and Metallic Map"
+                        hidden = false
+                    )
+                    bool inputs:flip_tangent_u = 0 (
+                        customData = {
+                            bool default = 0
+                        }
+                        displayGroup = "Normal"
+                        displayName = "Normal Map Flip U Tangent"
+                        hidden = false
+                    )
+                    bool inputs:flip_tangent_v = 0 (
+                        customData = {
+                            bool default = 1
+                        }
+                        displayGroup = "Normal"
+                        displayName = "Normal Map Flip V Tangent"
+                        hidden = false
+                    )
+                    float inputs:metallic_constant = 1 (
+                        customData = {
+                            float default = 0
+                            dictionary range = {
+                                float max = 1
+                                float min = 0
+                            }
+                        }
+                        displayGroup = "Reflectivity"
+                        displayName = "Metallic Amount"
+                        doc = "Metallic Material"
+                        hidden = false
+                    )
+                    asset inputs:metallic_texture = @@ (
+                        colorSpace = "raw"
+                        customData = {
+                            asset default = @@
+                        }
+                        displayGroup = "Reflectivity"
+                        displayName = "Metallic Map"
+                        hidden = false
+                    )
+                    float inputs:metallic_texture_influence = 0 (
+                        customData = {
+                            float default = 0
+                            dictionary range = {
+                                float max = 1
+                                float min = 0
+                            }
+                        }
+                        displayGroup = "Reflectivity"
+                        displayName = "Metallic Map Influence"
+                        doc = "Blends between the constant value and the lookup of the metallic texture"
+                        hidden = false
+                    )
+                    asset inputs:normalmap_texture = @@ (
+                        colorSpace = "raw"
+                        customData = {
+                            asset default = @@
+                        }
+                        displayGroup = "Normal"
+                        displayName = "Normal Map"
+                        doc = "Enables the usage of the normalmap texture"
+                        hidden = false
+                    )
+                    float inputs:opacity_constant = 0 (
+                        customData = {
+                            float default = 1
+                            dictionary range = {
+                                float max = 1
+                                float min = 0
+                            }
+                        }
+                        displayGroup = "Opacity"
+                        displayName = "Opacity Amount"
+                        doc = "Opacity value between 0 and 1, when Opacity Map is not valid"
+                        hidden = false
+                    )
+                    int inputs:opacity_mode = 1 (
+                        customData = {
+                            int default = 1
+                        }
+                        displayGroup = "Opacity"
+                        displayName = "Opacity Mono Source"
+                        doc = "Determines how to lookup opacity from the supplied texture. mono_alpha, mono_average, mono_luminance, mono_maximum"
+                        hidden = false
+                        renderType = "::base::mono_mode"
+                        sdrMetadata = {
+                            string __SDR__enum_value = "mono_average"
+                            string options = "mono_alpha:0|mono_average:1|mono_luminance:2|mono_maximum:3"
+                        }
+                    )
+                    asset inputs:opacity_texture = @@ (
+                        colorSpace = "raw"
+                        customData = {
+                            asset default = @@
+                        }
+                        displayGroup = "Opacity"
+                        displayName = "Opacity Map"
+                        hidden = false
+                    )
+                    float inputs:opacity_threshold = 0 (
+                        customData = {
+                            float default = 0
+                            dictionary range = {
+                                float max = 1
+                                float min = 0
+                            }
+                        }
+                        displayGroup = "Opacity"
+                        displayName = "Opacity Threshold"
+                        doc = "If negative, disable cutout_opacity; if 0, use fractional opacity values 'as is'; if > 0, remap opacity values to 1 when >= threshold and to 0 otherwise"
+                        hidden = false
+                    )
+                    asset inputs:ORM_texture = @@ (
+                        colorSpace = "raw"
+                        customData = {
+                            asset default = @@
+                        }
+                        displayGroup = "Reflectivity"
+                        displayName = "ORM Map"
+                        doc = "Texture that hae Occlusion, Roughness and Metallic map stored in the respective r, g and b channels"
+                        hidden = false
+                    )
+                    bool inputs:project_uvw = 0 (
+                        customData = {
+                            bool default = 0
+                        }
+                        displayGroup = "UV"
+                        displayName = "Enable Project UVW Coordinates"
+                        doc = "When enabled, UV coordinates will be generated by projecting them from a coordinate system"
+                        hidden = false
+                    )
+                    float inputs:reflection_roughness_constant = 0.5 (
+                        customData = {
+                            float default = 0.5
+                            dictionary range = {
+                                float max = 1
+                                float min = 0
+                            }
+                        }
+                        displayGroup = "Reflectivity"
+                        displayName = "Roughness Amount"
+                        doc = "Higher roughness values lead to more blurry reflections"
+                        hidden = false
+                    )
+                    float inputs:reflection_roughness_texture_influence = 0 (
+                        customData = {
+                            float default = 0
+                            dictionary range = {
+                                float max = 1
+                                float min = 0
+                            }
+                        }
+                        displayGroup = "Reflectivity"
+                        displayName = "Roughness Map Influence"
+                        doc = "Blends between the constant value and the lookup of the roughness texture"
+                        hidden = false
+                    )
+                    asset inputs:reflectionroughness_texture = @@ (
+                        colorSpace = "raw"
+                        customData = {
+                            asset default = @@
+                        }
+                        displayGroup = "Reflectivity"
+                        displayName = "Roughness Map"
+                        hidden = false
+                    )
+                    float inputs:specular_level = 0.5 (
+                        customData = {
+                            float default = 0.5
+                            dictionary soft_range = {
+                                float max = 1
+                                float min = 0
+                            }
+                        }
+                        displayGroup = "Reflectivity"
+                        displayName = "Specular"
+                        doc = "The specular level (intensity) of the material"
+                        hidden = false
+                    )
+                    float inputs:texture_rotate = -0 (
+                        customData = {
+                            float default = 0
+                        }
+                        displayGroup = "UV"
+                        displayName = "Texture Rotate"
+                        doc = "Rotates angle of texture in degrees."
+                        hidden = false
+                    )
+                    float2 inputs:texture_scale = (1, 1) (
+                        customData = {
+                            float2 default = (1, 1)
+                        }
+                        displayGroup = "UV"
+                        displayName = "Texture Scale"
+                        doc = "Larger number increases size of texture."
+                        hidden = false
+                    )
+                    float2 inputs:texture_translate = (0, 0) (
+                        customData = {
+                            float2 default = (0, 0)
+                        }
+                        displayGroup = "UV"
+                        displayName = "Texture Translate"
+                        doc = "Controls position of texture."
+                        hidden = false
+                    )
+                    int inputs:uv_space_index = 0 (
+                        customData = {
+                            int default = 0
+                            dictionary range = {
+                                int max = 3
+                                int min = 0
+                            }
+                        }
+                        displayGroup = "UV"
+                        displayName = "UV Space Index"
+                        doc = "UV Space Index."
+                        hidden = false
+                    )
+                    bool inputs:world_or_object = 0 (
+                        customData = {
+                            bool default = 0
+                        }
+                        displayGroup = "UV"
+                        displayName = "Enable World Space"
+                        doc = "When set to 'true' uses world space for projection, when 'false' object space is used"
+                        hidden = false
+                    )
+                    token outputs:out
+                }
+            }
+
+            def Scope "preview"
+            {
+                def Shader "Principled_BSDF"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    float inputs:clearcoat = 0
+                    float inputs:clearcoatRoughness = 0.03
+                    color3f inputs:diffuseColor.connect = </World/Looks/Server_Inside/preview/Albedo_Map.outputs:rgb>
+                    color3f inputs:emissiveColor.connect = </World/Looks/Server_Inside/preview/Albedo_Map.outputs:rgb>
+                    float inputs:ior = 1.45
+                    float inputs:metallic.connect = </World/Looks/Server_Inside/preview/Albedo_Map.outputs:r>
+                    normal3f inputs:normal.connect = </World/Looks/Server_Inside/preview/Albedo_Map.outputs:rgb>
+                    float inputs:opacity = 1
+                    float inputs:roughness.connect = </World/Looks/Server_Inside/preview/Albedo_Map.outputs:r>
+                    float inputs:specular.connect = </World/Looks/Server_Inside/preview/Albedo_Map.outputs:r>
+                    token outputs:surface
+                }
+
+                def Shader "Albedo_Map"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float2 inputs:st.connect = </World/Looks/Server_Inside/preview/UV_Map.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                    color3f outputs:rgb
+                }
+
+                def Shader "UV_Map"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "_"
+                    float2 outputs:result
+                }
+            }
+        }
+    }
+
+    def Xform "ServerRoom"
+    {
+        double3 xformOp:rotateXYZ = (0, 204, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (450, 0, -187)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+        def Scope "Looks"
+        {
+            def Material "Concrete_WorldSpace"
+            {
+                token outputs:mdl:displacement.connect = </World/ServerRoom/Looks/Concrete_WorldSpace/Shader.outputs:out>
+                token outputs:mdl:surface.connect = </World/ServerRoom/Looks/Concrete_WorldSpace/Shader.outputs:out>
+                token outputs:mdl:volume.connect = </World/ServerRoom/Looks/Concrete_WorldSpace/Shader.outputs:out>
+
+                def Shader "Shader"
+                {
+                    uniform token info:implementationSource = "sourceAsset"
+                    uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                    uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                    asset inputs:diffuse_texture = @../TechStore/Textures/Concrete_Tile.jpg@ (
+                        colorSpace = "auto"
+                        customData = {
+                            asset default = @@
+                        }
+                        displayGroup = "Albedo"
+                        displayName = "Albedo Map"
+                        hidden = false
+                    )
+                    color3f inputs:diffuse_tint = (0.5, 0.499995, 0.499995) (
+                        customData = {
+                            float3 default = (1, 1, 1)
+                        }
+                        displayGroup = "Albedo"
+                        displayName = "Color Tint"
+                        doc = "When enabled, this color value is multiplied over the final albedo color"
+                        hidden = false
+                    )
+                    color3f inputs:diffuse_tint.connect = </World/ServerRoom/Looks/Concrete_WorldSpace/data_lookup_color.outputs:out>
+                    bool inputs:flip_tangent_v = 0 (
+                        customData = {
+                            bool default = 1
+                        }
+                        displayGroup = "Normal"
+                        displayName = "Normal Map Flip V Tangent"
+                        hidden = false
+                    )
+                    asset inputs:normalmap_texture = @../TechStore/Textures/Concrete_Tile_NORM.jpg@ (
+                        colorSpace = "raw"
+                        customData = {
+                            asset default = @@
+                        }
+                        displayGroup = "Normal"
+                        displayName = "Normal Map"
+                        doc = "Enables the usage of the normalmap texture"
+                        hidden = false
+                    )
+                    bool inputs:project_uvw = 1 (
+                        customData = {
+                            bool default = 0
+                        }
+                        displayGroup = "UV"
+                        displayName = "Enable Project UVW Coordinates"
+                        doc = "When enabled, UV coordinates will be generated by projecting them from a coordinate system"
+                        hidden = false
+                    )
+                    float2 inputs:texture_scale = (0.004, 0.004) (
+                        customData = {
+                            float2 default = (1, 1)
+                        }
+                        displayGroup = "UV"
+                        displayName = "Texture Scale"
+                        doc = "Larger number increases size of texture."
+                        hidden = false
+                    )
+                    bool inputs:world_or_object = 1 (
+                        customData = {
+                            bool default = 0
+                        }
+                        displayGroup = "UV"
+                        displayName = "Enable World Space"
+                        doc = "When set to 'true' uses world space for projection, when 'false' object space is used"
+                        hidden = false
+                    )
+                    token outputs:out
+                    uniform token ui:nodegraph:node:expansionState = "open"
+                }
+
+                def Shader "data_lookup_color" (
+                    prepend apiSchemas = ["NodeGraphNodeAPI"]
+                )
+                {
+                    reorder properties = ["inputs:name", "inputs:default_value"]
+                    uniform token info:implementationSource = "sourceAsset"
+                    uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                    uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color"
+                    color3f inputs:default_value (
+                        customData = {
+                            float3 default = (0, 0, 0)
+                        }
+                        hidden = false
+                        renderType = "color"
+                    )
+                    string inputs:name = "sceneColor1" (
+                        hidden = false
+                        renderType = "string"
+                    )
+                    color3f outputs:out (
+                        renderType = "color"
+                    )
+                    uniform token ui:nodegraph:node:expansionState = "open"
+                    uniform float2 ui:nodegraph:node:pos = (-796.3596, 48.57933)
+                }
+            }
+
+            def Material "Waterfall"
+            {
+                token outputs:mdl:displacement.connect = </World/ServerRoom/Looks/Waterfall/Shader.outputs:out>
+                token outputs:mdl:surface.connect = </World/ServerRoom/Looks/Waterfall/Shader.outputs:out>
+                token outputs:mdl:volume.connect = </World/ServerRoom/Looks/Waterfall/Shader.outputs:out>
+
+                def Shader "Shader"
+                {
+                    reorder properties = ["inputs:absorption_coeff", "inputs:use_glass_color_texture", "inputs:glass_color", "inputs:glass_color_texture", "inputs:frosting_roughness", "inputs:glass_ior", "inputs:thin_walled", "inputs:depth", "inputs:roughness_texture_influence", "inputs:roughness_texture", "inputs:reflection_color_texture", "inputs:reflection_color", "inputs:normal_map_texture", "inputs:normal_map_strength", "inputs:flip_tangent_u", "inputs:flip_tangent_v", "inputs:enable_opacity", "inputs:cutout_opacity", "inputs:cutout_opacity_texture", "inputs:cutout_opacity_mono_source", "inputs:opacity_threshold", "inputs:project_uvw", "inputs:world_or_object", "inputs:uv_space_index", "inputs:texture_translate", "inputs:texture_rotate", "inputs:texture_scale"]
+                    uniform token info:implementationSource = "sourceAsset"
+                    uniform asset info:mdl:sourceAsset = @OmniGlass.mdl@
+                    uniform token info:mdl:sourceAsset:subIdentifier = "OmniGlass"
+                    bool inputs:flip_tangent_v = 0 (
+                        customData = {
+                            bool default = 1
+                        }
+                        displayGroup = "Normal"
+                        displayName = "Normal Map Flip V Tangent"
+                        hidden = false
+                    )
+                    float inputs:normal_map_strength = 1 (
+                        customData = {
+                            float default = 1
+                            dictionary soft_range = {
+                                float max = 1
+                                float min = 0
+                            }
+                        }
+                        displayGroup = "Normal"
+                        displayName = "Normal Map Strength"
+                        doc = "Determines the degree of bumpiness"
+                        hidden = false
+                    )
+                    asset inputs:normal_map_texture = @./textures/Waterfall_NORM.png@ (
+                        colorSpace = "raw"
+                        customData = {
+                            asset default = @@
+                        }
+                        displayGroup = "Normal"
+                        displayName = "Normal Map Texture"
+                        doc = "The normal map texture"
+                        hidden = false
+                    )
+                    bool inputs:project_uvw = 1 (
+                        customData = {
+                            bool default = 0
+                        }
+                        displayGroup = "UV"
+                        displayName = "Enable Project UVW Coordinates"
+                        doc = "When enabled, UV coordinates will be generated by projecting them from a coordinate system"
+                        hidden = false
+                    )
+                    asset inputs:roughness_texture = @./textures/Waterfall_Roughness.png@ (
+                        colorSpace = "raw"
+                        customData = {
+                            asset default = @@
+                        }
+                        displayGroup = "Roughness"
+                        displayName = "Roughness Texture"
+                        doc = "The roughness texture"
+                        hidden = false
+                    )
+                    float inputs:roughness_texture_influence = 1 (
+                        customData = {
+                            float default = 1
+                            dictionary range = {
+                                float max = 1
+                                float min = 0
+                            }
+                        }
+                        displayGroup = "Roughness"
+                        displayName = "Roughness Texture Influence"
+                        hidden = false
+                    )
+                    float inputs:texture_rotate = 0 (
+                        customData = {
+                            float default = 0
+                        }
+                        displayGroup = "UV"
+                        displayName = "Texture Rotate"
+                        doc = "Rotates angle of the texture in degrees."
+                        hidden = false
+                    )
+                    float2 inputs:texture_scale = (0.08, 0.04) (
+                        customData = {
+                            float2 default = (1, 1)
+                        }
+                        displayGroup = "UV"
+                        displayName = "Texture Scale"
+                        doc = "Larger numbers increase the size."
+                        hidden = false
+                    )
+                    float2 inputs:texture_translate = (0, 0) (
+                        customData = {
+                            float2 default = (0, 0)
+                        }
+                        displayGroup = "UV"
+                        displayName = "Texture Translate"
+                        doc = "Controls the position of the texture."
+                        hidden = false
+                    )
+                    float2 inputs:texture_translate.connect = </World/ServerRoom/Looks/Waterfall/multiply.outputs:out>
+                    bool inputs:world_or_object = 0 (
+                        customData = {
+                            bool default = 0
+                        }
+                        displayGroup = "UV"
+                        displayName = "Enable World Space"
+                        doc = "When set to 'true' uses world space for projection, when 'false' object space is used"
+                        hidden = false
+                    )
+                    token outputs:out (
+                        renderType = "material"
+                    )
+                    uniform token ui:nodegraph:node:expansionState = "open"
+                }
+
+                def Shader "animation_time" (
+                    prepend apiSchemas = ["NodeGraphNodeAPI"]
+                )
+                {
+                    uniform token info:implementationSource = "sourceAsset"
+                    uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                    uniform token info:mdl:sourceAsset:subIdentifier = "animation_time"
+                    float outputs:out (
+                        renderType = "float"
+                    )
+                    uniform token ui:nodegraph:node:expansionState = "open"
+                    uniform float2 ui:nodegraph:node:pos = (-1227.9598, 754.01196)
+                }
+
+                def Shader "multiply" (
+                    prepend apiSchemas = ["NodeGraphNodeAPI"]
+                )
+                {
+                    reorder properties = ["inputs:a", "inputs:b"]
+                    uniform token info:implementationSource = "sourceAsset"
+                    uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                    uniform token info:mdl:sourceAsset:subIdentifier = "multiply(float2,float2)"
+                    float2 inputs:a = (0.05, 0.8) (
+                        customData = {
+                            float2 default = (0, 0)
+                        }
+                        hidden = false
+                        renderType = "float2"
+                    )
+                    float2 inputs:b (
+                        customData = {
+                            float2 default = (0, 0)
+                        }
+                        hidden = false
+                        renderType = "float2"
+                    )
+                    float2 inputs:b.connect = </World/ServerRoom/Looks/Waterfall/construct_float2.outputs:out>
+                    float2 outputs:out (
+                        renderType = "float2"
+                    )
+                    uniform token ui:nodegraph:node:expansionState = "open"
+                    uniform float2 ui:nodegraph:node:pos = (-795.61224, 643.8226)
+                }
+
+                def Shader "construct_float2" (
+                    prepend apiSchemas = ["NodeGraphNodeAPI"]
+                )
+                {
+                    uniform token info:implementationSource = "sourceAsset"
+                    uniform asset info:mdl:sourceAsset = @nvidia/aux_definitions.mdl@
+                    uniform token info:mdl:sourceAsset:subIdentifier = "construct_float2(float)"
+                    float inputs:a (
+                        customData = {
+                            float default = 0
+                        }
+                        hidden = false
+                        renderType = "float"
+                    )
+                    float inputs:a.connect = </World/ServerRoom/Looks/Waterfall/animation_time.outputs:out>
+                    float2 outputs:out (
+                        renderType = "float2"
+                    )
+                    uniform token ui:nodegraph:node:expansionState = "open"
+                    uniform float2 ui:nodegraph:node:pos = (-1011.6033, 703.96533)
+                }
+            }
+        }
+
+        def Camera "Camera"
+        {
+            float2 clippingRange = (1, 10000000)
+            float focalLength = 30
+            float focusDistance = 356.5
+            float fStop = 1
+            bool omni:kit:cameraLock = 0
+            custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -372.5411566423274)
+            double3 xformOp:rotateYXZ = (0, 73.200001090765, 0)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (824.200012281537, 132.8000019788742, 99.1000014767054)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateYXZ", "xformOp:scale"]
+        }
+
+        def Xform "Server1"
+        {
+            token visibility = "inherited"
+            double3 xformOp:rotateXYZ = (-90, 9.541664367526768e-15, 6.410082764606896e-15)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (283.70413367616015, 8.867573342286054e-12, -119.89583547968833)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+            def "superpod_rack_cabinet_01" (
+                instanceable = false
+                delete payload = @./superpod_rack_cabinet.usdc@
+                prepend payload = @./superpod_rack_cabinet.usdc@
+            )
+            {
+                float3 xformOp:rotateXYZ = (0, -0, 0)
+                float3 xformOp:scale = (100, 100, 100)
+                double3 xformOp:translate = (152.94818693262567, 0.0000045203113074876455, -2.5718933169987384e-11)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "materials"
+                {
+                    over "H100_LowRes"
+                    {
+                        over "mdl"
+                        {
+                            over "Shader"
+                            {
+                                color3f inputs:diffuse_tint = (0.47257382, 0.4428537, 0.25722373) (
+                                    doc = "When enabled, this color value is multiplied over the final albedo color"
+                                    hidden = false
+                                )
+                            }
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet"
+                {
+                    over "superpod_rack_cabinet_panel_001"
+                    {
+                        over "EOS_ServerCabinet"
+                        {
+                            rel material:binding = </World/Looks/EOS_ServerCabinet> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+
+                    over "superpod_side_rail"
+                    {
+                        over "superpod_side_rail_type_002"
+                        {
+                            rel material:binding = </World/Looks/Rack> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+
+                    over "H100_LowRes"
+                    {
+                        over "H100_LowRes_001"
+                        {
+                            rel material:binding = </World/Looks/H100_LowRes> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+            }
+
+            def "superpod_rack_cabinet" (
+                instanceable = false
+                delete payload = @./superpod_rack_cabinet.usdc@
+                prepend payload = @./superpod_rack_cabinet.usdc@
+            )
+            {
+                float3 xformOp:rotateXYZ = (0, -0, 0)
+                float3 xformOp:scale = (100, 100, 100)
+                double3 xformOp:translate = (76.3179958834868, 0.000004520311136957389, -2.5710360010114224e-11)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "materials"
+                {
+                    over "H100_LowRes"
+                    {
+                        over "mdl"
+                        {
+                            over "Shader"
+                            {
+                                color3f inputs:diffuse_tint = (0.4745098, 0.44313726, 0.25882354) (
+                                    doc = "When enabled, this color value is multiplied over the final albedo color"
+                                    hidden = false
+                                )
+                            }
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet"
+                {
+                    over "superpod_rack_cabinet_panel_001"
+                    {
+                        over "EOS_ServerCabinet"
+                        {
+                            rel material:binding = </World/Looks/EOS_ServerCabinet> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+
+                    over "superpod_side_rail"
+                    {
+                        over "superpod_side_rail_type_002"
+                        {
+                            rel material:binding = </World/Looks/Rack> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+
+                    over "H100_LowRes"
+                    {
+                        over "H100_LowRes_001"
+                        {
+                            rel material:binding = </World/Looks/H100_LowRes> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+            }
+
+            def "superpod_rack_cabinet_HalfFake_01" (
+                instanceable = false
+                delete payload = @./superpod_rack_cabinet_HalfFake.usdc@
+                prepend payload = @./superpod_rack_cabinet_HalfFake.usdc@
+            )
+            {
+                float3 xformOp:rotateXYZ = (0, -0, 0)
+                float3 xformOp:scale = (100, 100, 100)
+                double3 xformOp:translate = (-0.19722680168226248, 0.11042448550085737, 0.0001248020564770971)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "superpod_rack_cabinet_Inside1"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside2"
+                {
+                    token visibility = "inherited"
+
+                    over "superpod_rack_cabinet_Inside2"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside3"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside3"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_HalfFake"
+                {
+                    over "superpod_rack_cabinet_HalfFake"
+                    {
+                        rel material:binding = </World/Looks/EOS_ServerCabinet> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+
+                    over "superpod_side_rail"
+                    {
+                        over "superpod_side_rail_type_002"
+                        {
+                            rel material:binding = </World/Looks/Rack> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+            }
+
+            def "superpod_rack_cabinet_HalfFake_02" (
+                instanceable = false
+                delete payload = @./superpod_rack_cabinet_HalfFake.usdc@
+                prepend payload = @./superpod_rack_cabinet_HalfFake.usdc@
+            )
+            {
+                float3 xformOp:rotateXYZ = (0, -0, 0)
+                float3 xformOp:scale = (100, 100, 100)
+                double3 xformOp:translate = (-76.69722680168223, 0.11042448550762174, 0.0001248020561670488)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "superpod_rack_cabinet_HalfFake"
+                {
+                    token visibility = "inherited"
+
+                    over "superpod_rack_cabinet_HalfFake"
+                    {
+                        rel material:binding = </World/Looks/EOS_ServerCabinet> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+
+                    over "superpod_side_rail"
+                    {
+                        over "superpod_side_rail_type_002"
+                        {
+                            rel material:binding = </World/Looks/Rack> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside1"
+                {
+                    token visibility = "inherited"
+
+                    over "superpod_rack_cabinet_Inside"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside2"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside2"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside3"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside3"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+            }
+
+            def "superpod_rack_cabinet_HalfFake_03" (
+                instanceable = false
+                delete payload = @./superpod_rack_cabinet_HalfFake.usdc@
+                prepend payload = @./superpod_rack_cabinet_HalfFake.usdc@
+            )
+            {
+                float3 xformOp:rotateXYZ = (0, -0, 0)
+                float3 xformOp:scale = (100, 100, 100)
+                double3 xformOp:translate = (-153.19722680168235, 0.1104244855148977, 0.00012480205568876377)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "superpod_rack_cabinet_Inside1"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside3"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside3"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside2"
+                {
+                    over "superpod_rack_cabinet_Inside2"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_HalfFake"
+                {
+                    over "superpod_rack_cabinet_HalfFake"
+                    {
+                        rel material:binding = </World/Looks/EOS_ServerCabinet> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+
+                    over "superpod_side_rail"
+                    {
+                        over "superpod_side_rail_type_002"
+                        {
+                            rel material:binding = </World/Looks/Rack> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+            }
+
+            def "superpod_rack_cabinet_HalfFake_04" (
+                instanceable = false
+                delete payload = @./superpod_rack_cabinet_HalfFake.usdc@
+                prepend payload = @./superpod_rack_cabinet_HalfFake.usdc@
+            )
+            {
+                float3 xformOp:rotateXYZ = (0, -0, 0)
+                float3 xformOp:scale = (100, 100, 100)
+                double3 xformOp:translate = (-229.88860372483623, 0.11042448547200934, 0.00012480205720476336)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "superpod_rack_cabinet_Inside1"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside2"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside2"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside3"
+                {
+                    over "superpod_rack_cabinet_Inside3"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside1_001"
+                {
+                    token visibility = "inherited"
+                }
+
+                over "superpod_rack_cabinet_HalfFake"
+                {
+                    over "superpod_rack_cabinet_HalfFake"
+                    {
+                        rel material:binding = </World/Looks/EOS_ServerCabinet> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+
+                    over "superpod_side_rail"
+                    {
+                        over "superpod_side_rail_type_002"
+                        {
+                            rel material:binding = </World/Looks/Rack> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+            }
+
+            def "superpod_rack_cabinet_HalfFake_05" (
+                instanceable = false
+                delete payload = @./superpod_rack_cabinet_HalfFake.usdc@
+                prepend payload = @./superpod_rack_cabinet_HalfFake.usdc@
+            )
+            {
+                float3 xformOp:rotateXYZ = (0, -0, 0)
+                float3 xformOp:scale = (100, 100, 100)
+                double3 xformOp:translate = (-306.3886037248382, 0.11042448549991946, 0.00012480205647709817)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "superpod_rack_cabinet_Inside1"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside2"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside2"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside3"
+                {
+                    token visibility = "inherited"
+
+                    over "superpod_rack_cabinet_Inside3"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_HalfFake"
+                {
+                    over "superpod_rack_cabinet_HalfFake"
+                    {
+                        rel material:binding = </World/Looks/EOS_ServerCabinet> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+
+                    over "superpod_side_rail"
+                    {
+                        over "superpod_side_rail_type_002"
+                        {
+                            rel material:binding = </World/Looks/Rack> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+            }
+
+            def "superpod_rack_cabinet_HalfFake_06" (
+                instanceable = false
+                delete payload = @./superpod_rack_cabinet_HalfFake.usdc@
+                prepend payload = @./superpod_rack_cabinet_HalfFake.usdc@
+            )
+            {
+                float3 xformOp:rotateXYZ = (0, -0, 0)
+                float3 xformOp:scale = (100, 100, 100)
+                double3 xformOp:translate = (-382.8886037248399, 0.11042448550759332, 0.00012480205616704985)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "superpod_rack_cabinet_HalfFake"
+                {
+                    token visibility = "inherited"
+
+                    over "superpod_rack_cabinet_HalfFake"
+                    {
+                        rel material:binding = </World/Looks/EOS_ServerCabinet> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+
+                    over "superpod_side_rail"
+                    {
+                        over "superpod_side_rail_type_002"
+                        {
+                            rel material:binding = </World/Looks/Rack> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside1"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside2"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside2"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside3"
+                {
+                    token visibility = "inherited"
+
+                    over "superpod_rack_cabinet_Inside3"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+            }
+
+            def "superpod_rack_cabinet_HalfFake_07" (
+                instanceable = false
+                delete payload = @./superpod_rack_cabinet_HalfFake.usdc@
+                prepend payload = @./superpod_rack_cabinet_HalfFake.usdc@
+            )
+            {
+                float3 xformOp:rotateXYZ = (0, -0, 0)
+                float3 xformOp:scale = (100, 100, 100)
+                double3 xformOp:translate = (-459.3886037248379, 0.11042448551415873, 0.00012480205568876464)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "superpod_rack_cabinet_Inside1"
+                {
+                    token visibility = "inherited"
+
+                    over "superpod_rack_cabinet_Inside"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside3"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside3"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside2"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside2"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_HalfFake"
+                {
+                    over "superpod_rack_cabinet_HalfFake"
+                    {
+                        rel material:binding = </World/Looks/EOS_ServerCabinet> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+
+                    over "superpod_side_rail"
+                    {
+                        over "superpod_side_rail_type_002"
+                        {
+                            rel material:binding = </World/Looks/Rack> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+            }
+
+            def "superpod_rack_cabinet_HalfFake_08" (
+                instanceable = false
+                delete payload = @./superpod_rack_cabinet_HalfFake.usdc@
+                prepend payload = @./superpod_rack_cabinet_HalfFake.usdc@
+            )
+            {
+                float3 xformOp:rotateXYZ = (0, -0, 0)
+                float3 xformOp:scale = (100, 100, 100)
+                double3 xformOp:translate = (-536.0210131561266, 0.11042448547070194, 0.0001248020572047671)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "superpod_rack_cabinet_Inside1"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside2"
+                {
+                    token visibility = "inherited"
+
+                    over "superpod_rack_cabinet_Inside2"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside3"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside3"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_HalfFake"
+                {
+                    over "superpod_rack_cabinet_HalfFake"
+                    {
+                        rel material:binding = </World/Looks/EOS_ServerCabinet> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+
+                    over "superpod_side_rail"
+                    {
+                        over "superpod_side_rail_type_002"
+                        {
+                            rel material:binding = </World/Looks/Rack> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+            }
+
+            def "superpod_rack_cabinet_HalfFake_09" (
+                instanceable = false
+                delete payload = @./superpod_rack_cabinet_HalfFake.usdc@
+                prepend payload = @./superpod_rack_cabinet_HalfFake.usdc@
+            )
+            {
+                float3 xformOp:rotateXYZ = (0, -0, 0)
+                float3 xformOp:scale = (100, 100, 100)
+                double3 xformOp:translate = (-612.5210131561289, 0.11042448549756045, 0.00012480205647710254)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "superpod_rack_cabinet_Inside1"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside2"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside2"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside3"
+                {
+                    token visibility = "inherited"
+
+                    over "superpod_rack_cabinet_Inside3"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_HalfFake"
+                {
+                    over "superpod_rack_cabinet_HalfFake"
+                    {
+                        rel material:binding = </World/Looks/EOS_ServerCabinet> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+
+                    over "superpod_side_rail"
+                    {
+                        over "superpod_side_rail_type_002"
+                        {
+                            rel material:binding = </World/Looks/Rack> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        def Mesh "Floor"
+        {
+            int[] faceVertexCounts = [4]
+            int[] faceVertexIndices = [0, 2, 3, 1]
+            rel material:binding = </World/Looks/Floor> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-50, 0, -50), (50, 0, -50), (-50, 0, 50), (50, 0, 50)]
+            float2[] primvars:st = [(1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            double3 xformOp:rotateXYZ = (0, -0, 0)
+            double3 xformOp:scale = (30, 30, 30)
+            double3 xformOp:translate = (2.39311e-11, 0, -18.5911)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "Plane"
+        {
+            int[] faceVertexCounts = [4]
+            int[] faceVertexIndices = [0, 2, 3, 1]
+            rel material:binding = </World/Mood/Wall/TriangulatedWall/materials/Wall> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-50, 0, -50), (50, 0, -50), (-50, 0, 50), (50, 0, 50)]
+            bool primvars:doNotCastShadows = 1
+            float2[] primvars:st = [(1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            double3 xformOp:rotateXYZ = (180, 7.0167091267055864e-15, 180)
+            double3 xformOp:scale = (15.468544256755795, 7.999999999999999, 13.866800308227539)
+            double3 xformOp:translate = (-219.456359187114, 395.5979999999999, -50.133899999974815)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Xform "Lights"
+        {
+            token visibility = "inherited"
+            double3 xformOp:rotateXYZ = (0, -90, 0)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (426.88782083266995, -1.4097167877480388e-11, -454.29755886852877)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+            def DiskLight "FillLight" (
+                apiSchemas = ["ShapingAPI"]
+            )
+            {
+                color3f color = (0.84735316, 0.60617757, 1)
+                float intensity = 40000
+                float radius = 50
+                float shaping:cone:angle = 50
+                float shaping:cone:softness = 0.5
+                float shaping:focus
+                color3f shaping:focusTint
+                asset shaping:ies:file
+                token ui:displayGroup = "Material Graphs"
+                token ui:displayName = "FillLight"
+                int ui:order = 1024
+                token visibility = "inherited"
+                float3 xformOp:rotateXYZ = (-144.54044, -79.72112, 16.664463)
+                float3 xformOp:scale = (1.2624642, 1.0000006, 0.79210126)
+                double3 xformOp:translate = (639.6550682013944, 303.2679999999999, -82.30450450557667)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def DiskLight "RimLight" (
+                apiSchemas = ["ShapingAPI"]
+            )
+            {
+                color3f color = (0.64306873, 0.77070063, 0)
+                float exposure = 0
+                float intensity = 600000
+                bool normalize = 1
+                float radius = 48.9
+                float shaping:cone:angle = 20
+                float shaping:cone:softness = 0.075
+                float shaping:focus = 0
+                color3f shaping:focusTint
+                asset shaping:ies:file
+                token ui:displayGroup = "Material Graphs"
+                token ui:displayName = "RimLight"
+                int ui:order = 1024
+                token visibility = "inherited"
+                float3 xformOp:rotateXYZ = (-30.58834, 17.609058, 23.671213)
+                float3 xformOp:scale = (0.9999979, 0.99999905, 1.0000001)
+                double3 xformOp:translate = (551.5296682013947, 349.89599999999996, 386.71169549442345)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def DiskLight "FrontLight" (
+                apiSchemas = ["ShapingAPI"]
+            )
+            {
+                color3f color = (0.83439493, 0.72470987, 0.4490852)
+                float exposure = 1.3
+                float intensity = 60000
+                float radius = 30
+                float shaping:cone:angle = 28.4
+                float shaping:cone:softness = 0.2
+                float shaping:focus
+                color3f shaping:focusTint
+                asset shaping:ies:file
+                token ui:displayGroup = "Material Graphs"
+                token ui:displayName = "FrontLight"
+                int ui:order = 1024
+                token visibility = "inherited"
+                float3 xformOp:rotateXYZ = (172.69641, -35.4605, 162.41739)
+                float3 xformOp:scale = (0.9999994, 0.9999995, 0.99999905)
+                double3 xformOp:translate = (363.61436826217465, 198.55160861253418, -205.99260673087488)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def DomeLight "DomeLight" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float intensity = 1000
+                float shaping:cone:angle = 180
+                float shaping:cone:softness
+                float shaping:focus
+                color3f shaping:focusTint
+                asset shaping:ies:file
+                asset texture:file = @./textures/Warehouse-with-lights.jpg@
+                token texture:format = "latlong"
+                double3 xformOp:rotateXYZ = (0, 90, 90)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (454.2975588685287, 1.4097167877480388e-11, 426.8878208326697)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+        }
+
+        def Xform "Server_Frontal" (
+            kind = "group"
+        )
+        {
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 0, 0)
+            float3 xformOp:translate:pivot = (15.956903, 0, 224.75)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:translate:pivot", "xformOp:rotateXYZ", "xformOp:scale", "!invert!xformOp:translate:pivot"]
+
+            def "superpod_rack_cabinet_HalfFake" (
+                instanceable = false
+                delete payload = @./superpod_rack_cabinet_HalfFake.usdc@
+                prepend payload = @./superpod_rack_cabinet_HalfFake.usdc@
+            )
+            {
+                float3 xformOp:rotateXYZ = (0, 90, 90)
+                float3 xformOp:scale = (100, 100, 100)
+                double3 xformOp:translate = (76.90064953788152, 0.00012480207210625042, 109.99999999999999)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "superpod_rack_cabinet_Inside1"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside2"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside2"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside3"
+                {
+                    over "superpod_rack_cabinet_Inside3"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_HalfFake"
+                {
+                    over "superpod_rack_cabinet_HalfFake"
+                    {
+                        rel material:binding = </World/Looks/EOS_ServerCabinet> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+
+                    over "superpod_side_rail"
+                    {
+                        over "superpod_side_rail_type_002"
+                        {
+                            rel material:binding = </World/Looks/Rack> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+            }
+
+            def "superpod_rack_cabinet_HalfFake_01" (
+                instanceable = false
+                delete payload = @./superpod_rack_cabinet_HalfFake.usdc@
+                prepend payload = @./superpod_rack_cabinet_HalfFake.usdc@
+            )
+            {
+                float3 xformOp:rotateXYZ = (0, 90, 90)
+                float3 xformOp:scale = (100, 100, 100)
+                double3 xformOp:translate = (76.90064953785344, 0.00012480207137002626, 186.50000000000003)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "superpod_rack_cabinet_Inside1"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside2"
+                {
+                    token visibility = "inherited"
+
+                    over "superpod_rack_cabinet_Inside2"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside3"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside3"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_HalfFake"
+                {
+                    over "superpod_rack_cabinet_HalfFake"
+                    {
+                        rel material:binding = </World/Looks/EOS_ServerCabinet> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+
+                    over "superpod_side_rail"
+                    {
+                        over "superpod_side_rail_type_002"
+                        {
+                            rel material:binding = </World/Looks/Rack> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+            }
+
+            def "superpod_rack_cabinet_HalfFake_02" (
+                instanceable = false
+                delete payload = @./superpod_rack_cabinet_HalfFake.usdc@
+                prepend payload = @./superpod_rack_cabinet_HalfFake.usdc@
+            )
+            {
+                float3 xformOp:rotateXYZ = (0, 90, 90)
+                float3 xformOp:scale = (100, 100, 100)
+                double3 xformOp:translate = (76.90064953784673, 0.0001248020710514194, 262.99999999999994)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "superpod_rack_cabinet_HalfFake"
+                {
+                    token visibility = "inherited"
+
+                    over "superpod_rack_cabinet_HalfFake"
+                    {
+                        rel material:binding = </World/Looks/EOS_ServerCabinet> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+
+                    over "superpod_side_rail"
+                    {
+                        over "superpod_side_rail_type_002"
+                        {
+                            rel material:binding = </World/Looks/Rack> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside1"
+                {
+                    token visibility = "inherited"
+
+                    over "superpod_rack_cabinet_Inside"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside2"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside2"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside3"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside3"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+            }
+
+            def "superpod_rack_cabinet_HalfFake_03" (
+                instanceable = false
+                delete payload = @./superpod_rack_cabinet_HalfFake.usdc@
+                prepend payload = @./superpod_rack_cabinet_HalfFake.usdc@
+            )
+            {
+                float3 xformOp:rotateXYZ = (0, 90, 90)
+                float3 xformOp:scale = (100, 100, 100)
+                double3 xformOp:translate = (76.90064953783946, 0.00012480207056457575, 339.50000000000006)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "superpod_rack_cabinet_Inside1"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside3"
+                {
+                    token visibility = "invisible"
+
+                    over "superpod_rack_cabinet_Inside3"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_Inside2"
+                {
+                    over "superpod_rack_cabinet_Inside2"
+                    {
+                        over "superpod_colored"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake_colored> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "superpod_metal"
+                        {
+                            rel material:binding = </World/Looks/superpod_Fake> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Server_Inside"
+                        {
+                            rel material:binding = </World/Looks/Server_Inside> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "superpod_rack_cabinet_HalfFake"
+                {
+                    over "superpod_rack_cabinet_HalfFake"
+                    {
+                        rel material:binding = </World/Looks/EOS_ServerCabinet> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+
+                    over "superpod_side_rail"
+                    {
+                        over "superpod_side_rail_type_002"
+                        {
+                            rel material:binding = </World/Looks/Rack> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        def Mesh "Wall_Left"
+        {
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 0, 4, 5, 1, 1, 5, 6, 3, 2, 3, 6, 7, 0, 2, 7, 4, 4, 7, 6, 5]
+            rel material:binding = </World/Looks/Floor> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-50, -50, -50), (50, -50, -50), (-50, -50, 50), (50, -50, 50), (-50, 50, -50), (50, 50, -50), (50, 50, 50), (-50, 50, 50)]
+            float2[] primvars:st = [(1, 0), (0, 0), (0, 1), (1, 1), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (0, 0), (0, 1), (1, 1), (1, 0), (0, 0), (0, 1), (1, 1), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            double3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (17.99998664855957, 6.999999046325684, 0.9999996423721313)
+            double3 xformOp:translate = (-300, 73.10091329528508, 428.09288727482857)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "Wall_Right"
+        {
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 0, 4, 5, 1, 1, 5, 6, 3, 2, 3, 6, 7, 0, 2, 7, 4, 4, 7, 6, 5]
+            rel material:binding = </World/Looks/Floor> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-50, -50, -50), (50, -50, -50), (-50, -50, 50), (50, -50, 50), (-50, 50, -50), (50, 50, -50), (50, 50, 50), (-50, 50, 50)]
+            float2[] primvars:st = [(1, 0), (0, 0), (0, 1), (1, 1), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (0, 0), (0, 1), (1, 1), (1, 0), (0, 0), (0, 1), (1, 1), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            double3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (17.99998664855957, 6.999999046325684, 0.9999996423721313)
+            double3 xformOp:translate = (-300, 100.60921519306288, -448.25498730711354)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+    }
+
+    def Scope "transfer_data"
+    {
+        string mm:axis_fwd = "Z"
+        string mm:axis_up = "Y"
+        bool mm:axis_vis = 0
+        string[] mm:extra_dynamic = []
+        string[] mm:extra_static = []
+        string[] mm:gums = []
+        string[] mm:l_eye = []
+        string[] mm:r_eye = []
+    }
+    variantSet "moodVariant" = {
+        "mood1" {
+            def Xform "Mood"
+            {
+                double3 xformOp:rotateXYZ = (0, 204, 0)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (450, 0, -187)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                def Xform "Wall"
+                {
+                    double3 xformOp:rotateXYZ = (0, 0, 0)
+                    double3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-959.7835271181921, -1.3990763482269893e-12, -93.56742651158241)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    def "TriangulatedWall" (
+                        instanceable = false
+                        delete payload = @./TriangulatedWall.usdc@
+                        prepend payload = @./TriangulatedWall.usdc@
+                    )
+                    {
+                        float3 xformOp:rotateXYZ = (0, 90, 90)
+                        float3 xformOp:scale = (452, 452, 452)
+                        double3 xformOp:translate = (-13.8544, -169.94, 94.9721)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                        over "TriangulatedWallTile"
+                        {
+                            over "TriangulatedWallTile"
+                            {
+                                rel material:binding = </World/Mood/Wall/TriangulatedWall/materials/Wall> (
+                                    bindMaterialAs = "weakerThanDescendants"
+                                )
+                            }
+                        }
+
+                        over "materials"
+                        {
+                            over "Wall"
+                            {
+                                over "mdl"
+                                {
+                                    over "Shader"
+                                    {
+                                        color3f inputs:diffuse_color_constant = (0.19141912, 0.1914172, 0.1914172) (
+                                            customData = {
+                                                float3 default = (0.2, 0.2, 0.2)
+                                            }
+                                            displayGroup = "Albedo"
+                                            displayName = "Base Color"
+                                            doc = "This is the base color"
+                                            hidden = false
+                                        )
+                                        color3f inputs:diffuse_tint = (0.82422936, 0.9181586, 0.8842396) (
+                                            customData = {
+                                                float3 default = (1, 1, 1)
+                                            }
+                                            displayGroup = "Albedo"
+                                            displayName = "Color Tint"
+                                            doc = "When enabled, this color value is multiplied over the final albedo color"
+                                            hidden = false
+                                        )
+                                        float inputs:reflection_roughness_constant = 1 (
+                                            customData = {
+                                                float default = 0.5
+                                                dictionary range = {
+                                                    float max = 1
+                                                    float min = 0
+                                                }
+                                            }
+                                            displayGroup = "Reflectivity"
+                                            displayName = "Roughness Amount"
+                                            doc = "Higher roughness values lead to more blurry reflections"
+                                            hidden = false
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    def "NVIDIA_Logo" (
+                        instanceable = false
+                        delete payload = @./NVIDIA_Logo.usdc@
+                        prepend payload = @./NVIDIA_Logo.usdc@
+                    )
+                    {
+                        float3 xformOp:rotateXYZ = (0, 90, 90)
+                        float3 xformOp:scale = (100, 100, 100)
+                        double3 xformOp:translate = (16, 212.00000000000017, -24.99999999999995)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                        over "Logo"
+                        {
+                            over "Logo"
+                            {
+                                float3 xformOp:rotateXYZ = (0, 0, 0)
+                                float3 xformOp:scale = (1, 1, 1)
+                                double3 xformOp:translate = (-33.762368554599604, -3.9947417462826706e-7, -3.000000067061478)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                            }
+                        }
+
+                        over "materials"
+                        {
+                            over "Logo_Text"
+                            {
+                                over "mdl"
+                                {
+                                    over "Shader"
+                                    {
+                                        float inputs:bump_factor = 0 (
+                                            customData = {
+                                                float default = 1
+                                                dictionary soft_range = {
+                                                    float max = 1
+                                                    float min = 0
+                                                }
+                                            }
+                                            displayGroup = "Normal"
+                                            displayName = "Normal Map Strength"
+                                            doc = "Strength of normal map."
+                                            hidden = false
+                                        )
+                                        color3f inputs:diffuse_color_constant = (0.1898734, 0.18987149, 0.18987149) (
+                                            customData = {
+                                                float3 default = (0.2, 0.2, 0.2)
+                                            }
+                                            displayGroup = "Albedo"
+                                            displayName = "Base Color"
+                                            doc = "This is the base color"
+                                            hidden = false
+                                        )
+                                        float inputs:metallic_constant = 1 (
+                                            customData = {
+                                                float default = 0
+                                                dictionary range = {
+                                                    float max = 1
+                                                    float min = 0
+                                                }
+                                            }
+                                            displayGroup = "Reflectivity"
+                                            displayName = "Metallic Amount"
+                                            doc = "Metallic Material"
+                                            hidden = false
+                                        )
+                                    }
+                                }
+                            }
+
+                            over "Logo_Icon"
+                            {
+                                over "mdl"
+                                {
+                                    over "Shader"
+                                    {
+                                        color3f inputs:diffuse_color_constant = (0.27571484, 0.556962, 0.10810232) (
+                                            customData = {
+                                                float3 default = (0.2, 0.2, 0.2)
+                                            }
+                                            displayGroup = "Albedo"
+                                            displayName = "Base Color"
+                                            doc = "This is the base color"
+                                            hidden = false
+                                        )
+                                        float inputs:metallic_constant = 1 (
+                                            customData = {
+                                                float default = 0
+                                                dictionary range = {
+                                                    float max = 1
+                                                    float min = 0
+                                                }
+                                            }
+                                            displayGroup = "Reflectivity"
+                                            displayName = "Metallic Amount"
+                                            doc = "Metallic Material"
+                                            hidden = false
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                def Xform "Lights"
+                {
+                    token visibility = "inherited"
+                    double3 xformOp:rotateXYZ = (0, -90, 0)
+                    double3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (426.88782083266995, -1.4097167877480388e-11, -454.29755886852877)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    def SphereLight "BackgroundLight2" (
+                        apiSchemas = ["ShapingAPI"]
+                    )
+                    {
+                        color3f color = (1, 0.73528177, 0.28270042)
+                        float exposure = 0
+                        float intensity = 8000
+                        float radius = 50
+                        float shaping:cone:angle = 180
+                        float shaping:cone:softness
+                        float shaping:focus
+                        color3f shaping:focusTint
+                        asset shaping:ies:file
+                        token ui:displayGroup = "Material Graphs"
+                        token ui:displayName = "BackgroundLight2"
+                        int ui:order = 1024
+                        token visibility = "inherited"
+                        float3 xformOp:rotateXYZ = (180, -66, 180)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (500.20263500982907, 329.9789999999999, 610.4297667470145)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                    }
+
+                    def DiskLight "BackgroundLight1" (
+                        prepend apiSchemas = ["ShapingAPI"]
+                    )
+                    {
+                        color3f color = (0.4627451, 0.7254902, 0)
+                        float exposure = 1
+                        float filmDiagonal = 35
+                        float intensity = 120000
+                        bool normalize = 0
+                        float radius = 50
+                        float shaping:cone:angle = 180
+                        float shaping:cone:softness
+                        float shaping:focus
+                        color3f shaping:focusTint
+                        asset shaping:ies:file
+                        double3 xformOp:rotateXYZ = (138.5503387451172, -65.49858856201172, 170.73562622070312)
+                        double3 xformOp:scale = (0.9999998807907104, 1.0000003576278687, 0.9999999403953552)
+                        double3 xformOp:translate = (80.00513235694655, 289.0000000000127, 1235.6723479508619)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                    }
+                }
+            }
+
+        }
+        "mood2" {
+            def Xform "Mood"
+            {
+                double3 xformOp:rotateXYZ = (0, 204, 0)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (450, 0, -187)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                def Xform "Lights"
+                {
+                    token visibility = "inherited"
+                    double3 xformOp:rotateXYZ = (0, -90, 0)
+                    double3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (426.88782083266995, -1.4097167877480388e-11, -454.29755886852877)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    def SphereLight "BackgroundLight2" (
+                        apiSchemas = ["ShapingAPI"]
+                    )
+                    {
+                        color3f color = (0.88030887, 0.93761426, 1)
+                        float exposure = 0
+                        float intensity = 8000
+                        float radius = 50
+                        float shaping:cone:angle = 180
+                        float shaping:cone:softness
+                        float shaping:focus
+                        color3f shaping:focusTint
+                        asset shaping:ies:file
+                        token ui:displayGroup = "Material Graphs"
+                        token ui:displayName = "BackgroundLight2"
+                        int ui:order = 1024
+                        token visibility = "inherited"
+                        float3 xformOp:rotateXYZ = (180, -66, 180)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (500.20263500982907, 329.9789999999999, 610.4297667470145)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                    }
+
+                    def DiskLight "BackgroundLight1" (
+                        prepend apiSchemas = ["ShapingAPI"]
+                    )
+                    {
+                        color3f color = (0.15057915, 1, 0.95080584)
+                        float exposure = 1
+                        float filmDiagonal = 35
+                        float intensity = 80000
+                        bool normalize = 0
+                        float radius = 50
+                        float shaping:cone:angle = 180
+                        float shaping:cone:softness
+                        float shaping:focus
+                        color3f shaping:focusTint
+                        asset shaping:ies:file
+                        token visibility = "inherited"
+                        double3 xformOp:rotateXYZ = (138.5503387451172, -65.49858856201172, 170.73562622070312)
+                        double3 xformOp:scale = (0.9999998807907104, 1.0000003576278687, 0.9999999403953552)
+                        double3 xformOp:translate = (80.00513235694655, 289.0000000000127, 1235.6723479508619)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                    }
+                }
+
+                def Mesh "Wall"
+                {
+                    float3[] extent = [(-50, 0, -50), (50, 0, 50)]
+                    int[] faceVertexCounts = [4]
+                    int[] faceVertexIndices = [0, 2, 3, 1]
+                    rel material:binding = </World/ServerRoom/Looks/Concrete_WorldSpace> (
+                        bindMaterialAs = "weakerThanDescendants"
+                    )
+                    normal3f[] normals = [(0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0)] (
+                        interpolation = "faceVarying"
+                    )
+                    point3f[] points = [(-50, 0, -50), (50, 0, -50), (-50, 0, 50), (50, 0, 50)]
+                    float2[] primvars:st = [(1, 0), (1, 1), (0, 1), (0, 0)] (
+                        interpolation = "faceVarying"
+                    )
+                    uniform token subdivisionScheme = "none"
+                    double3 xformOp:rotateXYZ = (0, 0, 90)
+                    double3 xformOp:scale = (5, 1, 10)
+                    double3 xformOp:translate = (-970, 199.9999999999919, -1.5511147921642987e-11)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+
+                def Mesh "Waterfall"
+                {
+                    float3[] extent = [(-50, 0, -50), (50, 0, 50)]
+                    int[] faceVertexCounts = [4]
+                    int[] faceVertexIndices = [0, 2, 3, 1]
+                    rel material:binding = </World/ServerRoom/Looks/Waterfall> (
+                        bindMaterialAs = "weakerThanDescendants"
+                    )
+                    normal3f[] normals = [(0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0)] (
+                        interpolation = "faceVarying"
+                    )
+                    point3f[] points = [(-50, 0, -50), (50, 0, -50), (-50, 0, 50), (50, 0, 50)]
+                    float2[] primvars:st = [(1, 0), (1, 1), (0, 1), (0, 0)] (
+                        interpolation = "faceVarying"
+                    )
+                    uniform token subdivisionScheme = "none"
+                    token visibility = "inherited"
+                    double3 xformOp:rotateXYZ = (-1.0800249583553523e-12, 90, 90.00000000000273)
+                    double3 xformOp:scale = (10, 1, 5)
+                    double3 xformOp:translate = (-941.0314023092599, 199.99999999998445, -2.119548980772379e-11)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+
+                def Mesh "Cube"
+                {
+                    float3[] extent = [(-50, -50, -50), (50, 50, 50)]
+                    int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                    int[] faceVertexIndices = [0, 1, 3, 2, 0, 4, 5, 1, 1, 5, 6, 3, 2, 3, 6, 7, 0, 2, 7, 4, 4, 7, 6, 5]
+                    rel material:binding = </World/ServerRoom/Looks/Concrete_WorldSpace> (
+                        bindMaterialAs = "weakerThanDescendants"
+                    )
+                    normal3f[] normals = [(0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0)] (
+                        interpolation = "faceVarying"
+                    )
+                    point3f[] points = [(-50, -50, -50), (50, -50, -50), (-50, -50, 50), (50, -50, 50), (-50, 50, -50), (50, 50, -50), (50, 50, 50), (-50, 50, 50)]
+                    float2[] primvars:st = [(1, 0), (0, 0), (0, 1), (1, 1), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (0, 0), (0, 1), (1, 1), (1, 0), (0, 0), (0, 1), (1, 1), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                        interpolation = "faceVarying"
+                    )
+                    uniform token subdivisionScheme = "none"
+                    double3 xformOp:rotateXYZ = (0, 0, 0)
+                    double3 xformOp:scale = (0.1, 0.1, 10)
+                    double3 xformOp:translate = (-925, 4.999999999999873, 3.82982534574694e-12)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+
+                def Mesh "Cube_01"
+                {
+                    float3[] extent = [(-50, -50, -50), (50, 50, 50)]
+                    int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                    int[] faceVertexIndices = [0, 1, 3, 2, 0, 4, 5, 1, 1, 5, 6, 3, 2, 3, 6, 7, 0, 2, 7, 4, 4, 7, 6, 5]
+                    rel material:binding = </World/ServerRoom/Looks/Concrete_WorldSpace> (
+                        bindMaterialAs = "weakerThanDescendants"
+                    )
+                    normal3f[] normals = [(0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0)] (
+                        interpolation = "faceVarying"
+                    )
+                    point3f[] points = [(-50, -50, -50), (50, -50, -50), (-50, -50, 50), (50, -50, 50), (-50, 50, -50), (50, 50, -50), (50, 50, 50), (-50, 50, 50)]
+                    float2[] primvars:st = [(1, 0), (0, 0), (0, 1), (1, 1), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (0, 0), (0, 1), (1, 1), (1, 0), (0, 0), (0, 1), (1, 1), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                        interpolation = "faceVarying"
+                    )
+                    uniform token subdivisionScheme = "none"
+                    double3 xformOp:rotateXYZ = (0, 0, 0)
+                    double3 xformOp:scale = (0.1, 0.1, 10)
+                    double3 xformOp:translate = (-925.0000000000001, 391, 3.886668764607748e-12)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+            }
+
+        }
+    }
+}
+

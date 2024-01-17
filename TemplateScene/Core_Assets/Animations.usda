@@ -1,0 +1,545 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    endTimeCode = 788
+    metersPerUnit = 0.01
+    startTimeCode = 0
+    timeCodesPerSecond = 30
+    upAxis = "Y"
+)
+
+def Xform "World"
+{
+    def Scope "transfer_data"
+    {
+        string mm:axis_fwd = "Z"
+        string mm:axis_up = "Y"
+        bool mm:axis_vis = 0
+        string[] mm:extra_dynamic = []
+        string[] mm:extra_static = []
+        string[] mm:gums = []
+        string[] mm:l_eye = []
+        string[] mm:r_eye = []
+    }
+
+    def "Animations" (
+        prepend payload = @./Animations/Animations_Collected.usda@
+    )
+    {
+        over "Gestures"
+        {
+            over "Goodbye"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Welcome"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Attraction_1"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Attraction_2"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Bowing_1"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Bowing_2"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Come_Here_1"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Dont_Understand_1"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Driving_Mime"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Exhausted"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Fistbump_Offer"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "No_1"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Nodding_1"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Open_Question_1"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Personal_Statement_1"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Personal_Statement_2"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Phone_Dialing"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Please_Repeat_1"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Please_Repeat_2"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Pointing_Backward_1"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Pointing_Down_1"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Pointing_Down_2"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Pointing_Left_1"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Pointing_Left_2"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Pointing_To_Self_1"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Pointing_To_User_1"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Pointing_To_User_2"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Presenting_Options_1"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Presenting_Options_2"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Pulling_Mime"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Raise_Both_Arms"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Stupid_1"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Success_1"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Tell_Secret"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "The_Robot"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Toss"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Trying_To_See"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+        }
+
+        over "Postures"
+        {
+            over "Idle"
+            {
+                over "Idle_Loop" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Idle1" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Idle2" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Idle3" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Idle4" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+            }
+
+            over "Head_Idle"
+            {
+                over "Idle_FaceMotion" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+            }
+
+            over "Listening"
+            {
+                over "Listening_Loop" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Listening1" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Listening2" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Listening3" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Listening4" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+            }
+
+            over "Talking"
+            {
+                over "Talking_Loop" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Talking1" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Talking2" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Talking3" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Talking4" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+            }
+
+            over "Attentive"
+            {
+                over "Attentive_Active" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Attentive_Neutral" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+            }
+
+            over "Thinking"
+            {
+                over "Thinking" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+            }
+        }
+    
+        over "Partial"
+        {
+            over "Blinking_Darting"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+        }
+
+        over "Tests"
+        {
+            over "Test_1"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Test_2"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Test_3"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Test_4"  (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+        }
+    }
+
+    def "Rig_Retarget" (
+        instanceable = false
+        prepend payload = @./Animations/Rig_Retarget_Tagged.usda@
+    )
+    {
+        over "character" (
+            prepend apiSchemas = ["AnimationGraphAPI"]
+        )
+        {
+            custom float anim:graph:variable:AutoBlink
+            custom float anim:graph:variable:AutoEyeDart
+            custom float anim:graph:variable:BlendShapeStrength
+            custom float[] anim:graph:variable:BlendShapeWeights
+            custom string anim:graph:variable:Blink
+            custom float anim:graph:variable:BlinkingStrength
+            custom string anim:graph:variable:Command
+            custom string anim:graph:variable:CustomAnimation
+            custom float3 anim:graph:variable:Eye_LookAt_Target
+            custom float anim:graph:variable:Eye_LookAt_Weight
+            custom string anim:graph:variable:IdleType
+            custom string anim:graph:variable:IdleVariant
+            custom float3[] anim:graph:variable:JointPositions
+            custom float4[] anim:graph:variable:JointRotations
+            custom string anim:graph:variable:ListeningVariant
+            custom float3 anim:graph:variable:LookAt_Goal
+            custom float3 anim:graph:variable:LookAt_Target
+            custom float anim:graph:variable:LookAt_Weight
+            custom float3 anim:graph:variable:RootPositionDisplacement
+            custom float4 anim:graph:variable:RootRotationDisplacement
+            custom string anim:graph:variable:state
+            custom string anim:graph:variable:StopCustomAnimation
+            custom string anim:graph:variable:Subvariant
+            custom float anim:graph:variable:SubvariantFloat
+            custom string anim:graph:variable:TalkingVariant
+            custom string anim:graph:variable:ThinkingVariant
+            rel animationGraph = </World/AnimationGraph>
+            custom rel inputs:pose
+
+            over "OUTPUT"
+            {
+                over "root_JNT"
+                {
+                    over "root_JNT"
+                    {
+                        def "DemoAnimation" (
+                            prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                            instanceable = false
+                            prepend payload = @./Animations/DemoAnimation.usda@
+                        )
+                        {
+                            rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

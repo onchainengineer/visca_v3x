@@ -1,0 +1,203 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary animation_graph_microservice_api_variable_mapping = {
+            dictionary gesture_state = {
+                string variable_name = "gesture_state"
+            }
+            dictionary posture_state = {
+                string variable_name = "posture_state"
+            }
+            dictionary state = {
+                string variable_name = "posture_state"
+            }
+        }
+        dictionary audio2faceSettings = {
+            int export_fps = 60
+        }
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (0, 0, 50000)
+                double radius = 500
+            }
+            dictionary Perspective = {
+                double3 position = (1.5873738705858642, 169.25639288579941, 126.58178554486253)
+                double3 target = (-27.699237267706362, 127.35130026380324, -199.36140308781913)
+            }
+            dictionary Right = {
+                double3 position = (-50000, 0, -1.1102230246251565e-11)
+                double radius = 500
+            }
+            dictionary Top = {
+                double3 position = (-4.329780281177466e-12, 50000, 1.1102230246251565e-11)
+                double radius = 500
+            }
+            string boundCamera = "/World/camera_main"
+        }
+        dictionary omni_layer = {
+            string authoring_layer = "./Local_Configuration.usda"
+            dictionary locked = {
+                bool "./Configurator_Scene.usda" = 1
+            }
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+    int "rtx:ambientOcclusion:maxSamples" = 2
+    int "rtx:ambientOcclusion:minSamples" = 2
+    bool "rtx:animationTimeUseWallclock" = 1
+    float3 "rtx:debugView:pixelDebug:textColor" = (0, 1e18, 0)
+    bool "rtx:directLighting:domeLight:enabled" = 0
+    int "rtx:directLighting:domeLight:sampleCount" = 1
+    bool "rtx:directLighting:sampledLighting:autoEnable" = 0
+    int "rtx:directLighting:sampledLighting:autoEnableLightCountThreshold" = 2
+    bool "rtx:directLighting:sampledLighting:enabled" = 0
+    int "rtx:directLighting:sampledLighting:samplesPerPixel" = 4
+    bool "rtx:indirectDiffuse:enabled" = 0
+    bool "rtx:matteObject:enabled" = 0
+    bool "rtx:newDenoiser:enabled" = 1
+    double "rtx:post:aa:sharpness" = 0.4999999888241291
+    int "rtx:post:dlss:execMode" = 0
+    double "rtx:post:dof:fNumber" = 1.5
+    double "rtx:post:dof:focalLength" = 24
+    double "rtx:post:dof:subjectDistance" = 348.3999938964844
+    bool "rtx:raytracing:subsurface:enabled" = 1
+    int "rtx:raytracing:subsurface:maxSamplePerFrame" = 24
+    bool "rtx:raytracing:subsurface:transmission:enabled" = 0
+    int "rtx:realtime:mgpu:tileOverlap" = 24
+    double "rtx:reflections:maxRoughness" = 0.25
+    float3 "rtx:sceneDb:ambientLightColor" = (0.1, 0.1, 0.1)
+    double "rtx:sceneDb:ambientLightIntensity" = 1
+    double "rtx:translucency:worldEps" = 0.1
+}
+    }
+    defaultPrim = "World"
+    endTimeCode = 432
+    metersPerUnit = 0.01
+    startTimeCode = 0
+    subLayers = [
+        @./Local_Configuration.usda@,
+        @./Configurator_Scene.usda@,
+        @./Debug/Debug.usda@
+    ]
+    timeCodesPerSecond = 30
+    upAxis = "Y"
+)
+
+def Xform "World" (
+    variants = {
+        string avatarVariant = "avatar4"
+        string sceneVariant = "scene4"
+    }
+)
+{
+    def Camera "camera_main" (
+        hide_in_stage_window = false
+        kind = "model"
+        no_delete = false
+    )
+    {
+        float2 clippingRange = (10, 10000)
+        float focalLength = 35
+        float focusDistance = 369.7
+        float fStop = 1.5
+        float horizontalAperture = 20.955
+        float horizontalApertureOffset = 0
+        bool omni:kit:cameraLock = 1
+        custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -406.0767884037098)
+        token projection = "perspective"
+        double shutter:close = 0.25
+        double shutter:open = -0.25
+        custom string userProperties:blenderName:data = "Camera"
+        float verticalAperture = 15.2908
+        float verticalApertureOffset = 0
+        token visibility = "invisible"
+        float3 xformOp:rotateXYZ = (-5.9402924, 0.009506203, 0.00002060469)
+        float3 xformOp:scale = (1, 0.9999997, 0.99999875)
+        double3 xformOp:translate = (-9.41660048428767, 158.29900000000433, 373.8330005692238)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+    }
+
+    over "character"
+    {
+        color3f primvars:GlassesColor = (0.48195225, 0.52344316, 0.5604992)
+        color3f primvars:HairColor = (0.028991187, 0.022889243, 0.019602176)
+        color3f primvars:HatColor = (0.09626613, 0.23882802, 0.013473398)
+        color3f primvars:OutfitColor1 = (1, 0.99997795, 1)
+        color3f primvars:OutfitColor2 = (0.027755281, 0.041451894, 0.060031615)
+        token visibility = "inherited"
+
+        over "character"
+        {
+            over "character"
+            {
+                over "outfit_variants" (
+                    variants = {
+                        string outfitVariant = "outfit3"
+                    }
+                )
+                {
+                }
+
+                over "glasses_variants" (
+                    variants = {
+                        string glassesVariant = "glasses2"
+                    }
+                )
+                {
+                }
+
+                over "headgear_variants" (
+                    variants = {
+                        string headgearVariant = "headgear1"
+                    }
+                )
+                {
+                }
+            }
+        }
+
+        over "Looks" (
+            variants = {
+                string eyeVariant = "green"
+                string skinVariant = "medium"
+            }
+        )
+        {
+            over "Branding"
+            {
+                over "Shader"
+                {
+                    asset inputs:diffuse_texture = @./textures/logo_outfit_temp.png@
+                    asset inputs:opacity_texture = @./textures/logo_outfit_temp.png@
+                }
+            }
+        }
+    }
+
+    over "Scene" (
+        variants = {
+            string backgroundImageVariant = "Disabled"
+            string sceneMoodVariant = "mood1"
+        }
+    )
+    {
+        color3f primvars:sceneColor1 = (0.03025652, 0.032875918, 0.032875918)
+        color3f primvars:sceneColor2 = (0.15728073, 0.103634104, 0.04777576)
+        color3f primvars:sceneColor3 = (0.14198029, 0.23882802, 0.09151836)
+
+        over "Looks"
+        {
+            over "Background"
+            {
+                over "Shader"
+                {
+                    asset inputs:diffuse_reflection_color_image = @./textures/scene_background_temp.png@
+                    asset inputs:emission_color_image = @./textures/scene_background_temp.png@
+                    asset inputs:geometry_opacity_image = @./textures/scene_background_temp.png@
+                }
+            }
+        }
+    }
+}
+

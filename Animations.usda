@@ -1,0 +1,627 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (0, 0, 50000)
+                double radius = 500
+            }
+            dictionary Perspective = {
+                double3 position = (500, 500, 500)
+                double3 target = (-0.00000397803842133726, 0.000007956076785831101, -0.000003978038307650422)
+            }
+            dictionary Right = {
+                double3 position = (-50000, 0, 0)
+                double radius = 500
+            }
+            dictionary Top = {
+                double3 position = (0, 50000, 0)
+                double radius = 500
+            }
+            string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary metricsAssembler = {
+            dictionary "/World/Animations/Postures/Debug_LeftRight/Head_LeftRight_60d_YAxis" = {
+            }
+            dictionary "/World/Animations/Postures/Debug_Tilt/Head_Tilt_LeftRight_30d_ZAxis" = {
+            }
+            dictionary "/World/Animations/Postures/Debug_UpDown/Head_UpDown_30d_XAxis" = {
+            }
+            int version = 1
+        }
+        dictionary omni_layer = {
+            string authoring_layer = "./Animations.usda"
+        }
+        dictionary renderSettings = {
+            float3 "rtx:debugView:pixelDebug:textColor" = (0, 1e18, 0)
+            float3 "rtx:fog:fogColor" = (0.75, 0.75, 0.75)
+            float3 "rtx:index:regionOfInterestMax" = (0, 0, 0)
+            float3 "rtx:index:regionOfInterestMin" = (0, 0, 0)
+            float3 "rtx:iray:environment_dome_ground_position" = (0, 0, 0)
+            float3 "rtx:iray:environment_dome_ground_reflectivity" = (0, 0, 0)
+            float3 "rtx:iray:environment_dome_rotation_axis" = (3.4028235e38, 3.4028235e38, 3.4028235e38)
+            float3 "rtx:post:backgroundZeroAlpha:backgroundDefaultColor" = (0, 0, 0)
+            float3 "rtx:post:colorcorr:contrast" = (1, 1, 1)
+            float3 "rtx:post:colorcorr:gain" = (1, 1, 1)
+            float3 "rtx:post:colorcorr:gamma" = (1, 1, 1)
+            float3 "rtx:post:colorcorr:offset" = (0, 0, 0)
+            float3 "rtx:post:colorcorr:saturation" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:blackpoint" = (0, 0, 0)
+            float3 "rtx:post:colorgrad:contrast" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:gain" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:gamma" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:lift" = (0, 0, 0)
+            float3 "rtx:post:colorgrad:multiply" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:offset" = (0, 0, 0)
+            float3 "rtx:post:colorgrad:whitepoint" = (1, 1, 1)
+            float3 "rtx:post:lensDistortion:lensFocalLengthArray" = (10, 30, 50)
+            float3 "rtx:post:lensFlares:anisoFlareFalloffX" = (450, 475, 500)
+            float3 "rtx:post:lensFlares:anisoFlareFalloffY" = (10, 10, 10)
+            float3 "rtx:post:lensFlares:cutoffPoint" = (2, 2, 2)
+            float3 "rtx:post:lensFlares:haloFlareFalloff" = (10, 10, 10)
+            float3 "rtx:post:lensFlares:haloFlareRadius" = (75, 75, 75)
+            float3 "rtx:post:lensFlares:isotropicFlareFalloff" = (50, 50, 50)
+            float3 "rtx:post:tonemap:whitepoint" = (1, 1, 1)
+            float3 "rtx:raytracing:indexdirect:svoBrickSize" = (32, 32, 32)
+            float3 "rtx:raytracing:inscattering:singleScatteringAlbedo" = (0.9, 0.9, 0.9)
+            float3 "rtx:raytracing:inscattering:transmittanceColor" = (0.5, 0.5, 0.5)
+            float3 "rtx:sceneDb:ambientLightColor" = (0.1, 0.1, 0.1)
+        }
+    }
+    defaultPrim = "World"
+    endTimeCode = 788
+    metersPerUnit = 0.01
+    startTimeCode = 0
+    timeCodesPerSecond = 30
+    upAxis = "Y"
+)
+
+def Xform "World"
+{
+    def Scope "transfer_data"
+    {
+        string mm:axis_fwd = "Z"
+        string mm:axis_up = "Y"
+        bool mm:axis_vis = 0
+        string[] mm:extra_dynamic = []
+        string[] mm:extra_static = []
+        string[] mm:gums = []
+        string[] mm:l_eye = []
+        string[] mm:r_eye = []
+    }
+
+    def "Animations" (
+        prepend payload = @./Animations/Animations_Collected.usda@
+    )
+    {
+        over "Gestures"
+        {
+            over "Goodbye" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Welcome" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Attraction_1" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Attraction_2" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Bowing_1" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Bowing_2" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Come_Here_1" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Dont_Understand_1" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Driving_Mime" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Exhausted" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Fistbump_Offer" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "No_1" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Nodding_1" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Open_Question_1" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Personal_Statement_1" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Personal_Statement_2" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Phone_Dialing" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Please_Repeat_1" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Please_Repeat_2" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Pointing_Backward_1" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Pointing_Down_1" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Pointing_Down_2" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Pointing_Left_1" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Pointing_Left_2" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Pointing_To_Self_1" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Pointing_To_User_1" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Pointing_To_User_2" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Presenting_Options_1" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Presenting_Options_2" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Pulling_Mime" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Raise_Both_Arms" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Stupid_1" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Success_1" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Tell_Secret" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "The_Robot" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Toss" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Trying_To_See" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+        }
+
+        over "Postures"
+        {
+            over "Idle"
+            {
+                over "Idle_Loop" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Idle1" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Idle2" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Idle3" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Idle4" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+            }
+
+            over "Head_Idle"
+            {
+                over "Idle_FaceMotion" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+            }
+
+            over "Listening"
+            {
+                over "Listening_Loop" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Listening1" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Listening2" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Listening3" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Listening4" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+            }
+
+            over "Talking"
+            {
+                over "Talking_Loop" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Talking1" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Talking2" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Talking3" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Talking4" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+            }
+
+            over "Attentive"
+            {
+                over "Attentive_Active" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+
+                over "Attentive_Neutral" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+            }
+
+            over "Thinking"
+            {
+                over "Thinking" (
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+            }
+
+            def Scope "Debug_LeftRight"
+            {
+                def "Head_LeftRight_60d_YAxis" (
+                    prepend payload = @./Animations/Head_LeftRight_60d_YAxis.usda@
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+            }
+
+            def Scope "Debug_UpDown"
+            {
+                def "Head_UpDown_30d_XAxis" (
+                    prepend payload = @./Animations/Head_UpDown_30d_XAxis.usda@
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+            }
+
+            def Scope "Debug_Tilt"
+            {
+                def "Head_Tilt_LeftRight_30d_ZAxis" (
+                    prepend payload = @./Animations/Head_Tilt_LeftRight_30d_ZAxis.usda@
+                    prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                    rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                }
+            }
+        }
+
+        over "Partial"
+        {
+            over "Blinking_Darting" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+        }
+
+        over "Tests"
+        {
+            over "Test_1" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Test_2" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Test_3" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+
+            over "Test_4" (
+                prepend apiSchemas = ["AnimationSkelBindingAPI"]
+            )
+            {
+                rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+            }
+        }
+    }
+
+    def "Rig_Retarget" (
+        instanceable = false
+        prepend payload = @./Animations/Rig_Retarget_Tagged.usda@
+    )
+    {
+        over "character"
+        {
+            over "OUTPUT"
+            {
+                over "root_JNT"
+                {
+                    over "root_JNT"
+                    {
+                        def "DemoAnimation" (
+                            prepend apiSchemas = ["AnimationSkelBindingAPI"]
+                            instanceable = false
+                            prepend payload = @./Animations/DemoAnimation.usda@
+                        )
+                        {
+                            rel animationSkelBinding:sourceSkeleton = </World/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

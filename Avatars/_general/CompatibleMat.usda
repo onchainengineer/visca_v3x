@@ -1,0 +1,229 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (0, 0, 50000)
+                double radius = 500
+            }
+            dictionary Perspective = {
+                double3 position = (35.42686279947715, 19.017614491916973, 26.909312234344668)
+                double3 target = (-49.61445290235865, -45.28475579881073, -41.075954214880824)
+            }
+            dictionary Right = {
+                double3 position = (-50000, 0, -1.1102230246251565e-11)
+                double radius = 500
+            }
+            dictionary Top = {
+                double3 position = (-4.329780281177466e-12, 50000, 1.1102230246251565e-11)
+                double radius = 500
+            }
+            string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary omni_layer = {
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+        }
+    }
+    defaultPrim = "CompatibleMat"
+    endTimeCode = 100
+    metersPerUnit = 0.01
+    startTimeCode = 0
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+def Material "CompatibleMat" (
+    customData = {
+        dictionary ui = {
+            dictionary nodegraph = {
+                dictionary node = {
+                    dictionary pos = {
+                        double2 output = (442.4403381347656, -23.65009117126465)
+                    }
+                }
+            }
+        }
+    }
+)
+{
+    token outputs:surface.connect = </CompatibleMat/Shader.outputs:surface>
+    token ui:displayGroup = "Material Graphs"
+    token ui:displayName = "StormCompatibleMaterial"
+    int ui:order = 1024
+    uniform token[] xformOpOrder = []
+
+    def Shader "Shader" (
+        apiSchemas = ["NodeGraphNodeAPI"]
+    )
+    {
+        reorder properties = ["inputs:diffuseColor", "inputs:emissiveColor", "inputs:useSpecularWorkflow", "inputs:specularColor", "inputs:metallic", "inputs:roughness", "inputs:clearcoat", "inputs:clearcoatRoughness", "inputs:opacity", "inputs:opacityThreshold", "inputs:ior", "inputs:normal", "inputs:displacement", "inputs:occlusion", "outputs:surface", "outputs:displacement"]
+        uniform token info:id = "UsdPreviewSurface"
+        float inputs:clearcoat = 0
+        float inputs:clearcoatRoughness = 0.01
+        color3f inputs:diffuseColor = (0.18, 0.18, 0.18)
+        color3f inputs:diffuseColor.connect = </CompatibleMat/multiply.outputs:out>
+        float inputs:displacement = 0
+        color3f inputs:emissiveColor = (0, 0, 0)
+        float inputs:ior = 1.5
+        float inputs:metallic = 0
+        float inputs:metallic.connect = </CompatibleMat/tex_metallic.outputs:r>
+        normal3f inputs:normal = (0, 0, 1)
+        normal3f inputs:normal.connect = </CompatibleMat/tex_normal.outputs:rgb>
+        float inputs:occlusion = 1
+        float inputs:opacity = 1
+        float inputs:opacityThreshold = 0
+        float inputs:roughness = 0.5 (
+            customData = {
+                dictionary range = {
+                    double max = 1
+                    double min = 0
+                }
+            }
+        )
+        float inputs:roughness.connect = </CompatibleMat/tex_roughness.outputs:r>
+        color3f inputs:specularColor = (0, 0, 0)
+        int inputs:useSpecularWorkflow = 0 (
+            customData = {
+                dictionary range = {
+                    int max = 1
+                    int min = 0
+                }
+            }
+        )
+        token outputs:displacement
+        token outputs:surface
+        uniform token ui:nodegraph:node:expansionState = "open"
+        uniform float2 ui:nodegraph:node:pos = (200, 0)
+    }
+
+    def Shader "uvset0" (
+        apiSchemas = ["NodeGraphNodeAPI"]
+    )
+    {
+        uniform token info:id = "UsdPrimvarReader_float2"
+        token inputs:varname = "st"
+        float2 outputs:result
+        uniform token ui:nodegraph:node:expansionState = "open"
+        uniform float2 ui:nodegraph:node:pos = (-600, 0)
+    }
+
+    def Shader "tex_base" (
+        apiSchemas = ["NodeGraphNodeAPI"]
+    )
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (1, 1, 1, 1)
+        asset inputs:file = @@
+        float2 inputs:st.connect = </CompatibleMat/uvset0.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        float outputs:a
+        float3 outputs:rgb
+        uniform token ui:nodegraph:node:expansionState = "open"
+        uniform float2 ui:nodegraph:node:pos = (-199.04054, -500)
+    }
+
+    def Shader "tex_metallic" (
+        apiSchemas = ["NodeGraphNodeAPI"]
+    )
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (0, 0, 0, 1)
+        asset inputs:file = @@
+        float2 inputs:st.connect = </CompatibleMat/uvset0.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        float outputs:r
+        uniform token ui:nodegraph:node:expansionState = "open"
+        uniform float2 ui:nodegraph:node:pos = (-200, 0)
+    }
+
+    def Shader "tex_roughness" (
+        apiSchemas = ["NodeGraphNodeAPI"]
+    )
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:fallback = (1, 0, 0, 1)
+        asset inputs:file = @@
+        float2 inputs:st.connect = </CompatibleMat/uvset0.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        float outputs:r
+        uniform token ui:nodegraph:node:expansionState = "open"
+        uniform float2 ui:nodegraph:node:pos = (-200, 250)
+    }
+
+    def Shader "tex_normal" (
+        apiSchemas = ["NodeGraphNodeAPI"]
+    )
+    {
+        uniform token info:id = "UsdUVTexture"
+        float4 inputs:bias = (-1, -1, -1, -1)
+        float4 inputs:fallback = (0, 0, 1, 1)
+        asset inputs:file = @../Violet/textures/Shoes_normal.png@
+        float4 inputs:scale = (2, 2, 2, 2)
+        token inputs:sourceColorSpace = "raw" (
+            allowedTokens = ["auto", "raw", "sRGB"]
+        )
+        float2 inputs:st.connect = </CompatibleMat/uvset0.outputs:result>
+        token inputs:wrapS = "repeat"
+        token inputs:wrapT = "repeat"
+        float3 outputs:rgb
+        uniform token ui:nodegraph:node:expansionState = "open"
+        uniform float2 ui:nodegraph:node:pos = (-200, 750.9384)
+    }
+
+    def Shader "tint" (
+        prepend apiSchemas = ["NodeGraphNodeAPI"]
+    )
+    {
+        uniform token info:implementationSource = "sourceAsset"
+        uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+        uniform token info:mdl:sourceAsset:subIdentifier = "color_const"
+        color3f inputs:c = (1, 1, 1) (
+            customData = {
+                float3 default = (0, 0, 0)
+            }
+            hidden = false
+            renderType = "color"
+        )
+        color3f outputs:out (
+            renderType = "color"
+        )
+        uniform token ui:nodegraph:node:expansionState = "open"
+        uniform float2 ui:nodegraph:node:pos = (-593.9919, -311.57162)
+    }
+
+    def Shader "multiply" (
+        prepend apiSchemas = ["NodeGraphNodeAPI"]
+    )
+    {
+        reorder properties = ["inputs:a", "inputs:b"]
+        uniform token info:implementationSource = "sourceAsset"
+        uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+        uniform token info:mdl:sourceAsset:subIdentifier = "multiply(float3,float3)"
+        float3 inputs:a (
+            customData = {
+                float3 default = (0, 0, 0)
+            }
+            hidden = false
+            renderType = "float3"
+        )
+        float3 inputs:a.connect = </CompatibleMat/tex_base.outputs:rgb>
+        float3 inputs:b (
+            customData = {
+                float3 default = (0, 0, 0)
+            }
+            hidden = false
+            renderType = "float3"
+        )
+        float3 inputs:b.connect = </CompatibleMat/tint.outputs:out>
+        float3 outputs:out (
+            renderType = "float3"
+        )
+        uniform token ui:nodegraph:node:expansionState = "open"
+        uniform float2 ui:nodegraph:node:pos = (-2.969265, -354.75427)
+    }
+}

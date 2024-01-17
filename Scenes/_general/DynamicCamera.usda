@@ -1,0 +1,3177 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (0, 0, 50000)
+                double radius = 500
+            }
+            dictionary Perspective = {
+                double3 position = (182.7104436454813, 149.1512648831958, 15.583317220338682)
+                double3 target = (-8.511218134723777, 125.46093588679175, 51.98637182051088)
+            }
+            dictionary Right = {
+                double3 position = (-50000, 0, 0)
+                double radius = 500
+            }
+            dictionary Top = {
+                double3 position = (0, 50000, 0)
+                double radius = 1421.8724609375
+            }
+            string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary navmeshSettings = {
+            double agentHeight = 180
+            double agentRadius = 20
+            bool excludeRigidBodies = 1
+            int ver = 1
+            double voxelCeiling = 460
+        }
+        dictionary omni_layer = {
+            string authoring_layer = "./DynamicCamera.usda"
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+            int "rtx:ambientOcclusion:maxSamples" = 2
+            int "rtx:ambientOcclusion:minSamples" = 2
+            bool "rtx:directLighting:domeLight:enabled" = 0
+            int "rtx:directLighting:domeLight:sampleCount" = 1
+            bool "rtx:directLighting:sampledLighting:autoEnable" = 0
+            int "rtx:directLighting:sampledLighting:autoEnableLightCountThreshold" = 2
+            bool "rtx:matteObject:enabled" = 0
+            bool "rtx:pathtracing:mgpu:autoLoadBalancing:enabled" = 0
+            double "rtx:post:aa:sharpness" = 0.4999999888241291
+            int "rtx:post:dlss:execMode" = 0
+            bool "rtx:raytracing:subsurface:enabled" = 1
+            int "rtx:raytracing:subsurface:maxSamplePerFrame" = 64
+            bool "rtx:raytracing:subsurface:transmission:enabled" = 0
+            int "rtx:realtime:mgpu:tileOverlap" = 24
+            double "rtx:reflections:maxRoughness" = 0.09999999776482582
+        }
+    }
+    defaultPrim = "World"
+    endTimeCode = 900
+    metersPerUnit = 0.01
+    startTimeCode = 0
+    timeCodesPerSecond = 30
+    upAxis = "Y"
+)
+
+def Xform "World"
+{
+    def Xform "tempo"
+    {
+        custom string tempo = "slowly"
+    }
+
+    def Xform "DynamicCamera"
+    {
+        def Camera "camera_main" (
+            hide_in_stage_window = false
+            kind = "model"
+            no_delete = false
+        )
+        {
+            float2 clippingRange = (10, 10000)
+            float focalLength = 45
+            float focusDistance = 490
+            float fStop = 1.5
+            float horizontalAperture = 20.955
+            float horizontalApertureOffset = 0
+            bool omni:kit:cameraLock = 0
+            custom uniform vector3d omni:kit:centerOfInterest = (7.105427357601003e-15, 0, -500.1339422905925)
+            token projection = "perspective"
+            double shutter:close = 0.25
+            double shutter:open = -0.25
+            custom string userProperties:blenderName:data = "Camera"
+            float verticalAperture = 15.2908
+            float verticalApertureOffset = 0
+            token visibility = "invisible"
+            float3 xformOp:rotateXYZ = (-4.5, 0, 0.00002060469)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 172.19391680072548, 507.37281148271796)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Xform "camera_focus"
+        {
+            double3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 133.27821, 13.735313851830547)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Xform "cameras"
+        {
+            token visibility = "invisible"
+            double3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+            def Camera "entrance" (
+                hide_in_stage_window = false
+                kind = "model"
+                no_delete = false
+            )
+            {
+                float2 clippingRange = (10, 10000)
+                float focalLength = 35
+                float focusDistance = 660
+                custom uniform token FocusPoint = "avatar"
+                float fStop = 1.5
+                float horizontalAperture = 20.955
+                float horizontalApertureOffset = 0
+                bool omni:kit:cameraLock = 1
+                custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -672.9423156095628)
+                token projection = "perspective"
+                double shutter:close = 0.25
+                double shutter:open = -0.25
+                custom uniform bool UseFadeIn = 0
+                custom uniform bool UseFadeOut = 1
+                custom uniform bool UseFocalLength = 1
+                custom uniform bool UseFocusPoint = 1
+                custom uniform bool UseFStop = 1
+                custom string userProperties:blenderName:data = "Camera"
+                custom uniform bool UseTranslate = 1
+                float verticalAperture = 15.2908
+                float verticalApertureOffset = 0
+                token visibility = "inherited"
+                float3 xformOp:rotateXYZ = (-6, 0, 0.00002060469)
+                float3 xformOp:scale = (1, 0.9999997, 0.99999875)
+                double3 xformOp:translate = (0, 172.19392, 675)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                custom uniform token FocusPoint = "entrance_view"
+            }
+
+            def Camera "listening" (
+                hide_in_stage_window = false
+                kind = "model"
+                no_delete = false
+            )
+            {
+                float2 clippingRange = (10, 10000)
+                float focalLength = 45
+                float focusDistance = 490
+                custom uniform token FocusPoint = "avatar"
+                float fStop = 1.5
+                float horizontalAperture = 20.955
+                float horizontalApertureOffset = 0
+                bool omni:kit:cameraLock = 1
+                custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -540.3352754002758)
+                token projection = "perspective"
+                double shutter:close = 0.25
+                double shutter:open = -0.25
+                custom uniform bool UseFadeIn = 0
+                custom uniform bool UseFadeOut = 0
+                custom uniform bool UseFocalLength = 1
+                custom uniform bool UseFocusPoint = 0
+                custom uniform bool UseFStop = 1
+                custom string userProperties:blenderName:data = "Camera"
+                custom uniform bool UseTranslate = 1
+                float verticalAperture = 15.2908
+                float verticalApertureOffset = 0
+                token visibility = "inherited"
+                float3 xformOp:rotateXYZ = (-4.5, 0, 0.00002060469)
+                float3 xformOp:scale = (1, 0.9999997, 0.99999875)
+                double3 xformOp:translate = (0, 172.19391680072548, 507.37281148271796)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def Camera "talking" (
+                hide_in_stage_window = false
+                kind = "model"
+                no_delete = false
+            )
+            {
+                float2 clippingRange = (10, 10000)
+                float focalLength = 60
+                float focusDistance = 490
+                custom uniform token FocusPoint = "avatar"
+                float fStop = 1.5
+                float horizontalAperture = 20.955
+                float horizontalApertureOffset = 0
+                bool omni:kit:cameraLock = 1
+                custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -540.3352754002758)
+                token projection = "perspective"
+                double shutter:close = 0.25
+                double shutter:open = -0.25
+                custom uniform bool UseFadeIn = 0
+                custom uniform bool UseFadeOut = 0
+                custom uniform bool UseFocalLength = 1
+                custom uniform bool UseFocusPoint = 0
+                custom uniform bool UseFStop = 1
+                custom string userProperties:blenderName:data = "Camera"
+                custom uniform bool UseTranslate = 1
+                float verticalAperture = 15.2908
+                float verticalApertureOffset = 0
+                token visibility = "inherited"
+                float3 xformOp:rotateXYZ = (-3.8, 0, 0.00002060469)
+                float3 xformOp:scale = (1, 0.9999997, 0.99999875)
+                double3 xformOp:translate = (0, 172.19391680072548, 507.37281148271796)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def Camera "closer" (
+                hide_in_stage_window = false
+                kind = "model"
+                no_delete = false
+            )
+            {
+                float2 clippingRange = (10, 10000)
+                float focalLength = 90
+                float focusDistance = 490
+                custom uniform token FocusPoint = "avatar"
+                float fStop = 1.5
+                float horizontalAperture = 20.955
+                float horizontalApertureOffset = 0
+                bool omni:kit:cameraLock = 1
+                custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -540.3352754002758)
+                token projection = "perspective"
+                double shutter:close = 0.25
+                double shutter:open = -0.25
+                custom uniform bool UseFadeIn = 1
+                custom uniform bool UseFadeOut = 0
+                custom uniform bool UseFocalLength = 1
+                custom uniform bool UseFocusPoint = 0
+                custom uniform bool UseFStop = 1
+                custom string userProperties:blenderName:data = "Camera"
+                custom uniform bool UseTranslate = 0
+                float verticalAperture = 15.2908
+                float verticalApertureOffset = 0
+                token visibility = "inherited"
+                float3 xformOp:rotateXYZ = (-3.3, 0, 0.00002060469)
+                float3 xformOp:scale = (1, 0.9999997, 0.99999875)
+                double3 xformOp:translate = (0, 172.19391680072548, 507.37281148271796)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def Camera "much_closer" (
+                hide_in_stage_window = false
+                kind = "model"
+                no_delete = false
+            )
+            {
+                float2 clippingRange = (10, 10000)
+                float focalLength = 130
+                float focusDistance = 490
+                custom uniform token FocusPoint = "avatar"
+                float fStop = 1.5
+                float horizontalAperture = 20.955
+                float horizontalApertureOffset = 0
+                bool omni:kit:cameraLock = 1
+                custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -540.3352754002758)
+                token projection = "perspective"
+                double shutter:close = 0.25
+                double shutter:open = -0.25
+                custom uniform bool UseFadeIn = 1
+                custom uniform bool UseFadeOut = 0
+                custom uniform bool UseFocalLength = 1
+                custom uniform bool UseFocusPoint = 0
+                custom uniform bool UseFStop = 1
+                custom string userProperties:blenderName:data = "Camera"
+                custom uniform bool UseTranslate = 0
+                float verticalAperture = 15.2908
+                float verticalApertureOffset = 0
+                token visibility = "inherited"
+                float3 xformOp:rotateXYZ = (-3, 0, 0.00002060469)
+                float3 xformOp:scale = (1, 0.9999997, 0.99999875)
+                double3 xformOp:translate = (0, 172.19391680072548, 507.37281148271796)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def Camera "right" (
+                hide_in_stage_window = false
+                kind = "model"
+                no_delete = false
+            )
+            {
+                float2 clippingRange = (10, 10000)
+                float focalLength = 45
+                float focusDistance = 490
+                custom uniform token FocusPoint = "avatar"
+                float fStop = 1.5
+                float horizontalAperture = 20.955
+                float horizontalApertureOffset = 0
+                bool omni:kit:cameraLock = 1
+                custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -540.3352754002758)
+                token projection = "perspective"
+                double shutter:close = 0.25
+                double shutter:open = -0.25
+                custom uniform bool UseFadeIn = 1
+                custom uniform bool UseFadeOut = 0
+                custom uniform bool UseFocalLength = 0
+                custom uniform bool UseFocusPoint = 0
+                custom uniform bool UseFStop = 0
+                custom string userProperties:blenderName:data = "Camera"
+                custom uniform bool UseTranslate = 1
+                float verticalAperture = 15.2908
+                float verticalApertureOffset = 0
+                token visibility = "inherited"
+                float3 xformOp:rotateXYZ = (-4.5, 13.5, 0.00002060469)
+                float3 xformOp:scale = (1, 0.9999997, 0.99999875)
+                double3 xformOp:translate = (130, 172.19391680072548, 507.37281148271796)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def Camera "left" (
+                hide_in_stage_window = false
+                kind = "model"
+                no_delete = false
+            )
+            {
+                float2 clippingRange = (10, 10000)
+                float focalLength = 45
+                float focusDistance = 490
+                custom uniform token FocusPoint = "avatar"
+                float fStop = 1.5
+                float horizontalAperture = 20.955
+                float horizontalApertureOffset = 0
+                bool omni:kit:cameraLock = 1
+                custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -540.3352754002758)
+                token projection = "perspective"
+                double shutter:close = 0.25
+                double shutter:open = -0.25
+                custom uniform bool UseFadeIn = 1
+                custom uniform bool UseFadeOut = 0
+                custom uniform bool UseFocalLength = 0
+                custom uniform bool UseFocusPoint = 0
+                custom uniform bool UseFStop = 0
+                custom string userProperties:blenderName:data = "Camera"
+                custom uniform bool UseTranslate = 1
+                float verticalAperture = 15.2908
+                float verticalApertureOffset = 0
+                token visibility = "inherited"
+                float3 xformOp:rotateXYZ = (-4.5, -13.5, 0.00002060469)
+                float3 xformOp:scale = (1, 0.9999997, 0.99999875)
+                double3 xformOp:translate = (-130, 172.19391680072548, 507.37281148271796)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def Camera "back" (
+                hide_in_stage_window = false
+                kind = "model"
+                no_delete = false
+            )
+            {
+                float2 clippingRange = (10, 10000)
+                float focalLength = 45
+                float focusDistance = 540
+                custom uniform token FocusPoint = "avatar"
+                float fStop = 1.5
+                float horizontalAperture = 20.955
+                float horizontalApertureOffset = 0
+                bool omni:kit:cameraLock = 1
+                custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -540.3352754002758)
+                token projection = "perspective"
+                double shutter:close = 0.25
+                double shutter:open = -0.25
+                custom uniform bool UseFadeIn = 1
+                custom uniform bool UseFadeOut = 0
+                custom uniform bool UseFocalLength = 0
+                custom uniform bool UseFocusPoint = 0
+                custom uniform bool UseFStop = 0
+                custom string userProperties:blenderName:data = "Camera"
+                custom uniform bool UseTranslate = 1
+                float verticalAperture = 15.2908
+                float verticalApertureOffset = 0
+                token visibility = "inherited"
+                float3 xformOp:rotateXYZ = (-4.5, 0, 0.00002060469)
+                float3 xformOp:scale = (1, 0.9999997, 0.99999875)
+                double3 xformOp:translate = (0, 172.19391680072548, 607.37281)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def Camera "look_around" (
+                hide_in_stage_window = false
+                kind = "model"
+                no_delete = false
+            )
+            {
+                float2 clippingRange = (10, 10000)
+                float focalLength = 45
+                float focusDistance = 490
+                custom uniform token FocusPoint = "look_around"
+                float fStop = 1.5
+                float horizontalAperture = 20.955
+                float horizontalApertureOffset = 0
+                bool omni:kit:cameraLock = 1
+                custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -540.3352754002758)
+                token projection = "perspective"
+                double shutter:close = 0.25
+                double shutter:open = -0.25
+                custom uniform bool UseFadeIn = 0
+                custom uniform bool UseFadeOut = 0
+                custom uniform bool UseFocalLength = 0
+                custom uniform bool UseFocusPoint = 1
+                custom uniform bool UseFStop = 0
+                custom string userProperties:blenderName:data = "Camera"
+                custom uniform bool UseTranslate = 0
+                float verticalAperture = 15.2908
+                float verticalApertureOffset = 0
+                token visibility = "inherited"
+                float3 xformOp:rotateXYZ = (-4.5, 0, 0.00002060469)
+                float3 xformOp:scale = (1, 0.9999997, 0.99999875)
+                double3 xformOp:translate = (0, 172.19391680072548, 507.37281148271796)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+        }
+
+        def OmniGraph "camera_controller"
+        {
+            token evaluationMode = "Automatic"
+            token evaluator:type = "execution"
+            token fabricCacheBacking = "Shared"
+            int2 fileFormatVersion = (1, 6)
+            custom token graph:variable:defaultCamera = "listening" (
+                customData = {
+                    token scope = "private"
+                }
+                displayName = "defaultCamera"
+            )
+            custom token graph:variable:defaultFocusPoint = "avatar" (
+                customData = {
+                    token scope = "private"
+                }
+                displayName = "defaultFocusPoint"
+            )
+            custom double graph:variable:DurationDefault = 2 (
+                customData = {
+                    token scope = "private"
+                }
+                displayName = "DurationDefault"
+            )
+            custom double graph:variable:DurationQuick = 1 (
+                customData = {
+                    token scope = "private"
+                }
+                displayName = "DurationQuick"
+            )
+            custom double graph:variable:DurationSlow = 4 (
+                customData = {
+                    token scope = "private"
+                }
+                displayName = "DurationSlow"
+            )
+            custom bool graph:variable:isTransitioning (
+                customData = {
+                    token scope = "private"
+                }
+                displayName = "isTransitioning"
+            )
+            custom float graph:variable:lastCameraFocalLenght = 45 (
+                customData = {
+                    token scope = "private"
+                }
+                displayName = "lastCameraFocalLenght"
+            )
+            custom float graph:variable:lastCameraFStop = 1.5 (
+                customData = {
+                    token scope = "private"
+                }
+                displayName = "lastCameraFStop"
+            )
+            custom double3 graph:variable:lastCameraTranslate = (0, 172.19392, 507.37281) (
+                customData = {
+                    token scope = "private"
+                }
+                displayName = "lastCameraTranslate"
+            )
+            custom double3 graph:variable:lastFocusPointPosition (
+                customData = {
+                    token scope = "private"
+                }
+                displayName = "lastFocusPointPosition"
+            )
+            custom token graph:variable:targetCamera = "left" (
+                customData = {
+                    token scope = "private"
+                }
+                displayName = "targetCamera"
+            )
+            custom token graph:variable:tempo (
+                customData = {
+                    token scope = "private"
+                }
+                displayName = "tempo"
+            )
+            custom double graph:variable:transitionStartTime (
+                customData = {
+                    token scope = "private"
+                }
+                displayName = "transitionStartTime"
+            )
+            token pipelineStage = "pipelineStageSimulation"
+
+            def OmniGraphNode "on_custom_event" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:eventName = "CameraChange"
+                custom bool inputs:onlyPlayback = 1
+                token node:type = "omni.graph.action.OnCustomEvent"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom token outputs:path
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1962.036, 389.99792)
+
+                def Output "outputs_bundle"
+                {
+                }
+            }
+
+            def OmniGraphNode "send_custom_event" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom rel inputs:bundle = None
+                custom token inputs:eventName = "CameraChange"
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/on_keyboard_input.outputs:pressed>
+                custom token inputs:path = ""
+                token node:type = "omni.graph.action.SendCustomEvent"
+                int node:typeVersion = 1
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1962.0753, 559.0401)
+            }
+
+            def OmniGraphNode "on_keyboard_input" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom bool inputs:altIn = 0
+                custom bool inputs:ctrlIn = 0
+                custom token inputs:keyIn = "A" (
+                    allowedTokens = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Apostrophe", "Backslash", "Backspace", "CapsLock", "Comma", "Del", "Down", "End", "Enter", "Equal", "Escape", "F1", "F10", "F11", "F12", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "GraveAccent", "Home", "Insert", "Key0", "Key1", "Key2", "Key3", "Key4", "Key5", "Key6", "Key7", "Key8", "Key9", "Left", "LeftAlt", "LeftBracket", "LeftControl", "LeftShift", "LeftSuper", "Menu", "Minus", "NumLock", "Numpad0", "Numpad1", "Numpad2", "Numpad3", "Numpad4", "Numpad5", "Numpad6", "Numpad7", "Numpad8", "Numpad9", "NumpadAdd", "NumpadDel", "NumpadDivide", "NumpadEnter", "NumpadEqual", "NumpadMultiply", "NumpadSubtract", "PageDown", "PageUp", "Pause", "Period", "PrintScreen", "Right", "RightAlt", "RightBracket", "RightControl", "RightShift", "RightSuper", "ScrollLock", "Semicolon", "Slash", "Space", "Tab", "Up"]
+                )
+                custom bool inputs:onlyPlayback = 1
+                custom bool inputs:shiftIn = 0
+                token node:type = "omni.graph.action.OnKeyboardInput"
+                int node:typeVersion = 3
+                custom bool outputs:isPressed
+                custom token outputs:keyOut
+                custom uint outputs:pressed (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom uint outputs:released (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2192.6997, 514.38025)
+            }
+
+            def OmniGraphNode "read_variable" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom rel inputs:graph = </World/DynamicCamera/camera_controller> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:targetPath
+                custom token inputs:variableName = "targetCamera"
+                token node:type = "omni.graph.core.ReadVariable"
+                int node:typeVersion = 2
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2704.6797, 1100.519)
+            }
+
+            def OmniGraphNode "append_string" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:a
+                prepend token inputs:a.connect = </World/DynamicCamera/camera_controller/append_slash.outputs:value>
+                custom token inputs:b
+                prepend token inputs:b.connect = </World/DynamicCamera/camera_controller/read_variable.outputs:value>
+                token node:type = "omni.graph.nodes.BuildString"
+                int node:typeVersion = 2
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2553.789, 1025.0732)
+            }
+
+            def OmniGraphNode "UseTranslate" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "UseTranslate"
+                custom rel inputs:prim = None (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/append_string.outputs:value>
+                custom timecode inputs:usdTimecode = nan
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2234.8948, 731.4994)
+            }
+
+            def OmniGraphNode "UseFocalLength" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "UseFocalLength"
+                custom rel inputs:prim = None (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/append_string.outputs:value>
+                custom timecode inputs:usdTimecode = nan
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2240.346, 927.34155)
+            }
+
+            def OmniGraphNode "UseFStop" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "UseFStop"
+                custom rel inputs:prim = None (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/append_string.outputs:value>
+                custom timecode inputs:usdTimecode = nan
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2239.2996, 1120.2578)
+            }
+
+            def OmniGraphNode "UseFadeIn" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "UseFadeIn"
+                custom rel inputs:prim = None (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/append_string.outputs:value>
+                custom timecode inputs:usdTimecode = nan
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2229.0457, 1341.5383)
+            }
+
+            def OmniGraphNode "UseFadeOut" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "UseFadeOut"
+                custom rel inputs:prim = None (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/append_string.outputs:value>
+                custom timecode inputs:usdTimecode = nan
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2228.6448, 1533.7535)
+            }
+
+            def OmniGraphNode "branch_if_UseTranslate" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom bool inputs:condition = 0
+                prepend bool inputs:condition.connect = </World/DynamicCamera/camera_controller/UseTranslate.outputs:value>
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/write_transitionStartTime.outputs:execOut>
+                token node:type = "omni.graph.action.Branch"
+                int node:typeVersion = 1
+                custom uint outputs:execFalse (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom uint outputs:execTrue (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1067.4586, 443.25415)
+            }
+
+            def OmniGraphNode "branch_if_UseFocalLength" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom bool inputs:condition = 0
+                prepend bool inputs:condition.connect = </World/DynamicCamera/camera_controller/UseFocalLength.outputs:value>
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/write_transitionStartTime.outputs:execOut>
+                token node:type = "omni.graph.action.Branch"
+                int node:typeVersion = 1
+                custom uint outputs:execFalse (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom uint outputs:execTrue (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1072.4238, 590.4115)
+            }
+
+            def OmniGraphNode "branch_if_UseFStop" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom bool inputs:condition = 0
+                prepend bool inputs:condition.connect = </World/DynamicCamera/camera_controller/UseFStop.outputs:value>
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/write_transitionStartTime.outputs:execOut>
+                token node:type = "omni.graph.action.Branch"
+                int node:typeVersion = 1
+                custom uint outputs:execFalse (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom uint outputs:execTrue (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1072.9835, 738.2395)
+            }
+
+            def OmniGraphNode "read_time" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                token node:type = "omni.graph.nodes.ReadTime"
+                int node:typeVersion = 1
+                custom double outputs:absoluteSimTime
+                custom double outputs:deltaSeconds
+                custom double outputs:frame
+                custom bool outputs:isPlaying
+                custom double outputs:time
+                custom double outputs:timeSinceStart
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1991.3251, 1360.6682)
+            }
+
+            def OmniGraphNode "write_transitionStartTime" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = [
+                    </World/DynamicCamera/camera_controller/send_custom_event.outputs:execOut>,
+                    </World/DynamicCamera/camera_controller/on_custom_event.outputs:execOut>,
+                ]
+                custom rel inputs:graph = </World/DynamicCamera/camera_controller> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:targetPath
+                custom token inputs:value
+                prepend token inputs:value.connect = </World/DynamicCamera/camera_controller/divide.outputs:result>
+                custom token inputs:variableName = "transitionStartTime"
+                token node:type = "omni.graph.core.WriteVariable"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1531.588, 1319.7806)
+            }
+
+            def OmniGraphNode "subtract_getTransitionTime" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:a
+                prepend token inputs:a.connect = </World/DynamicCamera/camera_controller/divide.outputs:result>
+                custom token inputs:b
+                prepend token inputs:b.connect = </World/DynamicCamera/camera_controller/write_transitionStartTime.outputs:value>
+                token node:type = "omni.graph.nodes.Subtract"
+                int node:typeVersion = 2
+                custom token outputs:difference
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1443.2909, 1690.2109)
+            }
+
+            def OmniGraphNode "subtract_invertTransitionTime" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:a
+                prepend token inputs:a.connect = </World/DynamicCamera/camera_controller/constant_float_one.inputs:value>
+                custom token inputs:b
+                prepend token inputs:b.connect = </World/DynamicCamera/camera_controller/subtract_getTransitionTime.outputs:difference>
+                token node:type = "omni.graph.nodes.Subtract"
+                int node:typeVersion = 2
+                custom token outputs:difference
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1224.7329, 1787.6759)
+            }
+
+            def OmniGraphNode "constant_float_one" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom float inputs:value = 1
+                token node:type = "omni.graph.nodes.ConstantFloat"
+                int node:typeVersion = 1
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1439.5581, 1572.1035)
+            }
+
+            def OmniGraphNode "select_if_UseFadeIn" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:condition
+                prepend token inputs:condition.connect = </World/DynamicCamera/camera_controller/UseFadeIn.outputs:value>
+                custom token inputs:ifFalse
+                prepend token inputs:ifFalse.connect = </World/DynamicCamera/camera_controller/constant_float_one.inputs:value>
+                custom token inputs:ifTrue
+                prepend token inputs:ifTrue.connect = </World/DynamicCamera/camera_controller/subtract_getTransitionTime.outputs:difference>
+                token node:type = "omni.graph.nodes.SelectIf"
+                int node:typeVersion = 1
+                custom token outputs:result
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1069.2935, 1582.5253)
+            }
+
+            def OmniGraphNode "select_if_UseFadeOut" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:condition
+                prepend token inputs:condition.connect = </World/DynamicCamera/camera_controller/UseFadeOut.outputs:value>
+                custom token inputs:ifFalse
+                prepend token inputs:ifFalse.connect = </World/DynamicCamera/camera_controller/select_if_UseFadeIn.outputs:result>
+                custom token inputs:ifTrue
+                prepend token inputs:ifTrue.connect = </World/DynamicCamera/camera_controller/subtract_invertTransitionTime.outputs:difference>
+                token node:type = "omni.graph.nodes.SelectIf"
+                int node:typeVersion = 1
+                custom token outputs:result
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-842.4877, 1680.5303)
+            }
+
+            def OmniGraphNode "camera_main_ReadTranslate" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "xformOp:translate"
+                custom rel inputs:prim = </World/DynamicCamera/camera_main> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/get_active_camera.outputs:camera>
+                custom timecode inputs:usdTimecode = nan
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1073.1042, -413.43213)
+            }
+
+            def OmniGraphNode "camera_main_ReadFocalLength" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "focalLength"
+                custom rel inputs:prim = </World/DynamicCamera/camera_main> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/get_active_camera.outputs:camera>
+                custom timecode inputs:usdTimecode = nan
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1075.7695, -207.06519)
+            }
+
+            def OmniGraphNode "camera_main_ReadFStop" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "fStop"
+                custom rel inputs:prim = </World/DynamicCamera/camera_main> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/get_active_camera.outputs:camera>
+                custom timecode inputs:usdTimecode = nan
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1072.7781, -6.809044)
+            }
+
+            def OmniGraphNode "write_variable" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/branch_if_UseTranslate.outputs:execTrue>
+                custom rel inputs:graph = </World/DynamicCamera/camera_controller> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:targetPath
+                custom token inputs:value
+                prepend token inputs:value.connect = </World/DynamicCamera/camera_controller/camera_main_ReadTranslate.outputs:value>
+                custom token inputs:variableName = "lastCameraTranslate"
+                token node:type = "omni.graph.core.WriteVariable"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-674.92834, 394.1194)
+            }
+
+            def OmniGraphNode "write_variable_01" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/branch_if_UseFocalLength.outputs:execTrue>
+                custom rel inputs:graph = </World/DynamicCamera/camera_controller> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:targetPath
+                custom token inputs:value (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                float attrValue = 0
+                                string resolvedType = "float"
+                            }
+                        }
+                    }
+                )
+                prepend token inputs:value.connect = </World/DynamicCamera/camera_controller/camera_main_ReadFocalLength.outputs:value>
+                custom token inputs:variableName = "lastCameraFocalLenght"
+                token node:type = "omni.graph.core.WriteVariable"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-674.5052, 540.0781)
+            }
+
+            def OmniGraphNode "write_variable_02" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/branch_if_UseFStop.outputs:execTrue>
+                custom rel inputs:graph = </World/DynamicCamera/camera_controller> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:targetPath
+                custom token inputs:value (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                float attrValue = 0
+                                string resolvedType = "float"
+                            }
+                        }
+                    }
+                )
+                prepend token inputs:value.connect = </World/DynamicCamera/camera_controller/camera_main_ReadFStop.outputs:value>
+                custom token inputs:variableName = "lastCameraFStop"
+                token node:type = "omni.graph.core.WriteVariable"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-677.42395, 695.1065)
+            }
+
+            def OmniGraphNode "easing_function_Translate" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:alpha
+                prepend token inputs:alpha.connect = </World/DynamicCamera/camera_controller/select_if_instantly.outputs:result>
+                custom int inputs:blendExponent = 2
+                custom token inputs:easeFunc = "EaseInOut" (
+                    allowedTokens = ["EaseIn", "EaseOut", "EaseInOut", "Linear", "SinIn", "SinOut", "SinInOut"]
+                )
+                custom token inputs:end
+                prepend token inputs:end.connect = </World/DynamicCamera/camera_controller/target_ReadTranslate.outputs:value>
+                custom token inputs:start
+                prepend token inputs:start.connect = </World/DynamicCamera/camera_controller/write_variable.outputs:value>
+                token node:type = "omni.graph.nodes.Ease"
+                int node:typeVersion = 2
+                custom token outputs:result
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (147.60068, 1015.07874)
+            }
+
+            def OmniGraphNode "easing_function_FocalLength" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:alpha
+                prepend token inputs:alpha.connect = </World/DynamicCamera/camera_controller/select_if_instantly.outputs:result>
+                custom int inputs:blendExponent = 2
+                custom token inputs:easeFunc = "EaseInOut" (
+                    allowedTokens = ["EaseIn", "EaseOut", "EaseInOut", "Linear", "SinIn", "SinOut", "SinInOut"]
+                )
+                custom token inputs:end
+                prepend token inputs:end.connect = </World/DynamicCamera/camera_controller/target_ReadFocalLength.outputs:value>
+                custom token inputs:start
+                prepend token inputs:start.connect = </World/DynamicCamera/camera_controller/write_variable_01.outputs:value>
+                token node:type = "omni.graph.nodes.Ease"
+                int node:typeVersion = 2
+                custom token outputs:result
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (151.71262, 1218.3359)
+            }
+
+            def OmniGraphNode "easing_function_FStop" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:alpha
+                prepend token inputs:alpha.connect = </World/DynamicCamera/camera_controller/select_if_instantly.outputs:result>
+                custom int inputs:blendExponent = 2
+                custom token inputs:easeFunc = "EaseInOut" (
+                    allowedTokens = ["EaseIn", "EaseOut", "EaseInOut", "Linear", "SinIn", "SinOut", "SinInOut"]
+                )
+                custom token inputs:end
+                prepend token inputs:end.connect = </World/DynamicCamera/camera_controller/target_ReadFStop.outputs:value>
+                custom token inputs:start
+                prepend token inputs:start.connect = </World/DynamicCamera/camera_controller/write_variable_02.outputs:value>
+                token node:type = "omni.graph.nodes.Ease"
+                int node:typeVersion = 2
+                custom token outputs:result
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (154.1851, 1419.4836)
+            }
+
+            def OmniGraphNode "camera_mainWriteTranslate" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/branch_if_UseTranslate_01.outputs:execTrue>
+                custom token inputs:name = "xformOp:translate"
+                custom rel inputs:prim = </World/DynamicCamera/camera_main> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                                custom token inputs:primPath
+                custom bool inputs:usdWriteBack = 1
+                custom bool inputs:usePath = 0
+                custom token inputs:value
+                prepend token inputs:value.connect = </World/DynamicCamera/camera_controller/easing_function_Translate.outputs:result>
+                token node:type = "omni.graph.nodes.WritePrimAttribute"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom bool state:correctlySetup = 0
+                custom uint64 state:destAttrib
+                custom uint64 state:destPath
+                custom uint64 state:destPathToken
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (558.06464, 593.4982)
+            }
+
+            def OmniGraphNode "camera_mainWriteFocalLength" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/branch_if_UseFocalLength_01.outputs:execTrue>
+                custom token inputs:name = "focalLength"
+                custom rel inputs:prim = </World/DynamicCamera/camera_main> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                                custom token inputs:primPath
+                custom bool inputs:usdWriteBack = 1
+                custom bool inputs:usePath = 0
+                custom token inputs:value
+                prepend token inputs:value.connect = </World/DynamicCamera/camera_controller/easing_function_FocalLength.outputs:result>
+                token node:type = "omni.graph.nodes.WritePrimAttribute"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom bool state:correctlySetup = 0
+                custom uint64 state:destAttrib
+                custom uint64 state:destPath
+                custom uint64 state:destPathToken
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (562.13965, 838.04)
+            }
+
+            def OmniGraphNode "camera_mainWriteFStop" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/branch_if_UseFStop_01.outputs:execTrue>
+                custom token inputs:name = "fStop"
+                custom rel inputs:prim = </World/DynamicCamera/camera_main> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                custom bool inputs:usdWriteBack = 1
+                custom bool inputs:usePath = 0
+                custom token inputs:value
+                prepend token inputs:value.connect = </World/DynamicCamera/camera_controller/easing_function_FStop.outputs:result>
+                token node:type = "omni.graph.nodes.WritePrimAttribute"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom bool state:correctlySetup = 0
+                custom uint64 state:destAttrib
+                custom uint64 state:destPath
+                custom uint64 state:destPathToken
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (558.9645, 1085.3823)
+            }
+
+            def OmniGraphNode "target_ReadFStop" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "fStop"
+                custom rel inputs:prim = None (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/append_string.outputs:value>
+                custom timecode inputs:usdTimecode = nan
+                prepend timecode inputs:usdTimecode.connect = </World/DynamicCamera/camera_controller/multiply.outputs:product>
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-655.0815, 1479.5387)
+            }
+
+            def OmniGraphNode "target_ReadFocalLength" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "focalLength"
+                custom rel inputs:prim = None (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/append_string.outputs:value>
+                custom timecode inputs:usdTimecode = nan
+                prepend timecode inputs:usdTimecode.connect = </World/DynamicCamera/camera_controller/multiply.outputs:product>
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-655.70374, 1277.653)
+            }
+
+            def OmniGraphNode "target_ReadTranslate" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "xformOp:translate"
+                custom rel inputs:prim = None (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/append_string.outputs:value>
+                custom timecode inputs:usdTimecode = nan
+                prepend timecode inputs:usdTimecode.connect = </World/DynamicCamera/camera_controller/multiply.outputs:product>
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-656.681, 1075.3298)
+            }
+
+            def OmniGraphNode "on_stage_event_Stop" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:eventName = "Animation Stop Play" (
+                    allowedTokens = ["Saved", "Selection Changed", "Hierarchy Changed", "OmniGraph Start Play", "OmniGraph Stop Play", "Simulation Start Play", "Simulation Stop Play", "Animation Start Play", "Animation Stop Play"]
+                )
+                custom bool inputs:onlyPlayback = 1
+                token node:type = "omni.graph.action.OnStageEvent"
+                int node:typeVersion = 3
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-190.81308, -1791.6389)
+            }
+
+            def OmniGraphNode "camera_mainResetTranslate" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/on_stage_event_Stop.outputs:execOut>
+                custom token inputs:name = "xformOp:translate"
+                custom rel inputs:prim = </World/DynamicCamera/camera_main> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                custom bool inputs:usdWriteBack = 1
+                custom bool inputs:usePath = 0
+                custom token inputs:value
+                prepend token inputs:value.connect = </World/DynamicCamera/camera_controller/target_ReadDefaultTranslate.outputs:value>
+                token node:type = "omni.graph.nodes.WritePrimAttribute"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom bool state:correctlySetup = 0
+                custom uint64 state:destAttrib
+                custom uint64 state:destPath
+                custom uint64 state:destPathToken
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (476.20706, -1547.3005)
+            }
+
+            def OmniGraphNode "camera_mainResetFocalLengt" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/on_stage_event_Stop.outputs:execOut>
+                custom token inputs:name = "focalLength"
+                custom rel inputs:prim = </World/DynamicCamera/camera_main> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                custom bool inputs:usdWriteBack = 1
+                custom bool inputs:usePath = 0
+                custom token inputs:value
+                prepend token inputs:value.connect = </World/DynamicCamera/camera_controller/target_ReadDefaultFocalLength.outputs:value>
+                token node:type = "omni.graph.nodes.WritePrimAttribute"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom bool state:correctlySetup = 0
+                custom uint64 state:destAttrib
+                custom uint64 state:destPath
+                custom uint64 state:destPathToken
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (480.28207, -1302.7588)
+            }
+
+            def OmniGraphNode "camera_mainResetFStop" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/on_stage_event_Stop.outputs:execOut>
+                custom token inputs:name = "fStop"
+                custom rel inputs:prim = </World/DynamicCamera/camera_main> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                custom bool inputs:usdWriteBack = 1
+                custom bool inputs:usePath = 0
+                custom token inputs:value
+                prepend token inputs:value.connect = </World/DynamicCamera/camera_controller/target_ReadDefaultFStop.outputs:value>
+                token node:type = "omni.graph.nodes.WritePrimAttribute"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom bool state:correctlySetup = 0
+                custom uint64 state:destAttrib
+                custom uint64 state:destPath
+                custom uint64 state:destPathToken
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (482.1878, -1070.9141)
+            }
+
+            def OmniGraphNode "target_ReadDefaultTranslate" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "xformOp:translate"
+                custom rel inputs:prim = None (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/append_string_01.outputs:value>
+                custom timecode inputs:usdTimecode = nan
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-180.96426, -1646.168)
+            }
+
+            def OmniGraphNode "target_ReadDefaultFStop" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "fStop"
+                custom rel inputs:prim = None (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/append_string_01.outputs:value>
+                custom timecode inputs:usdTimecode = nan
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-179.36472, -1241.9592)
+            }
+
+            def OmniGraphNode "target_ReadDefaultFocalLength" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "focalLength"
+                custom rel inputs:prim = None (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/append_string_01.outputs:value>
+                custom timecode inputs:usdTimecode = nan
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-179.98697, -1443.845)
+            }
+
+            def OmniGraphNode "read_variable_01" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom rel inputs:graph = </World/DynamicCamera/camera_controller> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:targetPath
+                custom token inputs:variableName = "defaultCamera"
+                token node:type = "omni.graph.core.ReadVariable"
+                int node:typeVersion = 2
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-699.97815, -1366.4275)
+            }
+
+            def OmniGraphNode "append_string_01" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:a
+                prepend token inputs:a.connect = </World/DynamicCamera/camera_controller/append_slash.outputs:value>
+                custom token inputs:b
+                prepend token inputs:b.connect = </World/DynamicCamera/camera_controller/read_variable_01.outputs:value>
+                token node:type = "omni.graph.nodes.BuildString"
+                int node:typeVersion = 2
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-506.01584, -1458.2488)
+            }
+
+            def OmniGraphNode "branch_if_UseTranslate_01" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom bool inputs:condition = 0
+                prepend bool inputs:condition.connect = </World/DynamicCamera/camera_controller/UseTranslate.outputs:value>
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/branch.outputs:execTrue>
+                token node:type = "omni.graph.action.Branch"
+                int node:typeVersion = 1
+                custom uint outputs:execFalse (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom uint outputs:execTrue (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (50.08898, 315.19266)
+            }
+
+            def OmniGraphNode "branch_if_UseFocalLength_01" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom bool inputs:condition = 0
+                prepend bool inputs:condition.connect = </World/DynamicCamera/camera_controller/UseFocalLength.outputs:value>
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/branch.outputs:execTrue>
+                token node:type = "omni.graph.action.Branch"
+                int node:typeVersion = 1
+                custom uint outputs:execFalse (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom uint outputs:execTrue (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (50.54461, 466.8535)
+            }
+
+            def OmniGraphNode "branch_if_UseFStop_01" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom bool inputs:condition = 0
+                prepend bool inputs:condition.connect = </World/DynamicCamera/camera_controller/UseFStop.outputs:value>
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/branch.outputs:execTrue>
+                token node:type = "omni.graph.action.Branch"
+                int node:typeVersion = 1
+                custom uint outputs:execFalse (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom uint outputs:execTrue (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (53.049004, 620.57404)
+            }
+
+            def OmniGraphNode "clamp" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:input
+                prepend token inputs:input.connect = </World/DynamicCamera/camera_controller/select_if_UseFadeOut.outputs:result>
+                custom token inputs:lower
+                prepend token inputs:lower.connect = </World/DynamicCamera/camera_controller/constant_float_0.inputs:value>
+                custom token inputs:upper
+                prepend token inputs:upper.connect = </World/DynamicCamera/camera_controller/constant_float_1.inputs:value>
+                token node:type = "omni.graph.nodes.Clamp"
+                int node:typeVersion = 1
+                custom token outputs:result
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-425.1061, 1766.9967)
+            }
+
+            def OmniGraphNode "constant_float_1" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom float inputs:value = 1
+                token node:type = "omni.graph.nodes.ConstantFloat"
+                int node:typeVersion = 1
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-661.43616, 1970.7571)
+            }
+
+            def OmniGraphNode "constant_float_0" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom float inputs:value = 0
+                token node:type = "omni.graph.nodes.ConstantFloat"
+                int node:typeVersion = 1
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-657.436, 1881.4235)
+            }
+
+            def OmniGraphNode "resetLastCameraTranslate" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/on_stage_event_Stop.outputs:execOut>
+                custom rel inputs:graph = </World/DynamicCamera/camera_controller> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:targetPath
+                custom token inputs:value (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                double3 attrValue = (0, 0, 0)
+                                string resolvedType = "double[3]"
+                            }
+                        }
+                    }
+                )
+                prepend token inputs:value.connect = </World/DynamicCamera/camera_controller/target_ReadDefaultTranslate.outputs:value>
+                custom token inputs:variableName = "lastCameraTranslate"
+                token node:type = "omni.graph.core.WriteVariable"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (505.46494, -2089.1086)
+            }
+
+            def OmniGraphNode "resetLastCameraFStop" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/on_stage_event_Stop.outputs:execOut>
+                custom rel inputs:graph = </World/DynamicCamera/camera_controller> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:targetPath
+                custom token inputs:value (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                float attrValue = 0
+                                string resolvedType = "float"
+                            }
+                        }
+                    }
+                )
+                prepend token inputs:value.connect = </World/DynamicCamera/camera_controller/target_ReadDefaultFStop.outputs:value>
+                custom token inputs:variableName = "lastCameraFStop"
+                token node:type = "omni.graph.core.WriteVariable"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (499.91647, -1757.8545)
+            }
+
+            def OmniGraphNode "resetLastCameraFocalLength" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/on_stage_event_Stop.outputs:execOut>
+                custom rel inputs:graph = </World/DynamicCamera/camera_controller> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:targetPath
+                custom token inputs:value (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                float attrValue = 0
+                                string resolvedType = "float"
+                            }
+                        }
+                    }
+                )
+                prepend token inputs:value.connect = </World/DynamicCamera/camera_controller/target_ReadDefaultFocalLength.outputs:value>
+                custom token inputs:variableName = "lastCameraFocalLenght"
+                token node:type = "omni.graph.core.WriteVariable"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (506.81982, -1929.3716)
+            }
+
+            def OmniGraphNode "if_Slow" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:condition
+                prepend token inputs:condition.connect = </World/DynamicCamera/camera_controller/compare_slow.outputs:result>
+                custom token inputs:ifFalse
+                prepend token inputs:ifFalse.connect = </World/DynamicCamera/camera_controller/read_DurationDefault.outputs:value>
+                custom token inputs:ifTrue
+                prepend token inputs:ifTrue.connect = </World/DynamicCamera/camera_controller/read_DurationSlow.outputs:value>
+                token node:type = "omni.graph.nodes.SelectIf"
+                int node:typeVersion = 1
+                custom token outputs:result
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2645.8584, 2049.464)
+            }
+
+            def OmniGraphNode "select_if" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:condition
+                prepend token inputs:condition.connect = </World/DynamicCamera/camera_controller/compare_quickly.outputs:result>
+                custom token inputs:ifFalse
+                prepend token inputs:ifFalse.connect = </World/DynamicCamera/camera_controller/if_Slow.outputs:result>
+                custom token inputs:ifTrue
+                prepend token inputs:ifTrue.connect = </World/DynamicCamera/camera_controller/read_DurationQuick.outputs:value>
+                token node:type = "omni.graph.nodes.SelectIf"
+                int node:typeVersion = 1
+                custom token outputs:result
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2211.9377, 2091.4011)
+            }
+
+            def OmniGraphNode "compare_slow" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:a
+                prepend token inputs:a.connect = </World/DynamicCamera/camera_controller/read_tempo.outputs:value>
+                custom token inputs:b
+                prepend token inputs:b.connect = </World/DynamicCamera/camera_controller/constant_token_slowly.inputs:value>
+                custom token inputs:operation = "==" (
+                    allowedTokens = [">", "<", ">=", "<=", "==", "!="]
+                )
+                token node:type = "omni.graph.nodes.Compare"
+                int node:typeVersion = 1
+                custom token outputs:result
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2858.9443, 1971.1409)
+            }
+
+            def OmniGraphNode "compare_quickly" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:a
+                prepend token inputs:a.connect = </World/DynamicCamera/camera_controller/read_tempo.outputs:value>
+                custom token inputs:b
+                prepend token inputs:b.connect = </World/DynamicCamera/camera_controller/constant_token_quickly.inputs:value>
+                custom token inputs:operation = "==" (
+                    allowedTokens = [">", "<", ">=", "<=", "==", "!="]
+                )
+                token node:type = "omni.graph.nodes.Compare"
+                int node:typeVersion = 1
+                custom token outputs:result
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2430.8823, 1995.5132)
+            }
+
+            def OmniGraphNode "read_tempo" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom rel inputs:graph = </World/DynamicCamera/camera_controller> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:targetPath
+                custom token inputs:variableName = "tempo"
+                token node:type = "omni.graph.core.ReadVariable"
+                int node:typeVersion = 2
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2967.7505, 1789.1865)
+            }
+
+            def OmniGraphNode "constant_token_quickly" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:value = "quickly"
+                token node:type = "omni.graph.nodes.ConstantToken"
+                int node:typeVersion = 1
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2644.75, 1898.4481)
+            }
+
+            def OmniGraphNode "constant_token_slowly" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:value = "slowly"
+                token node:type = "omni.graph.nodes.ConstantToken"
+                int node:typeVersion = 1
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-3077.8184, 2008.8486)
+            }
+
+            def OmniGraphNode "read_DurationQuick" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom rel inputs:graph = </World/DynamicCamera/camera_controller> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:targetPath
+                custom token inputs:variableName = "DurationQuick"
+                token node:type = "omni.graph.core.ReadVariable"
+                int node:typeVersion = 2
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2370.7534, 2199.2559)
+            }
+
+            def OmniGraphNode "read_DurationDefault" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom rel inputs:graph = </World/DynamicCamera/camera_controller> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:targetPath
+                custom token inputs:variableName = "DurationDefault"
+                token node:type = "omni.graph.core.ReadVariable"
+                int node:typeVersion = 2
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2828.2139, 2135.2468)
+            }
+
+            def OmniGraphNode "read_DurationSlow" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom rel inputs:graph = </World/DynamicCamera/camera_controller> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:targetPath
+                custom token inputs:variableName = "DurationSlow"
+                token node:type = "omni.graph.core.ReadVariable"
+                int node:typeVersion = 2
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2815.9497, 2184.8467)
+            }
+
+            def OmniGraphNode "divide" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:a
+                prepend token inputs:a.connect = </World/DynamicCamera/camera_controller/read_time.outputs:timeSinceStart>
+                custom token inputs:b
+                prepend token inputs:b.connect = </World/DynamicCamera/camera_controller/select_if.outputs:result>
+                token node:type = "omni.graph.nodes.Divide"
+                int node:typeVersion = 1
+                custom token outputs:result
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1753.6516, 1530.6772)
+            }
+
+            def OmniGraphNode "constant_token_instantly" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:value = "instantly"
+                token node:type = "omni.graph.nodes.ConstantToken"
+                int node:typeVersion = 1
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-645.5831, 2127.463)
+            }
+
+            def OmniGraphNode "compare_instantly" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:a
+                prepend token inputs:a.connect = </World/DynamicCamera/camera_controller/read_tempo.outputs:value>
+                custom token inputs:b
+                prepend token inputs:b.connect = </World/DynamicCamera/camera_controller/constant_token_instantly.inputs:value>
+                custom token inputs:operation = "==" (
+                    allowedTokens = [">", "<", ">=", "<=", "==", "!="]
+                )
+                token node:type = "omni.graph.nodes.Compare"
+                int node:typeVersion = 1
+                custom token outputs:result
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-421.63004, 2036.2373)
+            }
+
+            def OmniGraphNode "select_if_instantly" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:condition
+                prepend token inputs:condition.connect = </World/DynamicCamera/camera_controller/compare_instantly.outputs:result>
+                custom token inputs:ifFalse
+                prepend token inputs:ifFalse.connect = </World/DynamicCamera/camera_controller/clamp.outputs:result>
+                custom token inputs:ifTrue
+                prepend token inputs:ifTrue.connect = </World/DynamicCamera/camera_controller/constant_float_1.inputs:value>
+                token node:type = "omni.graph.nodes.SelectIf"
+                int node:typeVersion = 1
+                custom token outputs:result
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-155.26616, 1815.0018)
+            }
+
+            def OmniGraphNode "branch" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom bool inputs:condition = 0
+                prepend bool inputs:condition.connect = </World/DynamicCamera/camera_controller/read_variable_02.outputs:value>
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/on_tick.outputs:tick>
+                token node:type = "omni.graph.action.Branch"
+                int node:typeVersion = 1
+                custom uint outputs:execFalse (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom uint outputs:execTrue (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-229.13264, 143.57661)
+            }
+
+            def OmniGraphNode "on_tick" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:framePeriod = 0
+                custom bool inputs:onlyPlayback = 1
+                token node:type = "omni.graph.action.OnTick"
+                int node:typeVersion = 1
+                custom double outputs:absoluteSimTime
+                custom double outputs:deltaSeconds
+                custom double outputs:frame
+                custom bool outputs:isPlaying
+                custom uint outputs:tick (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom double outputs:time
+                custom double outputs:timeSinceStart
+                custom double state:accumulatedSeconds = 0
+                custom uint state:frameCount = 0
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-497.84485, 16.722254)
+            }
+
+            def OmniGraphNode "read_variable_02" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom rel inputs:graph = </World/DynamicCamera/camera_controller> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:targetPath
+                custom token inputs:variableName = "isTransitioning"
+                token node:type = "omni.graph.core.ReadVariable"
+                int node:typeVersion = 2
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-415.73022, 238.12973)
+            }
+
+            def OmniGraphNode "write_variable_03" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = [
+                    </World/DynamicCamera/camera_controller/write_variable.outputs:execOut>,
+                    </World/DynamicCamera/camera_controller/write_variable_01.outputs:execOut>,
+                    </World/DynamicCamera/camera_controller/write_variable_02.outputs:execOut>,
+                    </World/DynamicCamera/camera_controller/write_lastFocusPoint.outputs:execOut>,
+                ]
+                custom rel inputs:graph = </World/DynamicCamera/camera_controller> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:targetPath
+                custom token inputs:value = "True" (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                bool attrValue = 1
+                                string resolvedType = "bool"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:variableName = "isTransitioning"
+                token node:type = "omni.graph.core.WriteVariable"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "minimized"
+                uniform float2 ui:nodegraph:node:pos = (-240.79881, 482.11813)
+            }
+
+            def OmniGraphNode "branch_01" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom bool inputs:condition = 0
+                prepend bool inputs:condition.connect = </World/DynamicCamera/camera_controller/compare.outputs:result>
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = [
+                    </World/DynamicCamera/camera_controller/camera_mainWriteFStop.outputs:execOut>,
+                    </World/DynamicCamera/camera_controller/camera_mainWriteFocalLength.outputs:execOut>,
+                    </World/DynamicCamera/camera_controller/camera_mainWriteTranslate.outputs:execOut>,
+                ]
+                token node:type = "omni.graph.action.Branch"
+                int node:typeVersion = 1
+                custom uint outputs:execFalse (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom uint outputs:execTrue (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (1281.2787, 1482.3856)
+            }
+
+            def OmniGraphNode "compare" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:a
+                prepend token inputs:a.connect = </World/DynamicCamera/camera_controller/select_if_instantly.outputs:result>
+                custom token inputs:b
+                prepend token inputs:b.connect = </World/DynamicCamera/camera_controller/constant_float.inputs:value>
+                custom token inputs:operation = ">" (
+                    allowedTokens = [">", "<", ">=", "<=", "==", "!="]
+                )
+                token node:type = "omni.graph.nodes.Compare"
+                int node:typeVersion = 1
+                custom token outputs:result
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (997.1351, 1582.1688)
+            }
+
+            def OmniGraphNode "constant_float" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom float inputs:value = 0.9999
+                token node:type = "omni.graph.nodes.ConstantFloat"
+                int node:typeVersion = 1
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-148.01999, 1976.7959)
+            }
+
+            def OmniGraphNode "write_variable_04" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/branch_01.outputs:execTrue>
+                custom rel inputs:graph = </World/DynamicCamera/camera_controller> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:targetPath
+                custom token inputs:value
+                custom token inputs:variableName = "isTransitioning"
+                token node:type = "omni.graph.core.WriteVariable"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (1510.1648, 1477.468)
+            }
+
+            def OmniGraphNode "write_variable_05" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/on_stage_event_Stop.outputs:execOut>
+                custom rel inputs:graph = </World/DynamicCamera/camera_controller> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:targetPath
+                custom token inputs:value
+                custom token inputs:variableName = "isTransitioning"
+                token node:type = "omni.graph.core.WriteVariable"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "closed"
+                uniform float2 ui:nodegraph:node:pos = (22.316296, -1872.4587)
+            }
+
+            def OmniGraphNode "get_active_camera" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:viewport = ""
+                token node:type = "omni.graph.ui_nodes.GetActiveViewportCamera"
+                int node:typeVersion = 2
+                custom token outputs:camera
+                custom rel outputs:cameraPrim (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1529.7488, -182.63872)
+            }
+
+            def OmniGraphNode "set_camera_target" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/branch.outputs:execTrue>
+                custom rel inputs:prim (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/get_active_camera.outputs:camera>
+                custom bool inputs:rotate = 1
+                custom point3d inputs:target = (0, 0, 0)
+                delete point3d inputs:target.connect = </World/DynamicCamera/camera_controller/read_prim_attribute.outputs:value>
+                prepend point3d inputs:target.connect = </World/DynamicCamera/camera_controller/camera_focusReadAttrib.outputs:value>
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.ui_nodes.SetCameraTarget"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (339.82935, -198.27968)
+            }
+
+            def OmniGraphNode "read_prim_attribute" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "xformOp:translate"
+                custom rel inputs:prim (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/append_string_02.outputs:value>
+                custom timecode inputs:usdTimecode = nan
+                prepend timecode inputs:usdTimecode.connect = </World/DynamicCamera/camera_controller/multiply.outputs:product>
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-660.7293, 875.1491)
+            }
+
+            def OmniGraphNode "append_string_02" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:a
+                prepend token inputs:a.connect = </World/DynamicCamera/camera_controller/constant_token_PrimPath_FocusPoints.inputs:value>
+                custom token inputs:b
+                prepend token inputs:b.connect = </World/DynamicCamera/camera_controller/target_FocusPoint.outputs:value>
+                token node:type = "omni.graph.nodes.BuildString"
+                int node:typeVersion = 2
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-913.60266, 906.106)
+            }
+
+            def OmniGraphNode "constant_token_PrimPath_FocusPoints" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:value = "/World/DynamicCamera/focusPoints/"
+                token node:type = "omni.graph.nodes.ConstantToken"
+                int node:typeVersion = 1
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1135.5798, 891.2414)
+            }
+
+            def OmniGraphNode "UseFocusPoint" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "UseFocusPoint"
+                custom rel inputs:prim = None (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/append_string.outputs:value>
+                custom timecode inputs:usdTimecode = nan
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2218.4648, 144.5315)
+            }
+
+            def OmniGraphNode "target_FocusPoint" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "FocusPoint"
+                custom rel inputs:prim = None (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/append_string.outputs:value>
+                custom timecode inputs:usdTimecode = nan
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1159.5345, 1008.3587)
+            }
+
+            def OmniGraphNode "multiply" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:a
+                delete token inputs:a.connect = </World/DynamicCamera/camera_controller/select_if_instantly.outputs:result>
+                prepend token inputs:a.connect = </World/DynamicCamera/camera_controller/subtract_getTransitionTime.outputs:difference>
+                custom token inputs:b
+                prepend token inputs:b.connect = </World/DynamicCamera/camera_controller/constant_float_01.inputs:value>
+                token node:type = "omni.graph.nodes.Multiply"
+                int node:typeVersion = 2
+                custom token outputs:product
+                uniform token ui:nodegraph:node:expansionState = "minimized"
+                uniform float2 ui:nodegraph:node:pos = (-952.4498, 1200.3961)
+            }
+
+            def OmniGraphNode "constant_float_01" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom float inputs:value = 100
+                token node:type = "omni.graph.nodes.ConstantFloat"
+                int node:typeVersion = 1
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1171.1901, 1255.141)
+            }
+
+            def OmniGraphNode "branch_if_UseFocusPoint" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom bool inputs:condition = 0
+                prepend bool inputs:condition.connect = </World/DynamicCamera/camera_controller/UseFocusPoint.outputs:value>
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/write_transitionStartTime.outputs:execOut>
+                token node:type = "omni.graph.action.Branch"
+                int node:typeVersion = 1
+                custom uint outputs:execFalse (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom uint outputs:execTrue (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1066.7003, 264.6211)
+            }
+
+            def OmniGraphNode "branch_if_UseFocusPoint_01" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom bool inputs:condition = 0
+                prepend bool inputs:condition.connect = </World/DynamicCamera/camera_controller/UseFocusPoint.outputs:value>
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/branch.outputs:execTrue>
+                token node:type = "omni.graph.action.Branch"
+                int node:typeVersion = 1
+                custom uint outputs:execFalse (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom uint outputs:execTrue (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (48.63886, 147.28653)
+            }
+
+            def OmniGraphNode "write_lastFocusPoint" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/branch_if_UseFocusPoint.outputs:execTrue>
+                custom rel inputs:graph = </World/DynamicCamera/camera_controller> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:targetPath
+                custom token inputs:value
+                delete token inputs:value.connect = </World/DynamicCamera/camera_controller/read_prim_attribute.outputs:value>
+                prepend token inputs:value.connect = </World/DynamicCamera/camera_controller/camera_focusReadAttrib.outputs:value>
+                custom token inputs:variableName = "lastFocusPointPosition"
+                token node:type = "omni.graph.core.WriteVariable"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-676.9493, 242.84375)
+            }
+
+            def OmniGraphNode "easing_function_FocusPoint" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:alpha
+                prepend token inputs:alpha.connect = </World/DynamicCamera/camera_controller/select_if_instantly.outputs:result>
+                custom int inputs:blendExponent = 2
+                custom token inputs:easeFunc = "EaseInOut" (
+                    allowedTokens = ["EaseIn", "EaseOut", "EaseInOut", "Linear", "SinIn", "SinOut", "SinInOut"]
+                )
+                custom token inputs:end
+                delete token inputs:end.connect = </World/DynamicCamera/camera_controller/target_ReadTranslate.outputs:value>
+                prepend token inputs:end.connect = </World/DynamicCamera/camera_controller/read_prim_attribute.outputs:value>
+                custom token inputs:start
+                delete token inputs:start.connect = </World/DynamicCamera/camera_controller/write_variable.outputs:value>
+                prepend token inputs:start.connect = </World/DynamicCamera/camera_controller/write_lastFocusPoint.outputs:value>
+                token node:type = "omni.graph.nodes.Ease"
+                int node:typeVersion = 2
+                custom token outputs:result
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (145.55725, 812.62836)
+            }
+
+            def OmniGraphNode "camera_focusWriteAttrib" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/branch_if_UseFocusPoint_01.outputs:execTrue>
+                custom token inputs:name = "xformOp:translate"
+                custom rel inputs:prim = </World/DynamicCamera/camera_focus> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                custom bool inputs:usdWriteBack = 1
+                custom bool inputs:usePath = 0
+                custom token inputs:value
+                prepend token inputs:value.connect = </World/DynamicCamera/camera_controller/easing_function_FocusPoint.outputs:result>
+                token node:type = "omni.graph.nodes.WritePrimAttribute"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom bool state:correctlySetup = 0
+                custom uint64 state:destAttrib
+                custom uint64 state:destPath
+                custom uint64 state:destPathToken
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (557.26, 349.40796)
+            }
+
+            def OmniGraphNode "camera_focusReadAttrib" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "xformOp:translate"
+                custom rel inputs:prim = </World/DynamicCamera/camera_focus> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                custom timecode inputs:usdTimecode = nan
+                custom bool inputs:usePath = 0
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1069.3696, -635.4687)
+            }
+
+            def OmniGraphNode "target_ReadDefaultRotation" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:name = "xformOp:rotateXYZ"
+                custom rel inputs:prim = None (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                prepend token inputs:primPath.connect = </World/DynamicCamera/camera_controller/append_string_01.outputs:value>
+                custom timecode inputs:usdTimecode = nan
+                custom bool inputs:usePath = 1
+                token node:type = "omni.graph.nodes.ReadPrimAttribute"
+                int node:typeVersion = 3
+                custom token outputs:value
+                custom bool state:correctlySetup = 0
+                custom uint64 state:importPath
+                custom uint64 state:srcAttrib
+                custom uint64 state:srcPath
+                custom uint64 state:srcPathToken
+                custom double state:time
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-181.40962, -1042.1895)
+            }
+
+            def OmniGraphNode "camera_mainResetRotation" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/DynamicCamera/camera_controller/on_stage_event_Stop.outputs:execOut>
+                custom token inputs:name = "xformOp:rotateXYZ"
+                custom rel inputs:prim = </World/DynamicCamera/camera_main> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom token inputs:primPath
+                custom bool inputs:usdWriteBack = 1
+                custom bool inputs:usePath = 0
+                custom token inputs:value
+                prepend token inputs:value.connect = </World/DynamicCamera/camera_controller/target_ReadDefaultRotation.outputs:value>
+                token node:type = "omni.graph.nodes.WritePrimAttribute"
+                int node:typeVersion = 2
+                custom uint outputs:execOut (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                custom bool state:correctlySetup = 0
+                custom uint64 state:destAttrib
+                custom uint64 state:destPath
+                custom uint64 state:destPathToken
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (481.74084, -836.8408)
+            }
+
+            def OmniGraphNode "get_prim_path" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom rel inputs:prim (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                prepend rel inputs:prim = </World/DynamicCamera/camera_controller/camera_parent_prim.inputs:value>
+                token node:type = "omni.graph.nodes.GetPrimPath"
+                int node:typeVersion = 3
+                custom string outputs:path = ""
+                custom token outputs:primPath
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2974.9155, 12.373007)
+            }
+
+            def OmniGraphNode "camera_parent_prim" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom rel inputs:value = </World/DynamicCamera/cameras> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                token node:type = "omni.graph.nodes.ConstantPrims"
+                int node:typeVersion = 2
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-3197.2244, 12.143026)
+            }
+
+            def OmniGraphNode "constant_token" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:value = "/"
+                token node:type = "omni.graph.nodes.ConstantToken"
+                int node:typeVersion = 1
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-3435.5217, 124.32025)
+            }
+
+            def OmniGraphNode "append_slash" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom token inputs:a
+                prepend token inputs:a.connect = </World/DynamicCamera/camera_controller/get_prim_path.outputs:primPath>
+                custom token inputs:b (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                token attrValue = ""
+                                string resolvedType = "token"
+                            }
+                        }
+                    }
+                )
+                prepend token inputs:b.connect = </World/DynamicCamera/camera_controller/constant_token.inputs:value>
+                token node:type = "omni.graph.nodes.BuildString"
+                int node:typeVersion = 2
+                custom token outputs:value
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-3150.9202, 38.31947)
+            }
+        }
+
+        def Xform "focusPoints"
+        {
+            double3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+            def Xform "avatar"
+            {
+                double3 xformOp:rotateXYZ = (0, -0, 0)
+                double3 xformOp:scale = (1, 1, 1.0000001192092896)
+                double3 xformOp:translate = (0.000013994855632553962, 133.27820531972023, 12.901813951086286)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def Xform "look_around"
+            {
+                double3 xformOp:rotateXYZ = (0, 0, 0)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-100, 147.96447246621193, 13.735313851830547)
+                double3 xformOp:translate.timeSamples = {
+                    0: (-100, 147.96447246621193, 13.735313851830547),
+                    100: (100, 147.96447246621193, 13.735313851830547),
+                }
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def Xform "entrance_view"
+            {
+                double3 xformOp:rotateXYZ = (0, 0, 0)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (0, 102.57872705837822, 12.655682802783124)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "DoorFrame" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </World/Customizable_Office/Customizable_Office/DoorFrame_01/Looks/DoorFrame> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        token visibility = "invisible"
+        double3 xformOp:rotateXYZ = (-2.271619905513944e-7, 30.394302368164062, 5.7689662075199877e-11)
+        double3 xformOp:scale = (1.0000005960464478, 1.0000001192092896, 0.9999994039535522)
+        double3 xformOp:translate = (404.75848724323725, 0.00001185278799198386, 690.0513327904463)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+        def Mesh "Wall_Top" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-50, -50, -50), (50, 50, 50)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Customizable_Office/Customizable_Office/DoorFrame_01/Looks/DoorFrame> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-50, -50, 50), (50, -50, 50), (-50, 50, 50), (50, 50, 50), (-50, -50, -50), (50, -50, -50), (-50, 50, -50), (50, 50, -50)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            double3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (3, 1, 0.1)
+            double3 xformOp:translate = (0, 240, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "WallRight" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-50, -50, -50), (50, 50, 50)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Customizable_Office/Customizable_Office/DoorFrame_01/Looks/DoorFrame> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-50, -50, 50), (50, -50, 50), (-50, 50, 50), (50, 50, 50), (-50, -50, -50), (50, -50, -50), (-50, 50, -50), (50, 50, -50)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            double3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (1, 1.9, 0.1)
+            double3 xformOp:translate = (100, 95, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "WallLeft" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-50, -50, -50), (50, 50, 50)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Customizable_Office/Customizable_Office/DoorFrame_01/Looks/DoorFrame> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-50, -50, 50), (50, -50, 50), (-50, 50, 50), (50, 50, 50), (-50, -50, -50), (50, -50, -50), (-50, 50, -50), (50, 50, -50)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            double3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (1, 1.9, 0.1)
+            double3 xformOp:translate = (-100, 95, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Scope "Looks"
+        {
+            def Material "DoorFrame"
+            {
+                token outputs:mdl:displacement.connect = </World/Customizable_Office/Customizable_Office/DoorFrame_01/Looks/DoorFrame/Shader.outputs:out>
+                token outputs:mdl:surface.connect = </World/Customizable_Office/Customizable_Office/DoorFrame_01/Looks/DoorFrame/Shader.outputs:out>
+                token outputs:mdl:volume.connect = </World/Customizable_Office/Customizable_Office/DoorFrame_01/Looks/DoorFrame/Shader.outputs:out>
+
+                def Shader "Shader"
+                {
+                    uniform token info:implementationSource = "sourceAsset"
+                    uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                    uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                    token outputs:out (
+                        renderType = "material"
+                    )
+                }
+            }
+        }
+    }
+
+    def Xform "DoorFrame_01" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </World/Customizable_Office/Customizable_Office/DoorFrame/Looks/DoorFrame> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        token visibility = "invisible"
+        double3 xformOp:rotateXYZ = (0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 800)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+        def Mesh "Wall_Top" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-50, -50, -50), (50, 50, 50)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Customizable_Office/Customizable_Office/DoorFrame/Looks/DoorFrame> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-50, -50, 50), (50, -50, 50), (-50, 50, 50), (50, 50, 50), (-50, -50, -50), (50, -50, -50), (-50, 50, -50), (50, 50, -50)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            double3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (3, 1, 0.1)
+            double3 xformOp:translate = (0, 240, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "WallRight" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-50, -50, -50), (50, 50, 50)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Customizable_Office/Customizable_Office/DoorFrame/Looks/DoorFrame> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-50, -50, 50), (50, -50, 50), (-50, 50, 50), (50, 50, 50), (-50, -50, -50), (50, -50, -50), (-50, 50, -50), (50, 50, -50)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            double3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (1, 1.9, 0.1)
+            double3 xformOp:translate = (100, 95, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "WallLeft" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-50, -50, -50), (50, 50, 50)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Customizable_Office/Customizable_Office/DoorFrame/Looks/DoorFrame> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-50, -50, 50), (50, -50, 50), (-50, 50, 50), (50, 50, 50), (-50, -50, -50), (50, -50, -50), (-50, 50, -50), (50, 50, -50)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            double3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (1, 1.9, 0.1)
+            double3 xformOp:translate = (-100, 95, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Scope "Looks"
+        {
+            def Material "DoorFrame"
+            {
+                token outputs:mdl:displacement.connect = </World/Customizable_Office/Customizable_Office/DoorFrame/Looks/DoorFrame/Shader.outputs:out>
+                token outputs:mdl:surface.connect = </World/Customizable_Office/Customizable_Office/DoorFrame/Looks/DoorFrame/Shader.outputs:out>
+                token outputs:mdl:volume.connect = </World/Customizable_Office/Customizable_Office/DoorFrame/Looks/DoorFrame/Shader.outputs:out>
+
+                def Shader "Shader"
+                {
+                    uniform token info:implementationSource = "sourceAsset"
+                    uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                    uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                    token outputs:out (
+                        renderType = "material"
+                    )
+                }
+            }
+        }
+    }
+
+    def "character" (
+        prepend payload = @../../Avatars/Dummy/Dummy_Configurable.usda@
+    )
+    {
+        double3 xformOp:rotateXYZ = (0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+    }
+}
+
+def "Environment"
+{
+    custom string ground:type = "Off"
+}
+

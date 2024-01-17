@@ -1,0 +1,35 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    endTimeCode = 1200
+    metersPerUnit = 1
+    startTimeCode = 0
+    timeCodesPerSecond = 30
+    upAxis = "Y"
+)
+
+def "World" (
+    variants = {
+        string FPS_Wheel = "Disabled"
+    }
+    prepend variantSets = "FPS_Wheel"
+)
+{
+    variantSet "FPS_Wheel" = {
+        "Enabled"
+        {
+            def "FPS_Wheel" (
+                    prepend payload = @./FPS_Wheel/FPS_Wheel.usda@
+            )
+            {
+                float3 xformOp:rotateXYZ = (0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-60, 30, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+        }
+        "Disabled"
+        {
+        }
+    }
+}

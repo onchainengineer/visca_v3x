@@ -1,0 +1,106 @@
+#usda 1.0
+(
+    upAxis = "Y"
+)
+
+over "World"
+{
+    over "AnimationGraph"
+    {
+        rel inputs:pose = </World/AnimationGraph/Blend>
+        rel skel:skeleton = </World/Animations/Rig_Retarget/character/OUTPUT/root_JNT/root_JNT>
+        custom uniform float2 ui:position = (516.9252, 139.5911)
+
+        def PoseProvider "PoseProvider_A2F"
+        {
+            rel inputs:blendShapes = </World/AnimationGraph/Read_BlendShapeWeights>
+            rel inputs:jointsPositions = </World/AnimationGraph/Read_JointPositions>
+            rel inputs:jointsRotations = </World/AnimationGraph/Read_JointRotations>
+            rel inputs:rootPositionDisplacement = </World/AnimationGraph/Read_RootPositionDisplacement>
+            rel inputs:rootRotationDisplacement = </World/AnimationGraph/Read_RootRotationDisplacement>
+            custom float2 ui:position = (-753.9636, 88.72921)
+        }
+
+        def AnimationClip "AnimationClip_Blinking_Darting"
+        {
+            rel inputs:animationSource = </World/Animations/Animations/Partial/Blinking_Darting>
+            bool inputs:loop = 1
+            custom float2 ui:position = (-757.5564, 353.3848)
+        }
+
+        def Blend "Blend_Blinking"
+        {
+            rel inputs:blendWeight = </World/AnimationGraph/Read_BlinkingStrength>
+            rel inputs:pose0 = </World/AnimationGraph/Filter_Darting>
+            rel inputs:pose1 = </World/AnimationGraph/PoseProvider_A2F>
+            custom float2 ui:position = (-227.16339, 203.28284)
+        }
+
+        def Blend "Blend"
+        {
+            rel inputs:blendWeight = </World/AnimationGraph/Read_BlendShapeStrength>
+            rel inputs:pose0 = </World/AnimationGraph/MainStateMachine>
+            rel inputs:pose1 = </World/AnimationGraph/Filter_Facial_Blendshapes>
+            custom float2 ui:position = (274.55896, 137.15747)
+        }
+
+        def ReadVariable "Read_JointPositions"
+        {
+            token inputs:variableName = "JointPositions"
+            custom float2 ui:position = (-935.5648, 107.17403)
+        }
+
+        def ReadVariable "Read_JointRotations"
+        {
+            token inputs:variableName = "JointRotations"
+            custom float2 ui:position = (-936.46545, 157.77757)
+        }
+
+        def ReadVariable "Read_RootPositionDisplacement"
+        {
+            token inputs:variableName = "RootPositionDisplacement"
+            custom float2 ui:position = (-1003.7252, 206.18642)
+        }
+
+        def ReadVariable "Read_RootRotationDisplacement"
+        {
+            token inputs:variableName = "RootRotationDisplacement"
+            custom float2 ui:position = (-1007.2733, 253.76215)
+        }
+
+        def ReadVariable "Read_BlendShapeWeights"
+        {
+            token inputs:variableName = "BlendShapeWeights"
+            custom float2 ui:position = (-973.713, 301.88196)
+        }
+
+        def ReadVariable "Read_BlinkingStrength"
+        {
+            token inputs:variableName = "BlinkingStrength"
+            custom float2 ui:position = (-413.44714, 421.02036)
+        }
+
+        def ReadVariable "Read_BlendShapeStrength"
+        {
+            token inputs:variableName = "BlendShapeStrength"
+            custom float2 ui:position = (86.33771, 304.2908)
+        }
+
+        def Filter "Filter_Darting"
+        {
+            token[] inputs:blendShapes = ["eyeBlinkLeft", "eyeBlinkRight", "eyeLookDownLeft", "eyeLookInLeft", "eyeLookOutLeft", "eyeLookUpLeft", "eyeLookDownRight", "eyeLookInRight", "eyeLookOutRight", "eyeLookUpRight"]
+            prepend rel inputs:pose = </World/AnimationGraph/AnimationClip_Blinking_Darting>
+            custom uniform float2 ui:position = (-462.73486, 307.56354)
+        }
+
+        def Filter "Filter_Facial_Blendshapes"
+        {
+            token[] inputs:blendShapes = ["eyeBlinkLeft", "eyeLookDownLeft", "eyeLookInLeft", "eyeLookOutLeft", "eyeLookUpLeft", "eyeSquintLeft", "eyeWideLeft", "eyeBlinkRight", "eyeLookDownRight", "eyeLookInRight", "eyeLookOutRight", "eyeLookUpRight", "eyeSquintRight", "eyeWideRight", "jawForward", "jawLeft", "jawRight", "jawOpen", "mouthClose", "mouthFunnel", "mouthPucker", "mouthLeft", "mouthRight", "mouthSmileLeft", "mouthSmileRight", "mouthFrownLeft", "mouthFrownRight", "mouthDimpleLeft", "mouthDimpleRight", "mouthStretchLeft", "mouthStretchRight", "mouthRollLower", "mouthRollUpper", "mouthShrugLower", "mouthShrugUpper", "mouthPressLeft", "mouthPressRight", "mouthLowerDownLeft", "mouthLowerDownRight", "mouthUpperUpLeft", "mouthUpperUpRight", "browDownLeft", "browDownRight", "browInnerUp", "browOuterUpLeft", "browOuterUpRight", "cheekPuff", "cheekSquintLeft", "cheekSquintRight", "noseSneerLeft", "noseSneerRight", "tongueOut"]
+            bool inputs:blendShapesInclusive = 1
+            bool inputs:inclusive = 1
+            rel inputs:pose = </World/AnimationGraph/Blend_Blinking>
+            custom float2 ui:position = (6.4490356, 183.4052)
+        }
+    }
+}
+

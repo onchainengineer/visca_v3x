@@ -1,0 +1,96 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary animation_graph_microservice_api_variable_mapping = {
+            dictionary gesture_state = {
+                string variable_name = "gesture_state"
+            }
+            dictionary posture_state = {
+                string variable_name = "posture_state"
+            }
+            dictionary state = {
+                string variable_name = "posture_state"
+            }
+        }
+        dictionary audio2faceSettings = {
+            int export_fps = 60
+        }
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (0, 0, 50000)
+                double radius = 500
+            }
+            dictionary Perspective = {
+                double3 position = (1.5873738705858642, 169.25639288579941, 126.58178554486253)
+                double3 target = (-27.699237267706362, 127.35130026380324, -199.36140308781913)
+            }
+            dictionary Right = {
+                double3 position = (-50000, 0, -1.1102230246251565e-11)
+                double radius = 500
+            }
+            dictionary Top = {
+                double3 position = (-4.329780281177466e-12, 50000, 1.1102230246251565e-11)
+                double radius = 500
+            }
+            string boundCamera = "/World/camera_main"
+        }
+        dictionary omni_layer = {
+            string authoring_layer = "./Local_Configuration.usda"
+            dictionary locked = {
+                bool "./Configurator_Scene.usda" = 1
+            }
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+        }
+    }
+    defaultPrim = "World"
+    endTimeCode = 432
+    metersPerUnit = 0.01
+    startTimeCode = 0
+    subLayers = [
+        @./Local_Configuration.usda@,
+        @./Configurator_Scene.usda@,
+        @./Debug/Debug.usda@
+    ]
+    timeCodesPerSecond = 30
+    upAxis = "Y"
+)
+
+def Xform "World" (
+    variants = {
+        string FPS_Wheel = "Enabled"
+        string avatarVariant = "dummy"
+        string sceneVariant = "dummy"
+    }
+)
+{
+    def Camera "camera_main" (
+        hide_in_stage_window = false
+        kind = "model"
+        no_delete = false
+    )
+    {
+        float2 clippingRange = (10, 10000)
+        float focalLength = 35
+        float focusDistance = 369.7
+        float fStop = 1.5
+        float horizontalAperture = 20.955
+        float horizontalApertureOffset = 0
+        bool omni:kit:cameraLock = 1
+        custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -406.0767884037098)
+        token projection = "perspective"
+        double shutter:close = 0.25
+        double shutter:open = -0.25
+        custom string userProperties:blenderName:data = "Camera"
+        float verticalAperture = 15.2908
+        float verticalApertureOffset = 0
+        token visibility = "invisible"
+        float3 xformOp:rotateXYZ = (-5.9402924, 0.009506203, 0.00002060469)
+        float3 xformOp:scale = (1, 0.9999997, 0.99999875)
+        double3 xformOp:translate = (-9.41660048428767, 158.29900000000433, 373.8330005692238)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+    }
+}
+

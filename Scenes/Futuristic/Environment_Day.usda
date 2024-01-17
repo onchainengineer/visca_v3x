@@ -1,0 +1,221 @@
+#usda 1.0
+(
+    defaultPrim = "Root"
+    upAxis = "Y"
+)
+
+def Xform "Root"
+{
+    def Xform "Environment_Day"
+    {
+        token ui:displayGroup = "Material Graphs"
+        token ui:displayName = "Environment_Day"
+        int ui:order = 1024
+        custom string userProperties:blenderName:object = "Light"
+        token visibility = "visible"
+        float3 xformOp:rotateXYZ = (0, -0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+        def DistantLight "AmbientLight"
+        {
+            float angle = 30
+            color3f color = (0.3166023, 0.6279677, 1)
+            float inputs:angle = 0.5235988
+            color3f inputs:color = (0.8, 0.9, 1)
+            float inputs:intensity = 341.50674
+            float inputs:specular = 1
+            float intensity = 700
+            float specular = 1
+            custom string userProperties:blenderName:data = "AmbientLight"
+            token visibility = "invisible"
+            float3 xformOp:rotateXYZ = (52.424473, -10.075814, -48.579605)
+            float3 xformOp:scale = (1.0000005, 0.99999934, 1)
+            double3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def DistantLight "Sunlight"
+        {
+            float angle = 8
+            color3f color = (1, 0.8580071, 0.7104247)
+            float inputs:angle = 0.017453292
+            color3f inputs:color = (1, 0.9567686, 0.9227799)
+            float inputs:intensity = 3000.0002
+            float inputs:specular = 1
+            float intensity = 7000
+            float specular = 1
+            custom string userProperties:blenderName:data = "Sunlight"
+            token visibility = "inherited"
+            float3 xformOp:rotateXYZ = (-17.633543, 45.488716, 1.9547567)
+            float3 xformOp:scale = (0.99999994, 0.9999999, 0.9999998)
+            double3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def CylinderLight "CylinderLight" (
+            apiSchemas = ["ShapingAPI"]
+        )
+        {
+            color3f color = (1, 0.99999535, 0.99999)
+            float intensity = 6000
+            float length = 500
+            float radius = 5
+            float shaping:cone:angle = 180
+            float shaping:cone:softness = 0.5
+            float shaping:focus
+            color3f shaping:focusTint
+            asset shaping:ies:file
+            token visibility = "invisible"
+            double3 xformOp:rotateXYZ = (-150.9014892578125, -55.473297119140625, -114.63277435302734)
+            double3 xformOp:scale = (0.009999999776482582, 0.009999999776482582, 0.009999999776482582)
+            double3 xformOp:translate = (-1.1245369572928696, 0.1578176863181615, 2.3645025938606232)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def RectLight "FillLight" (
+            apiSchemas = ["ShapingAPI"]
+        )
+        {
+            color3f color = (0.8069498, 0.81440353, 1)
+            float exposure = 2.5
+            float height = 25
+            float intensity = 100000
+            float shaping:cone:angle = 50
+            float shaping:cone:softness = 0.4
+            float shaping:focus = 1
+            color3f shaping:focusTint
+            asset shaping:ies:file
+            token visibility = "inherited"
+            float width = 25
+            double3 xformOp:rotateXYZ = (78.34097185719861, -11.489818054059043, -44.85637239761556)
+            double3 xformOp:scale = (0.009999999776482582, 0.009999999776482582, 0.009999999776482582)
+            double3 xformOp:translate = (-1.8543202490939628, -2.388874703991072, 2.01253859802535)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def DomeLight "sky" (
+            apiSchemas = ["ShapingAPI"]
+        )
+        {
+            float intensity = 1000
+            float shaping:cone:angle = 180
+            float shaping:cone:softness
+            float shaping:focus = 0
+            color3f shaping:focusTint = (0, 0, 0)
+            asset shaping:ies:file
+            float specular = 1
+            asset texture:file = @./modern_buildings_2_4k.exr@
+            token texture:format = "latlong"
+            token visibility = "inherited"
+            bool visibleInPrimaryRay = 1
+            double3 xformOp:rotateXYZ = (0.7006149040667253, 15.985053678078174, 182.5425706067494)
+            double3 xformOp:scale = (0.009999999776482582, 0.009999999776482582, 0.009999999776482582)
+            double3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Xform "SkyPlane" (
+            instanceable = false
+        )
+        {
+            token visibility = "inherited"
+            float3 xformOp:rotateXYZ = (-7.3825e-16, -16, -2.4904562e-15)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.5512747116339983, 4.547477303574617e-16, -1.922523391876637)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+            def Scope "materials"
+            {
+                def Material "Sky"
+                {
+                    token outputs:mdl:surface.connect = </Root/Environment_Day/SkyPlane/materials/Sky/mdl/Shader.outputs:out>
+                    custom string userProperties:blenderName:data = "Sky"
+
+                    def Scope "mdl"
+                    {
+                        def Shader "Shader"
+                        {
+                            uniform token info:implementationSource = "sourceAsset"
+                            uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                            uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                            color3f inputs:diffuse_color_constant = (0.8, 0.8, 0.8)
+                            asset inputs:diffuse_texture = @@ (
+                                colorSpace = "auto"
+                            )
+                            bool inputs:enable_opacity = 0
+                            bool inputs:excludeFromWhiteMode = 0 (
+                                customData = {
+                                    bool default = 0
+                                }
+                                displayGroup = "Material Flags"
+                                displayName = "Exclude from White Mode"
+                                hidden = false
+                            )
+                            float inputs:opacity_constant = 1
+                            token outputs:out
+                        }
+                    }
+
+                    def Scope "preview"
+                    {
+                    }
+                }
+            }
+
+            def Xform "Sky"
+            {
+                custom string userProperties:blenderName:object = "Sky"
+                float3 xformOp:rotateXYZ = (0, 0, -19.785326)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (0, 0, 0.3999999761581421)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                def Mesh "Sky" (
+                    active = true
+                )
+                {
+                    uniform bool doubleSided = 1
+                    int[] faceVertexCounts = [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
+                    int[] faceVertexIndices = [0, 2, 3, 1, 4, 6, 7, 5, 6, 8, 9, 7, 8, 10, 11, 9, 10, 12, 13, 11, 12, 14, 15, 13, 14, 16, 17, 15, 16, 18, 19, 17, 18, 20, 21, 19, 20, 22, 23, 21, 22, 24, 25, 23, 24, 26, 27, 25, 26, 28, 29, 27, 28, 30, 31, 29, 30, 32, 33, 31, 32, 0, 1, 33]
+                    rel material:binding = </World/Scene/Looks/SkyPlane_Day> (
+                        bindMaterialAs = "weakerThanDescendants"
+                    )
+                    normal3f[] normals = [(-0.6343932, -0.77301055, 0), (-0.67155874, -0.7409512, 0), (-0.67155874, -0.7409512, 0), (-0.6343932, -0.77301055, 0), (0.6715581, -0.7409519, 0), (0.63439333, -0.7730104, 0), (0.63439333, -0.7730104, 0), (0.6715581, -0.7409519, 0), (0.63439333, -0.7730104, 0), (0.55557084, -0.8314693, 0), (0.55557084, -0.8314693, 0), (0.63439333, -0.7730104, 0), (0.55557084, -0.8314693, 0), (0.47139657, -0.88192135, 0), (0.47139657, -0.88192135, 0), (0.55557084, -0.8314693, 0), (0.47139657, -0.88192135, 0), (0.382683, -0.92387974, 0), (0.382683, -0.92387974, 0), (0.47139657, -0.88192135, 0), (0.382683, -0.92387974, 0), (0.29028466, -0.9569403, 0), (0.29028466, -0.9569403, 0), (0.382683, -0.92387974, 0), (0.29028466, -0.9569403, 0), (0.19509059, -0.98078525, 0), (0.19509059, -0.98078525, 0), (0.29028466, -0.9569403, 0), (0.19509059, -0.98078525, 0), (0.098017216, -0.9951848, 0), (0.098017216, -0.9951848, 0), (0.19509059, -0.98078525, 0), (0.098017216, -0.9951848, 0), (1.1872268e-8, -1, 0), (1.1872268e-8, -1, 0), (0.098017216, -0.9951848, 0), (1.1872268e-8, -1, 0), (-0.098017715, -0.99518466, 0), (-0.098017715, -0.99518466, 0), (1.1872268e-8, -1, 0), (-0.098017715, -0.99518466, 0), (-0.19509055, -0.98078525, 0), (-0.19509055, -0.98078525, 0), (-0.098017715, -0.99518466, 0), (-0.19509055, -0.98078525, 0), (-0.290284, -0.95694053, 0), (-0.290284, -0.95694053, 0), (-0.19509055, -0.98078525, 0), (-0.290284, -0.95694053, 0), (-0.38268304, -0.92387974, 0), (-0.38268304, -0.92387974, 0), (-0.290284, -0.95694053, 0), (-0.38268304, -0.92387974, 0), (-0.47139692, -0.88192123, 0), (-0.47139692, -0.88192123, 0), (-0.38268304, -0.92387974, 0), (-0.47139692, -0.88192123, 0), (-0.55557036, -0.8314695, 0), (-0.55557036, -0.8314695, 0), (-0.47139692, -0.88192123, 0), (-0.55557036, -0.8314695, 0), (-0.6343932, -0.77301055, 0), (-0.6343932, -0.77301055, 0), (-0.55557036, -0.8314695, 0)] (
+                        interpolation = "faceVarying"
+                    )
+                    point3f[] points = [(25.37573, 30.920418, -19.999998), (25.37573, 30.920418, 19.999998), (28.284271, 28.284271, -19.999998), (28.284271, 28.284271, 19.999998), (-28.284271, 28.284271, -19.999998), (-28.284271, 28.284271, 19.999998), (-25.375729, 30.920414, -19.999998), (-25.375729, 30.920414, 19.999998), (-22.222809, 33.258785, -19.999998), (-22.222809, 33.258785, 19.999998), (-18.85587, 35.27685, -19.999998), (-18.85587, 35.27685, 19.999998), (-15.307336, 36.95518, -19.999998), (-15.307336, 36.95518, 19.999998), (-11.611385, 38.27761, -19.999998), (-11.611385, 38.27761, 19.999998), (-7.8036118, 39.23141, -19.999998), (-7.8036118, 39.23141, 19.999998), (-3.9206862, 39.80739, -19.999998), (-3.9206862, 39.80739, 19.999998), (-0.0000011920929, 40, -19.999998), (-0.0000011920929, 40, 19.999998), (3.9206862, 39.80739, -19.999998), (3.9206862, 39.80739, 19.999998), (7.8036094, 39.231407, -19.999998), (7.8036094, 39.231407, 19.999998), (11.611385, 38.27761, -19.999998), (11.611385, 38.27761, 19.999998), (15.307339, 36.95518, -19.999998), (15.307339, 36.95518, 19.999998), (18.85587, 35.27685, -19.999998), (18.85587, 35.27685, 19.999998), (22.222807, 33.258785, -19.999998), (22.222807, 33.258785, 19.999998)]
+                    bool primvars:doNotCastShadows = 1
+                    texCoord2f[] primvars:st = [(0.062586635, 0.00009790063), (0.00009905547, 0.000097721815), (0.000097714365, 0.99999934), (0.06258541, 0.99999946), (0.9999011, 0.00009781122), (0.93741345, 0.000097990036), (0.93741447, 0.9999996), (0.99990225, 0.99999934), (0.93741345, 0.000097990036), (0.87492573, 0.00009825826), (0.8749266, 0.9999996), (0.93741447, 0.9999996), (0.87492573, 0.00009825826), (0.8124382, 0.000098347664), (0.8124389, 0.9999998), (0.8749266, 0.9999996), (0.8124382, 0.000098347664), (0.74995047, 0.00009825826), (0.7499512, 0.99999994), (0.8124389, 0.9999998), (0.74995047, 0.00009825826), (0.6874628, 0.000098347664), (0.68746346, 1), (0.7499512, 0.99999994), (0.6874628, 0.000098347664), (0.6249752, 0.00009839237), (0.62497574, 1), (0.68746346, 1), (0.6249752, 0.00009839237), (0.56248766, 0.00009857118), (0.5624879, 1.0000002), (0.62497574, 1), (0.56248766, 0.00009857118), (0.5, 0.00009857118), (0.5000002, 1.0000002), (0.5624879, 1.0000002), (0.5, 0.00009857118), (0.4375124, 0.00009857118), (0.43751234, 1.0000002), (0.5000002, 1.0000002), (0.4375124, 0.00009857118), (0.3750248, 0.00009857118), (0.37502462, 1.0000002), (0.43751234, 1.0000002), (0.3750248, 0.00009857118), (0.31253716, 0.00009839237), (0.3125367, 1), (0.37502462, 1.0000002), (0.31253716, 0.00009839237), (0.25004947, 0.00009830296), (0.2500488, 1), (0.3125367, 1), (0.25004947, 0.00009830296), (0.18756191, 0.00009830296), (0.18756111, 0.9999998), (0.2500488, 1), (0.18756191, 0.00009830296), (0.12507427, 0.00009816885), (0.12507331, 0.9999996), (0.18756111, 0.9999998), (0.12507427, 0.00009816885), (0.062586635, 0.00009790063), (0.06258541, 0.99999946), (0.12507331, 0.9999996)] (
+                        interpolation = "faceVarying"
+                    )
+                    uniform token subdivisionScheme = "none"
+                    custom string userProperties:blenderName:data = "Sky"
+                    custom string userProperties:blenderName:data:st = "UVMap"
+                }
+            }
+        }
+
+        def RectLight "Background_SkyLight" (
+            apiSchemas = ["ShapingAPI"]
+        )
+        {
+            color3f color = (0.2934363, 0.48290038, 1)
+            float height = 300
+            float intensity = 2000
+            float shaping:cone:angle = 100
+            float shaping:cone:softness = 1
+            float shaping:focus
+            color3f shaping:focusTint
+            asset shaping:ies:file
+            token visibility = "inherited"
+            float width = 1300
+            double3 xformOp:rotateXYZ = (106, 2.226388324188481e-14, -90)
+            double3 xformOp:scale = (0.010000004433095455, 0.009999999776482582, 0.010000004433095455)
+            double3 xformOp:translate = (-0.8616158568918739, 8.732193743301252, 2.6889928247857786)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+    }
+}
+

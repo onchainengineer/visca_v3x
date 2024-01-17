@@ -1,0 +1,3446 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary audio2faceSettings = {
+            int export_fps = 60
+        }
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (0, 0, 50000)
+                double radius = 500
+            }
+            dictionary Perspective = {
+                double3 position = (469.4356783858564, 319.71143965768294, 1448.7327542127261)
+                double3 target = (-577.1774667431057, -255.93863026481574, -749.68522861116)
+            }
+            dictionary Right = {
+                double3 position = (-50000, 0, 0)
+                double radius = 500
+            }
+            dictionary Top = {
+                double3 position = (0, 50000, 0)
+                double radius = 500
+            }
+        }
+        dictionary navmeshSettings = {
+            double agentHeight = 180
+            double agentRadius = 20
+            bool excludeRigidBodies = 1
+            int ver = 1
+            double voxelCeiling = 460
+        }
+        dictionary omni_layer = {
+            string authoring_layer = "./Customizable_Office.usda"
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+            int "rtx:hydra:curves:splits" = 2
+            bool "rtx:raytracing:subsurface:enabled" = 1
+        }
+    }
+    defaultPrim = "World"
+    endTimeCode = 100
+    metersPerUnit = 0.01
+    startTimeCode = 0
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def Xform "World" (
+    variants = {
+        string backgroundImageVariant = "Enabled"
+        string sceneMoodVariant = "mood1"
+    }
+    prepend variantSets = "sceneMoodVariant"
+    append variantSets = "backgroundImageVariant"
+)
+{
+    rel material:binding = None (
+        bindMaterialAs = "weakerThanDescendants"
+    )
+    color3f primvars:sceneColor1 = (0.13, 0.077, 0.054)
+    color3f primvars:sceneColor2 = (0.06, 0.029, 0.021)
+    color3f primvars:sceneColor3 = (0.054, 0.069, 0.023)
+
+    def "Desk_Clutter" (
+        instanceable = false
+        delete payload = @./Desk_Clutter.usdc@
+        prepend payload = @./Desk_Clutter.usdc@
+    )
+    {
+        float3 xformOp:rotateXYZ = (-90, 0, 0)
+        float3 xformOp:scale = (100, 100, 100)
+        double3 xformOp:translate = (-40, 9.875734549505256e-20, 50)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+    }
+
+    def Scope "Looks"
+    {
+        def Material "Separator_Wall"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/Separator_Wall/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/Separator_Wall/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/Separator_Wall/Shader.outputs:out>
+            uniform token ui:nodegraph:node:expansionState = "open"
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                float inputs:bump_factor = 0.5 (
+                    customData = {
+                        float default = 1
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Normal"
+                    displayName = "Normal Strength"
+                    doc = "Strength of normal map"
+                    hidden = false
+                )
+                float inputs:detail_bump_factor = 0.3 (
+                    customData = {
+                        float default = 0.3
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Normal"
+                    displayName = "Detail Normal Strength"
+                    doc = "Strength of the detail normal"
+                    hidden = false
+                )
+                color3f inputs:diffuse_color_constant = (0.9, 0.9, 0.9) (
+                    customData = {
+                        float3 default = (0.2, 0.2, 0.2)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Color"
+                    doc = "This is the albedo base color"
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f inputs:diffuse_tint = (1, 1, 1) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Color Tint"
+                    doc = "When enabled, this color value is multiplied over the final albedo color"
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f inputs:diffuse_tint.connect = </World/Looks/Separator_Wall/data_lookup_color.outputs:out>
+                asset inputs:normalmap_texture = @./textures/Wall_Tilable_NORM.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Normal"
+                    displayName = "Normal Map"
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                float inputs:reflection_roughness_constant = 1 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Amount"
+                    doc = "Higher roughness values lead to more blurry reflections"
+                    hidden = false
+                )
+                float2 inputs:texture_scale = (2, 2) (
+                    customData = {
+                        float2 default = (1, 1)
+                    }
+                    displayGroup = "UV"
+                    displayName = "Texture Tiling"
+                    doc = "Controls the repetition of the texture."
+                    hidden = false
+                )
+                token outputs:out (
+                    renderType = "material"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+            }
+
+            def Shader "data_lookup_color" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color"
+                color3f inputs:default_value = (0.4, 0.399996, 0.399996) (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                string inputs:name = "sceneColor3" (
+                    customData = {
+                        string default = ""
+                    }
+                    hidden = false
+                    renderType = "string"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-849.653, 144.99733)
+            }
+        }
+
+        def Material "Desk1a"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/Desk1a/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/Desk1a/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/Desk1a/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                asset inputs:diffuse_texture = @./textures/Desk1_Albedo.png@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Map"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint = (1, 1, 1) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Color Tint"
+                    doc = "When enabled, this color value is multiplied over the final albedo color"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint.connect = </World/Looks/Desk1a/data_lookup_color.outputs:out>
+                float inputs:reflection_roughness_constant = 1 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Amount"
+                    doc = "Higher roughness values lead to more blurry reflections"
+                    hidden = false
+                )
+                float inputs:reflection_roughness_texture_influence = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map Influence"
+                    doc = "Blends between the constant value and the lookup of the roughness texture"
+                    hidden = false
+                )
+                asset inputs:reflectionroughness_texture = @./textures/Desk1_Roughness.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map"
+                    hidden = false
+                )
+                token outputs:out
+                uniform token ui:nodegraph:node:expansionState = "open"
+            }
+
+            def Shader "data_lookup_color" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:name", "inputs:default_value"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color"
+                color3f inputs:default_value (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                string inputs:name = "sceneColor1" (
+                    hidden = false
+                    renderType = "string"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-836.55206, 282.98465)
+            }
+        }
+
+        def Material "Desk1b"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/Desk1b/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/Desk1b/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/Desk1b/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                asset inputs:diffuse_texture = @./textures/Desk1_Albedo.png@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Map"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint = (1, 1, 1) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Color Tint"
+                    doc = "When enabled, this color value is multiplied over the final albedo color"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint.connect = </World/Looks/Desk1b/data_lookup_color.outputs:out>
+                float inputs:reflection_roughness_constant = 1 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Amount"
+                    doc = "Higher roughness values lead to more blurry reflections"
+                    hidden = false
+                )
+                float inputs:reflection_roughness_texture_influence = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map Influence"
+                    doc = "Blends between the constant value and the lookup of the roughness texture"
+                    hidden = false
+                )
+                asset inputs:reflectionroughness_texture = @./textures/Desk1_Roughness.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map"
+                    hidden = false
+                )
+                token outputs:out
+                uniform token ui:nodegraph:node:expansionState = "open"
+            }
+
+            def Shader "data_lookup_color" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:name", "inputs:default_value"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color"
+                color3f inputs:default_value (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                string inputs:name = "sceneColor3" (
+                    hidden = false
+                    renderType = "string"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-908.3301, 374.9262)
+            }
+        }
+
+        def Material "DeskGlass"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/DeskGlass/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/DeskGlass/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/DeskGlass/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniSurface.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniSurface"
+                color3f inputs:diffuse_reflection_color = (0.35806584, 0.41851854, 0.4077714) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Base"
+                    displayName = "Color"
+                    hidden = false
+                )
+                float inputs:diffuse_reflection_roughness = 0 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base"
+                    displayName = "Diffuse Roughness"
+                    hidden = false
+                )
+                float inputs:diffuse_reflection_weight = 1 (
+                    customData = {
+                        float default = 0.8
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base"
+                    displayName = "Weight"
+                    hidden = false
+                )
+                bool inputs:enable_specular_transmission = 1 (
+                    customData = {
+                        bool default = 0
+                    }
+                    displayGroup = "Transmission"
+                    displayName = "Enable Transmission"
+                    doc = "Enables the use of transmission"
+                    hidden = false
+                )
+                asset inputs:geometry_normal_image = @./textures/Noise_NORM.png@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Geometry"
+                    displayName = "Geometry Normal Map Image"
+                    hidden = false
+                )
+                bool inputs:geometry_normal_image_flip_g_channel = 1 (
+                    customData = {
+                        bool default = 0
+                    }
+                    displayGroup = "Geometry"
+                    displayName = "Normal Map Flip G Channel"
+                    hidden = false
+                )
+                float inputs:geometry_normal_strength = 0.1 (
+                    customData = {
+                        float default = 1
+                        dictionary range = {
+                            float max = 3.4028235e38
+                            float min = 0
+                        }
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Geometry"
+                    displayName = "Geometry Normal Strength"
+                    hidden = false
+                )
+                float inputs:metalness = 0 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base"
+                    displayName = "Metalness"
+                    hidden = false
+                )
+                float inputs:specular_reflection_roughness = 0.29999998 (
+                    customData = {
+                        float default = 0.2
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Specular"
+                    displayName = "Roughness"
+                    hidden = false
+                )
+                asset inputs:specular_reflection_roughness_image = @@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Specular"
+                    displayName = "Roughness Image"
+                    hidden = false
+                )
+                float inputs:specular_transmission_weight = 0.7 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Transmission"
+                    displayName = "Weight"
+                    hidden = false
+                )
+                float inputs:uvw_s_scale = 10 (
+                    customData = {
+                        float default = 1
+                        dictionary soft_range = {
+                            float max = 100
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "UVW Coordinates"
+                    displayName = "Scale U"
+                    hidden = false
+                )
+                float inputs:uvw_t_scale = 10 (
+                    customData = {
+                        float default = 1
+                        dictionary soft_range = {
+                            float max = 100
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "UVW Coordinates"
+                    displayName = "Scale V"
+                    hidden = false
+                )
+                token outputs:out
+            }
+        }
+
+        def Material "Floor_Wodd"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/Floor_Wodd/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/Floor_Wodd/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/Floor_Wodd/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                asset inputs:diffuse_texture = @./textures/Parquet_DIF.png@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Map"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint = (1, 1, 1) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Color Tint"
+                    doc = "When enabled, this color value is multiplied over the final albedo color"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint.connect = </World/Looks/Floor_Wodd/data_lookup_color.outputs:out>
+                asset inputs:normalmap_texture = @./textures/Parquet_NORM.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Normal"
+                    displayName = "Normal Map"
+                    doc = "Enables the usage of the normalmap texture"
+                    hidden = false
+                )
+                float inputs:reflection_roughness_texture_influence = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map Influence"
+                    doc = "Blends between the constant value and the lookup of the roughness texture"
+                    hidden = false
+                )
+                asset inputs:reflectionroughness_texture = @./textures/Parquet_Roughness.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map"
+                    hidden = false
+                )
+                float inputs:texture_rotate = 0 (
+                    customData = {
+                        float default = 0
+                    }
+                    displayGroup = "UV"
+                    displayName = "Texture Rotate"
+                    doc = "Rotates angle of texture in degrees."
+                    hidden = false
+                )
+                float2 inputs:texture_scale = (6, 6) (
+                    customData = {
+                        float2 default = (1, 1)
+                    }
+                    displayGroup = "UV"
+                    displayName = "Texture Scale"
+                    doc = "Larger number increases size of texture."
+                    hidden = false
+                )
+                token outputs:out
+                uniform token ui:nodegraph:node:expansionState = "open"
+            }
+
+            def Shader "data_lookup_color" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:name", "inputs:default_value"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color"
+                color3f inputs:default_value (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                string inputs:name = "sceneColor2" (
+                    hidden = false
+                    renderType = "string"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-828.0451, 216.09273)
+            }
+        }
+
+        def Material "Desk2a"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/Desk2a/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/Desk2a/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/Desk2a/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                float inputs:bump_factor = 0.3 (
+                    customData = {
+                        float default = 1
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Normal"
+                    displayName = "Normal Map Strength"
+                    doc = "Strength of normal map."
+                    hidden = false
+                )
+                asset inputs:diffuse_texture = @./textures/Desk2_Albedo.png@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Map"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint = (1, 1, 1) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Color Tint"
+                    doc = "When enabled, this color value is multiplied over the final albedo color"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint.connect = </World/Looks/Desk2a/data_lookup_color.outputs:out>
+                asset inputs:normalmap_texture = @./textures/Desk2_NORM.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Normal"
+                    displayName = "Normal Map"
+                    doc = "Enables the usage of the normalmap texture"
+                    hidden = false
+                )
+                float inputs:reflection_roughness_constant = 1 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Amount"
+                    doc = "Higher roughness values lead to more blurry reflections"
+                    hidden = false
+                )
+                float inputs:reflection_roughness_texture_influence = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map Influence"
+                    doc = "Blends between the constant value and the lookup of the roughness texture"
+                    hidden = false
+                )
+                asset inputs:reflectionroughness_texture = @./textures/Desk2_Roughness.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map"
+                    hidden = false
+                )
+                token outputs:out
+                uniform token ui:nodegraph:node:expansionState = "open"
+            }
+
+            def Shader "data_lookup_color" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:name", "inputs:default_value"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color"
+                color3f inputs:default_value (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                string inputs:name = "sceneColor2" (
+                    hidden = false
+                    renderType = "string"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-835.698, 282.98465)
+            }
+        }
+
+        def Material "Desk2b"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/Desk2b/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/Desk2b/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/Desk2b/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                float inputs:bump_factor = 0.3 (
+                    customData = {
+                        float default = 1
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Normal"
+                    displayName = "Normal Map Strength"
+                    doc = "Strength of normal map."
+                    hidden = false
+                )
+                asset inputs:diffuse_texture = @./textures/Desk2_Albedo.png@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Map"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint = (1, 1, 1) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Color Tint"
+                    doc = "When enabled, this color value is multiplied over the final albedo color"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint.connect = </World/Looks/Desk2b/data_lookup_color.outputs:out>
+                asset inputs:normalmap_texture = @./textures/Desk2_NORM.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Normal"
+                    displayName = "Normal Map"
+                    doc = "Enables the usage of the normalmap texture"
+                    hidden = false
+                )
+                float inputs:reflection_roughness_constant = 1 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Amount"
+                    doc = "Higher roughness values lead to more blurry reflections"
+                    hidden = false
+                )
+                float inputs:reflection_roughness_texture_influence = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map Influence"
+                    doc = "Blends between the constant value and the lookup of the roughness texture"
+                    hidden = false
+                )
+                asset inputs:reflectionroughness_texture = @./textures/Desk2_Roughness.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map"
+                    hidden = false
+                )
+                token outputs:out
+                uniform token ui:nodegraph:node:expansionState = "open"
+            }
+
+            def Shader "data_lookup_color" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:name", "inputs:default_value"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color"
+                color3f inputs:default_value (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                string inputs:name = "sceneColor1" (
+                    hidden = false
+                    renderType = "string"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-836.55206, 282.98465)
+            }
+        }
+
+        def Material "WallDecoration"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/WallDecoration/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/WallDecoration/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/WallDecoration/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                float inputs:bump_factor = 0.3 (
+                    customData = {
+                        float default = 1
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Normal"
+                    displayName = "Normal Map Strength"
+                    doc = "Strength of normal map."
+                    hidden = false
+                )
+                asset inputs:diffuse_texture = @./textures/WallDecoration_Albedo.png@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Map"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint = (1, 1, 1) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Color Tint"
+                    doc = "When enabled, this color value is multiplied over the final albedo color"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint.connect = </World/Looks/WallDecoration/data_lookup_color.outputs:out>
+                asset inputs:normalmap_texture = @./textures/WallDecoration_NORM.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Normal"
+                    displayName = "Normal Map"
+                    doc = "Enables the usage of the normalmap texture"
+                    hidden = false
+                )
+                float inputs:reflection_roughness_constant = 1 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Amount"
+                    doc = "Higher roughness values lead to more blurry reflections"
+                    hidden = false
+                )
+                float inputs:reflection_roughness_texture_influence = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map Influence"
+                    doc = "Blends between the constant value and the lookup of the roughness texture"
+                    hidden = false
+                )
+                asset inputs:reflectionroughness_texture = @./textures/WallDecoration_Roughness.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map"
+                    hidden = false
+                )
+                token outputs:out
+                uniform token ui:nodegraph:node:expansionState = "open"
+            }
+
+            def Shader "data_lookup_color" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:name", "inputs:default_value"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color"
+                color3f inputs:default_value (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                string inputs:name = "sceneColor2" (
+                    hidden = false
+                    renderType = "string"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-836.55206, 282.98465)
+            }
+        }
+
+        def Material "Wall"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/Wall/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/Wall/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/Wall/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                float inputs:bump_factor = 0.3 (
+                    customData = {
+                        float default = 1
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Normal"
+                    displayName = "Normal Map Strength"
+                    doc = "Strength of normal map."
+                    hidden = false
+                )
+                color3f inputs:diffuse_color_constant = (0.9, 0.9, 0.9) (
+                    customData = {
+                        float3 default = (0.2, 0.2, 0.2)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Base Color"
+                    doc = "This is the base color"
+                    hidden = false
+                )
+                asset inputs:diffuse_texture = @@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Map"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint = (1, 1, 1) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Color Tint"
+                    doc = "When enabled, this color value is multiplied over the final albedo color"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint.connect = </World/Looks/Wall/data_lookup_color.outputs:out>
+                asset inputs:normalmap_texture = @./textures/Wall_NORM.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Normal"
+                    displayName = "Normal Map"
+                    doc = "Enables the usage of the normalmap texture"
+                    hidden = false
+                )
+                float inputs:reflection_roughness_constant = 0.8 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Amount"
+                    doc = "Higher roughness values lead to more blurry reflections"
+                    hidden = false
+                )
+                float inputs:reflection_roughness_texture_influence = 0 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map Influence"
+                    doc = "Blends between the constant value and the lookup of the roughness texture"
+                    hidden = false
+                )
+                asset inputs:reflectionroughness_texture = @@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map"
+                    hidden = false
+                )
+                token outputs:out
+                uniform token ui:nodegraph:node:expansionState = "open"
+            }
+
+            def Shader "data_lookup_color" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:name", "inputs:default_value"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color"
+                color3f inputs:default_value (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                string inputs:name = "sceneColor3" (
+                    hidden = false
+                    renderType = "string"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-836.97644, 283.40906)
+            }
+        }
+
+        def Material "Background"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/Background/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/Background/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/Background/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniSurface.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniSurface"
+                asset inputs:diffuse_reflection_color_image = @../_general/Logo_Background.png@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Base"
+                    displayName = "Color Image"
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                float inputs:diffuse_reflection_weight = 0.79999995 (
+                    customData = {
+                        float default = 0.8
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base"
+                    displayName = "Weight"
+                    hidden = false
+                )
+                asset inputs:diffuse_reflection_weight_image = @@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Base"
+                    displayName = "Weight Image"
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                asset inputs:emission_color_image = @../_general/ExampleBackground.jpg@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Emission"
+                    displayName = "Color Image"
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                bool inputs:enable_opacity = 1 (
+                    customData = {
+                        bool default = 0
+                    }
+                    displayGroup = "Geometry"
+                    displayName = "Enable Opacity"
+                    hidden = false
+                )
+                asset inputs:geometry_opacity_image = @../_general/Logo_Background.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Geometry"
+                    displayName = "Opacity Image"
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                float inputs:specular_reflection_roughness = 0.18 (
+                    customData = {
+                        float default = 0.2
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Specular"
+                    displayName = "Roughness"
+                    hidden = false
+                )
+                token outputs:out (
+                    renderType = "material"
+                )
+            }
+        }
+
+        def Material "Paper"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/Paper/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/Paper/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/Paper/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (0.7, 0.6721186, 0.63) (
+                    customData = {
+                        float3 default = (0.2, 0.2, 0.2)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Color"
+                    doc = "This is the albedo base color"
+                    hidden = false
+                )
+                float inputs:reflection_roughness_constant = 0.18 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Amount"
+                    doc = "Higher roughness values lead to more blurry reflections"
+                    hidden = false
+                )
+                token outputs:out (
+                    renderType = "material"
+                )
+            }
+        }
+    }
+
+    def Scope "transfer_data"
+    {
+        string mm:axis_fwd = "Z"
+        string mm:axis_up = "Y"
+        bool mm:axis_vis = 0
+        string[] mm:extra_dynamic = []
+        string[] mm:extra_static = []
+        string[] mm:gums = []
+        string[] mm:l_eye = []
+        string[] mm:r_eye = []
+    }
+
+    over "Modern"
+    {
+        over "Light"
+        {
+            token visibility = "inherited"
+
+            over "Backlight" (
+                active = false
+            )
+            {
+            }
+
+            over "FillLight" (
+                active = false
+            )
+            {
+            }
+
+            over "Lamp1" (
+                active = false
+            )
+            {
+            }
+
+            over "Lamp2" (
+                active = false
+            )
+            {
+            }
+
+            over "Lamp3" (
+                active = false
+            )
+            {
+            }
+
+            over "MainLight" (
+                active = false
+            )
+            {
+            }
+
+            def SphereLight "MainLight_01" (
+                apiSchemas = ["ShapingAPI"]
+            )
+            {
+                color3f color = (1, 0.9439728, 0.8481848)
+                float exposure = 2
+                float intensity = 10000
+                float radius = 150
+                float shaping:cone:angle = 180
+                float shaping:cone:softness
+                float shaping:focus
+                color3f shaping:focusTint
+                asset shaping:ies:file
+                token visibility = "inherited"
+                double3 xformOp:rotateXYZ = (0, 0, 0)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (267.6528661768254, 549.2827517638586, 209.5785384186074)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def RectLight "Backlight_01" (
+                apiSchemas = ["ShapingAPI"]
+            )
+            {
+                color3f color = (0.7326733, 0.9077214, 1)
+                float height = 100
+                float intensity = 10000
+                float shaping:cone:angle = 180
+                float shaping:cone:softness
+                float shaping:focus
+                color3f shaping:focusTint
+                asset shaping:ies:file
+                token visibility = "inherited"
+                float width = 100
+                double3 xformOp:rotateXYZ = (185.3373337658482, 0, 0)
+                double3 xformOp:scale = (7.456914262128455, 2.078631944242488, 1)
+                double3 xformOp:translate = (0, 303.67967, -750.35747)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def RectLight "Lamp3_01" (
+                apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float exposure = 0
+                float height = 100
+                float intensity = 5000
+                float shaping:cone:angle = 180
+                float shaping:cone:softness
+                float shaping:focus
+                color3f shaping:focusTint
+                asset shaping:ies:file
+                token visibility = "invisible"
+                float width = 100
+                double3 xformOp:rotateXYZ = (-90, 0, 0)
+                double3 xformOp:scale = (0.65, 0.65, 0.65)
+                double3 xformOp:translate = (-166.2113337562949, 244.71341126881086, 219.04495704136986)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def RectLight "Lamp2_01" (
+                apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float exposure = 0
+                float height = 100
+                float intensity = 15000
+                float shaping:cone:angle = 180
+                float shaping:cone:softness
+                float shaping:focus
+                color3f shaping:focusTint
+                asset shaping:ies:file
+                token visibility = "invisible"
+                float width = 100
+                double3 xformOp:rotateXYZ = (-90, 0, 0)
+                double3 xformOp:scale = (0.65, 0.65, 0.65)
+                double3 xformOp:translate = (-99.99999999999999, 244.71341126881086, -47.048096082618144)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def RectLight "Lamp1_01" (
+                apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float exposure = 0
+                float height = 100
+                float intensity = 15000
+                float shaping:cone:angle = 180
+                float shaping:cone:softness
+                float shaping:focus
+                color3f shaping:focusTint
+                asset shaping:ies:file
+                token visibility = "invisible"
+                float width = 100
+                double3 xformOp:rotateXYZ = (-90, 0, 0)
+                double3 xformOp:scale = (0.65, 0.65, 0.65)
+                double3 xformOp:translate = (100.55262182398185, 244.71341126881111, 19.2338014203137)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def DistantLight "FillLight_01" (
+                apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float angle = 20
+                color3f color = (0.857, 0.9122123, 1)
+                float intensity = 800
+                float shaping:cone:angle = 180
+                float shaping:cone:softness
+                float shaping:focus
+                color3f shaping:focusTint
+                asset shaping:ies:file
+                token visibility = "inherited"
+                double3 xformOp:rotateXYZ = (-1.959686366925439, -56.101883827295296, -16.122773612030983)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-382.63833483900737, 90.20575507671339, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def RectLight "TableBounceLight" (
+                apiSchemas = ["ShapingAPI"]
+            )
+            {
+                color3f color = (1, 0.77091897, 0.63600004)
+                float diffuse = 1
+                float exposure = 4.5
+                float height = 100
+                float intensity = 100
+                float shaping:cone:angle = 180
+                float shaping:cone:softness = 0.05
+                float shaping:focus
+                color3f shaping:focusTint
+                asset shaping:ies:file
+                float specular = 0.01
+                token visibility = "inherited"
+                float width = 300
+                double3 xformOp:rotateXYZ = (50.3078164184121, 0, 0)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (7.389644617076471e-13, 91.77401138463944, 193.94673419356243)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "DoorFrame" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </World/DoorFrame/Looks/DoorFrame> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        double3 xformOp:rotateXYZ = (0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 800)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+        def Mesh "Wall_Top" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-50, -50, -50), (50, 50, 50)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/DoorFrame/Looks/DoorFrame> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-50, -50, 50), (50, -50, 50), (-50, 50, 50), (50, 50, 50), (-50, -50, -50), (50, -50, -50), (-50, 50, -50), (50, 50, -50)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            double3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (3, 1, 0.1)
+            double3 xformOp:translate = (0, 240, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "WallRight" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-50, -50, -50), (50, 50, 50)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/DoorFrame/Looks/DoorFrame> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-50, -50, 50), (50, -50, 50), (-50, 50, 50), (50, 50, 50), (-50, -50, -50), (50, -50, -50), (-50, 50, -50), (50, 50, -50)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            double3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (1, 1.9, 0.1)
+            double3 xformOp:translate = (100, 95, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "WallLeft" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-50, -50, -50), (50, 50, 50)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/DoorFrame/Looks/DoorFrame> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-50, -50, 50), (50, -50, 50), (-50, 50, 50), (50, 50, 50), (-50, -50, -50), (50, -50, -50), (-50, 50, -50), (50, 50, -50)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            double3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (1, 1.9, 0.1)
+            double3 xformOp:translate = (-100, 95, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Scope "Looks"
+        {
+            def Material "DoorFrame"
+            {
+                token outputs:mdl:displacement.connect = </World/DoorFrame/Looks/DoorFrame/Shader.outputs:out>
+                token outputs:mdl:surface.connect = </World/DoorFrame/Looks/DoorFrame/Shader.outputs:out>
+                token outputs:mdl:volume.connect = </World/DoorFrame/Looks/DoorFrame/Shader.outputs:out>
+
+                def Shader "Shader"
+                {
+                    uniform token info:implementationSource = "sourceAsset"
+                    uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                    uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                    token outputs:out (
+                        renderType = "material"
+                    )
+                }
+            }
+        }
+    }
+
+    def Xform "DoorFrame_01" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </World/DoorFrame_01/Looks/DoorFrame> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        double3 xformOp:rotateXYZ = (-2.271619905513944e-7, 30.394302368164062, 5.7689662075199877e-11)
+        double3 xformOp:scale = (1.0000005960464478, 1.0000001192092896, 0.9999994039535522)
+        double3 xformOp:translate = (404.75848724323725, 0.00001185278799198386, 690.0513327904463)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+        def Mesh "Wall_Top" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-50, -50, -50), (50, 50, 50)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/DoorFrame_01/Looks/DoorFrame> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-50, -50, 50), (50, -50, 50), (-50, 50, 50), (50, 50, 50), (-50, -50, -50), (50, -50, -50), (-50, 50, -50), (50, 50, -50)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            double3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (3, 1, 0.1)
+            double3 xformOp:translate = (0, 240, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "WallRight" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-50, -50, -50), (50, 50, 50)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/DoorFrame_01/Looks/DoorFrame> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-50, -50, 50), (50, -50, 50), (-50, 50, 50), (50, 50, 50), (-50, -50, -50), (50, -50, -50), (-50, 50, -50), (50, 50, -50)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            double3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (1, 1.9, 0.1)
+            double3 xformOp:translate = (100, 95, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "WallLeft" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-50, -50, -50), (50, 50, 50)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/DoorFrame_01/Looks/DoorFrame> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-50, -50, 50), (50, -50, 50), (-50, 50, 50), (50, 50, 50), (-50, -50, -50), (50, -50, -50), (-50, 50, -50), (50, 50, -50)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            double3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (1, 1.9, 0.1)
+            double3 xformOp:translate = (-100, 95, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Scope "Looks"
+        {
+            def Material "DoorFrame"
+            {
+                token outputs:mdl:displacement.connect = </World/DoorFrame_01/Looks/DoorFrame/Shader.outputs:out>
+                token outputs:mdl:surface.connect = </World/DoorFrame_01/Looks/DoorFrame/Shader.outputs:out>
+                token outputs:mdl:volume.connect = </World/DoorFrame_01/Looks/DoorFrame/Shader.outputs:out>
+
+                def Shader "Shader"
+                {
+                    uniform token info:implementationSource = "sourceAsset"
+                    uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                    uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                    token outputs:out (
+                        renderType = "material"
+                    )
+                }
+            }
+        }
+    }
+    variantSet "sceneMoodVariant" = {
+        "mood1" {
+            over "PictureFrame"
+            {
+                token visibility = "invisible"
+            }
+
+            def "Modern" (
+                instanceable = false
+                prepend payload = @./Modern.usdc@
+            )
+            {
+                def Xform "Wall_Glass_01" (
+                    instanceable = false
+                    prepend payload = @./Modern.usdc@</root/Wall_Glass>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (4, 1.200000047683716, -4.930380657631324e-32)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Wall_Glass"
+                    {
+                        rel material:binding = </World/Modern/materials/Wall_Glass> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                        bool primvars:doNotCastShadows = 1
+                    }
+
+                    over "Wall_Floor_Connector"
+                    {
+                        over "Wall_Floor_Connector"
+                        {
+                            rel material:binding = </World/Modern/materials/Metal_Rough> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                def Xform "Wall_Glass_02" (
+                    instanceable = false
+                    prepend payload = @./Modern.usdc@</root/Wall_Glass>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-4, 1.200000047683716, -4.930380657631324e-32)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Wall_Glass"
+                    {
+                        rel material:binding = </World/Modern/materials/Wall_Glass> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                        bool primvars:doNotCastShadows = 1
+                    }
+
+                    over "Wall_Floor_Connector"
+                    {
+                        over "Wall_Floor_Connector"
+                        {
+                            rel material:binding = </World/Modern/materials/Metal_Rough> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                def Xform "Wall_Glass_03" (
+                    instanceable = false
+                    prepend payload = @./Modern.usdc@</root/Wall_Glass>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-8, 1.200000047683716, -4.930380657631324e-32)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Wall_Glass"
+                    {
+                        rel material:binding = </World/Modern/materials/Wall_Glass> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                        bool primvars:doNotCastShadows = 1
+                    }
+
+                    over "Wall_Floor_Connector"
+                    {
+                        over "Wall_Floor_Connector"
+                        {
+                            rel material:binding = </World/Modern/materials/Metal_Rough> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                def Xform "Wall_Glass_04" (
+                    instanceable = false
+                    prepend payload = @./Modern.usdc@</root/Wall_Glass>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (8, 1.200000047683716, -4.930380657631324e-32)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Wall_Glass"
+                    {
+                        rel material:binding = </World/Modern/materials/Wall_Glass> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                        bool primvars:doNotCastShadows = 1
+                    }
+
+                    over "Wall_Floor_Connector"
+                    {
+                        over "Wall_Floor_Connector"
+                        {
+                            rel material:binding = </World/Modern/materials/Metal_Rough> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "Separator"
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-3.0, 0, 0)
+
+                    over "Separator" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </World/Modern/materials/Seperator_Frame> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                        float3 xformOp:rotateXYZ = (0, 0, 0)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (0, -0.9, -1.7242274843177942e-16)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                        over "Seperator_Wall" (
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                        )
+                        {
+                            rel material:binding = </World/Looks/Separator_Wall> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                def Xform  "Separator_01" (
+                    prepend payload = @./Modern.usdc@</root/Separator>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (3.0, 0, 0)
+
+                    over "Separator" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </World/Modern/materials/Seperator_Frame> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                        float3 xformOp:rotateXYZ = (0, 0, 0)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (0, -0.9, -1.7242274843177942e-16)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                        over "Seperator_Wall" (
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                        )
+                        {
+                            rel material:binding = </World/Looks/Separator_Wall> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                def Xform  "Separator_02" (
+                    prepend payload = @./Modern.usdc@</root/Separator>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-6.0, 0, 0)
+
+                    over "Separator" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </World/Modern/materials/Seperator_Frame> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                        float3 xformOp:rotateXYZ = (0, 0, 0)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (0, -0.9, -1.7242274843177942e-16)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                        over "Seperator_Wall" (
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                        )
+                        {
+                            rel material:binding = </World/Looks/Separator_Wall> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                def Xform  "Separator_03" (
+                    prepend payload = @./Modern.usdc@</root/Separator>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (6.0, 0, 0)
+                    over "Separator" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </World/Modern/materials/Seperator_Frame> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                        float3 xformOp:rotateXYZ = (0, 0, 0)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (0, -0.9, -1.7242274843177942e-16)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                        over "Seperator_Wall" (
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                        )
+                        {
+                            rel material:binding = </World/Looks/Separator_Wall> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+
+                def Scope "Looks"
+                {
+                    def Material "Backdrop_Blurred"
+                    {
+                        token outputs:mdl:displacement.connect = </World/Modern/Looks/Backdrop_Blurred/Shader.outputs:out>
+                        token outputs:mdl:surface.connect = </World/Modern/Looks/Backdrop_Blurred/Shader.outputs:out>
+                        token outputs:mdl:volume.connect = </World/Modern/Looks/Backdrop_Blurred/Shader.outputs:out>
+
+                        def Shader "Shader"
+                        {
+                            uniform token info:implementationSource = "sourceAsset"
+                            uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                            uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                            color3f inputs:diffuse_color_constant = (0.000001, 0, 0) (
+                                customData = {
+                                    float3 default = (0.2, 0.2, 0.2)
+                                }
+                                displayGroup = "Albedo"
+                                displayName = "Base Color"
+                                doc = "This is the base color"
+                                hidden = false
+                            )
+                            color3f inputs:emissive_color = (0.99999, 1, 0.99999) (
+                                customData = {
+                                    float3 default = (1, 0.1, 0.1)
+                                }
+                                displayGroup = "Emissive"
+                                displayName = "Emissive Color"
+                                doc = "The emission color"
+                                hidden = false
+                            )
+                            asset inputs:emissive_color_texture = @./textures/Office_Blurred.jpg@ (
+                                colorSpace = "sRGB"
+                                customData = {
+                                    asset default = @@
+                                }
+                                displayGroup = "Emissive"
+                                displayName = "Emissive Color map"
+                                doc = "The emissive color texture"
+                                hidden = false
+                            )
+                            float inputs:emissive_intensity = 6000 (
+                                customData = {
+                                    float default = 40
+                                }
+                                displayGroup = "Emissive"
+                                displayName = "Emissive Intensity"
+                                doc = "Intensity of the emission"
+                                hidden = false
+                            )
+                            bool inputs:enable_emission = 1 (
+                                customData = {
+                                    bool default = 0
+                                }
+                                displayGroup = "Emissive"
+                                displayName = "Enable Emission"
+                                doc = "Enables the emission of light from the material"
+                                hidden = false
+                            )
+                            float inputs:reflection_roughness_constant = 1 (
+                                customData = {
+                                    float default = 0.5
+                                    dictionary range = {
+                                        float max = 1
+                                        float min = 0
+                                    }
+                                }
+                                displayGroup = "Reflectivity"
+                                displayName = "Roughness Amount"
+                                doc = "Higher roughness values lead to more blurry reflections"
+                                hidden = false
+                            )
+                            token outputs:out
+                        }
+                    }
+                }
+
+                over "Backdrop_Office"
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (2, 2, 2)
+                    double3 xformOp:translate = (0, 1.4297218109447127, -1.2704001395344957)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Backdrop_Office"
+                    {
+                        rel material:binding = </World/Modern/Looks/Backdrop_Blurred> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                        bool primvars:doNotCastShadows = 1
+                    }
+                }
+
+                over "Desk_Modern"
+                {
+                    double3 xformOp:translate = (-0.4, -0.5, -9.965391612573258e-17)
+
+                    over "Desk_Modern_Glass"
+                    {
+                        over "Desk_Modern_Glass"
+                        {
+                            rel material:binding = </World/Looks/DeskGlass> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                            bool primvars:doNotCastShadows = 1
+                        }
+                    }
+
+                    over "Desk_Modern_Logo_Plate"
+                    {
+                        token visibility = "invisible"
+                    }
+
+                    over "Desk_Modern"
+                    {
+                        rel material:binding = </World/Modern/materials/Desk1a> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+
+                        over "Desk1a"
+                        {
+                            rel material:binding = </World/Looks/Desk1a> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Desk1b"
+                        {
+                            rel material:binding = </World/Looks/Desk1b> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "materials"
+                {
+                    over "Backdrop_Office"
+                    {
+                        over "mdl"
+                        {
+                            over "Shader"
+                            {
+                                float inputs:reflection_roughness_constant = 0.59999996 (
+                                    customData = {
+                                        float default = 0.5
+                                        dictionary range = {
+                                            float max = 1
+                                            float min = 0
+                                        }
+                                    }
+                                    displayGroup = "Reflectivity"
+                                    displayName = "Roughness Amount"
+                                    doc = "Higher roughness values lead to more blurry reflections"
+                                    hidden = false
+                                )
+                            }
+                        }
+                    }
+
+                    over "Ceiling_Lights"
+                    {
+                        over "mdl"
+                        {
+                            over "Shader"
+                            {
+                                float inputs:emissive_intensity = 5000 (
+                                    customData = {
+                                        float default = 40
+                                    }
+                                    displayGroup = "Emissive"
+                                    displayName = "Emissive Intensity"
+                                    doc = "Intensity of the emission"
+                                    hidden = false
+                                )
+                            }
+                        }
+                    }
+                }
+
+                def Xform "Ceiling_01" (
+                    instanceable = false
+                    prepend payload = @./Modern.usdc@</root/Ceiling>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (5, -3.200000047683716, 2.5)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Ceiling"
+                    {
+                        rel material:binding = </World/Modern/materials/Ceiling> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+
+                        over "Ceiling_Lights"
+                        {
+                            rel material:binding = </World/Modern/materials/Ceiling_Lights> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+
+                    over "CeilingLightCovers"
+                    {
+                        over "CeilingLightCovers"
+                        {
+                            rel material:binding = </World/Modern/materials/CeilingLightCovers> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                def Xform "Ceiling_02" (
+                    instanceable = false
+                    prepend payload = @./Modern.usdc@</root/Ceiling>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-5, -3.200000047683716, 2.5)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Ceiling"
+                    {
+                        rel material:binding = </World/Modern/materials/Ceiling> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+
+                        over "Ceiling_Lights"
+                        {
+                            rel material:binding = </World/Modern/materials/Ceiling_Lights> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+
+                    over "CeilingLightCovers"
+                    {
+                        over "CeilingLightCovers"
+                        {
+                            rel material:binding = </World/Modern/materials/CeilingLightCovers> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                def Xform "Floor_Wood_01" (
+                    instanceable = false
+                    prepend payload = @./Modern.usdc@</root/Floor_Wood>
+                )
+                {
+                    rel material:binding = </World/Looks/Floor_Wodd> (
+                        bindMaterialAs = "weakerThanDescendants"
+                    )
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (6, -1.75, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+
+                def Xform "Floor_Wood_02" (
+                    instanceable = false
+                    prepend payload = @./Modern.usdc@</root/Floor_Wood>
+                )
+                {
+                    rel material:binding = </World/Looks/Floor_Wodd> (
+                        bindMaterialAs = "weakerThanDescendants"
+                    )
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-6, -1.75, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+
+                def Mesh "Ceiling_Plane"
+                {
+                    int[] faceVertexCounts = [4]
+                    int[] faceVertexIndices = [0, 2, 3, 1]
+                    rel material:binding = </World/Modern/materials/Ceiling> (
+                        bindMaterialAs = "weakerThanDescendants"
+                    )
+                    normal3f[] normals = [(0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0)] (
+                        interpolation = "faceVarying"
+                    )
+                    point3f[] points = [(-50, 0, -50), (50, 0, -50), (-50, 0, 50), (50, 0, 50)]
+                    bool primvars:doNotCastShadows = 1
+                    float2[] primvars:st = [(1, 0), (1, 1), (0, 1), (0, 0)] (
+                        interpolation = "faceVarying"
+                    )
+                    uniform token subdivisionScheme = "none"
+                    double3 xformOp:rotateXYZ = (90, -0, 0)
+                    double3 xformOp:scale = (0.10000000149011612, 0.10000000149011612, 0.10000000149011612)
+                    double3 xformOp:translate = (0, -3.1, 3.799999999999998)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+
+                over "Floor_Wood"
+                {
+                    over "Floor_Wood"
+                    {
+                        rel material:binding = </World/Looks/Floor_Wodd> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                        bool primvars:doNotCastShadows = 0
+                    }
+                }
+
+                over "Wall_Glass"
+                {
+                    over "Wall_Glass"
+                    {
+                        bool primvars:doNotCastShadows = 1
+                    }
+                }
+
+                over "Ceiling"
+                {
+                    over "Ceiling"
+                    {
+                        bool primvars:doNotCastShadows = 1
+                    }
+
+                    over "CeilingLightCovers"
+                    {
+                        over "CeilingLightCovers"
+                        {
+                            bool primvars:doNotCastShadows = 1
+                        }
+                    }
+                }
+
+                def Xform "Light"
+                {
+                    double3 xformOp:rotateXYZ = (90, -0, 0)
+                    double3 xformOp:scale = (0.009999999776482582, 0.009999999776482582, 0.009999999776482582)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    def SphereLight "MainLight" (
+                        prepend apiSchemas = ["ShapingAPI"]
+                    )
+                    {
+                        color3f color = (1, 0.9439728, 0.8481848)
+                        float exposure = 2
+                        float intensity = 10000
+                        float radius = 150
+                        float shaping:cone:angle = 180
+                        float shaping:cone:softness
+                        float shaping:focus
+                        color3f shaping:focusTint
+                        asset shaping:ies:file
+                        double3 xformOp:rotateXYZ = (0, 0, 0)
+                        double3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (267.6528661768254, 549.2827517638586, 209.5785384186074)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                    }
+
+                    def RectLight "Backlight" (
+                        prepend apiSchemas = ["ShapingAPI"]
+                    )
+                    {
+                        color3f color = (0.7326733, 0.9077214, 1)
+                        float height = 100
+                        float intensity = 10000
+                        float shaping:cone:angle = 180
+                        float shaping:cone:softness
+                        float shaping:focus
+                        color3f shaping:focusTint
+                        asset shaping:ies:file
+                        float width = 100
+                        double3 xformOp:rotateXYZ = (185.3373337658482, 0, 0)
+                        double3 xformOp:scale = (7.456914262128455, 2.078631944242488, 1)
+                        double3 xformOp:translate = (0, 286.39449882784646, -565.3398204708545)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                    }
+
+                    def RectLight "Lamp3" (
+                        prepend apiSchemas = ["ShapingAPI"]
+                    )
+                    {
+                        float exposure = 0
+                        float height = 100
+                        float intensity = 5000
+                        float shaping:cone:angle = 180
+                        float shaping:cone:softness
+                        float shaping:focus
+                        color3f shaping:focusTint
+                        asset shaping:ies:file
+                        token visibility = "invisible"
+                        float width = 100
+                        double3 xformOp:rotateXYZ = (-90, 0, 0)
+                        double3 xformOp:scale = (0.65, 0.65, 0.65)
+                        double3 xformOp:translate = (-166.2113337562949, 244.71341126881086, 219.04495704136986)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                    }
+
+                    def RectLight "Lamp2" (
+                        prepend apiSchemas = ["ShapingAPI"]
+                    )
+                    {
+                        float exposure = 0
+                        float height = 100
+                        float intensity = 15000
+                        float shaping:cone:angle = 180
+                        float shaping:cone:softness
+                        float shaping:focus
+                        color3f shaping:focusTint
+                        asset shaping:ies:file
+                        token visibility = "invisible"
+                        float width = 100
+                        double3 xformOp:rotateXYZ = (-90, 0, 0)
+                        double3 xformOp:scale = (0.65, 0.65, 0.65)
+                        double3 xformOp:translate = (-99.99999999999999, 244.71341126881086, -47.048096082618144)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                    }
+
+                    def RectLight "Lamp1" (
+                        prepend apiSchemas = ["ShapingAPI"]
+                    )
+                    {
+                        float exposure = 0
+                        float height = 100
+                        float intensity = 15000
+                        float shaping:cone:angle = 180
+                        float shaping:cone:softness
+                        float shaping:focus
+                        color3f shaping:focusTint
+                        asset shaping:ies:file
+                        token visibility = "invisible"
+                        float width = 100
+                        double3 xformOp:rotateXYZ = (-90, 0, 0)
+                        double3 xformOp:scale = (0.65, 0.65, 0.65)
+                        double3 xformOp:translate = (100.55262182398185, 244.71341126881111, 19.2338014203137)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                    }
+
+                    def DistantLight "FillLight" (
+                        prepend apiSchemas = ["ShapingAPI"]
+                    )
+                    {
+                        float angle = 1
+                        color3f color = (1, 0.8019802, 0.8019802)
+                        float intensity = 600
+                        float shaping:cone:angle = 180
+                        float shaping:cone:softness
+                        float shaping:focus
+                        color3f shaping:focusTint
+                        asset shaping:ies:file
+                        double3 xformOp:rotateXYZ = (-1.959686366925439, -56.101883827295296, -16.122773612030983)
+                        double3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (-382.63833483900737, 90.20575507671339, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                    }
+                }
+            }
+
+        }
+        "mood2" {
+            over "Logo"
+            {
+                token visibility = "invisible"
+            }
+
+            def "Vintage" (
+                instanceable = false
+                prepend payload = @./Vintage.usd@
+            )
+            {
+                over "materials"
+                {
+                    def Material "Outside"
+                    {
+                        token outputs:mdl:displacement.connect = </World/Vintage/materials/Outside/Shader.outputs:out>
+                        token outputs:mdl:surface.connect = </World/Vintage/materials/Outside/Shader.outputs:out>
+                        token outputs:mdl:volume.connect = </World/Vintage/materials/Outside/Shader.outputs:out>
+
+                        def Shader "Shader"
+                        {
+                            uniform token info:implementationSource = "sourceAsset"
+                            uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                            uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                            color3f inputs:diffuse_color_constant = (0, 0, 0) (
+                                customData = {
+                                    float3 default = (0.2, 0.2, 0.2)
+                                }
+                                displayGroup = "Albedo"
+                                displayName = "Albedo Color"
+                                doc = "This is the albedo base color"
+                                hidden = false
+                            )
+                            color3f inputs:emissive_color = (1, 1, 1) (
+                                customData = {
+                                    float3 default = (1, 0.1, 0.1)
+                                }
+                                displayGroup = "Emissive"
+                                displayName = "Emissive Color"
+                                doc = "The emission color"
+                                hidden = false
+                            )
+                            asset inputs:emissive_color_texture = @./textures/pexels-pixabay-276299.jpg@ (
+                                colorSpace = "sRGB"
+                                customData = {
+                                    asset default = @@
+                                }
+                                displayGroup = "Emissive"
+                                displayName = "Emissive Color map"
+                                doc = "The emissive color texture"
+                                hidden = false
+                                renderType = "texture_2d"
+                            )
+                            float inputs:emissive_intensity = 4000 (
+                                customData = {
+                                    float default = 40
+                                }
+                                displayGroup = "Emissive"
+                                displayName = "Emissive Intensity"
+                                doc = "Intensity of the emission"
+                                hidden = false
+                            )
+                            bool inputs:enable_emission = 1 (
+                                customData = {
+                                    bool default = 0
+                                }
+                                displayGroup = "Emissive"
+                                displayName = "Enable Emission"
+                                doc = "Enables the emission of light from the material"
+                                hidden = false
+                            )
+                            float inputs:reflection_roughness_constant = 1 (
+                                customData = {
+                                    float default = 0.5
+                                    dictionary range = {
+                                        float max = 1
+                                        float min = 0
+                                    }
+                                }
+                                displayGroup = "Reflectivity"
+                                displayName = "Roughness Amount"
+                                doc = "Higher roughness values lead to more blurry reflections"
+                                hidden = false
+                            )
+                            float inputs:reflection_roughness_texture_influence = 0 (
+                                customData = {
+                                    float default = 0
+                                    dictionary range = {
+                                        float max = 1
+                                        float min = 0
+                                    }
+                                }
+                                displayGroup = "Reflectivity"
+                                displayName = "Roughness Map Influence"
+                                doc = "Blends between the constant value and the lookup of the roughness texture"
+                                hidden = false
+                            )
+                            float2 inputs:texture_translate = (0, 0) (
+                                customData = {
+                                    float2 default = (0, 0)
+                                }
+                                displayGroup = "UV"
+                                displayName = "Texture Translate"
+                                doc = "Controls position of texture."
+                                hidden = false
+                            )
+                            token outputs:out (
+                                renderType = "material"
+                            )
+                        }
+                    }
+
+                    def Material "PictureOnWall"
+                    {
+                        token outputs:mdl:displacement.connect = </World/Vintage/materials/PictureOnWall/Shader.outputs:out>
+                        token outputs:mdl:surface.connect = </World/Vintage/materials/PictureOnWall/Shader.outputs:out>
+                        token outputs:mdl:volume.connect = </World/Vintage/materials/PictureOnWall/Shader.outputs:out>
+
+                        def Shader "Shader"
+                        {
+                            uniform token info:implementationSource = "sourceAsset"
+                            uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                            uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                            asset inputs:diffuse_texture = @./textures/pexels-pixabay-276299.jpg@ (
+                                colorSpace = "auto"
+                                customData = {
+                                    asset default = @@
+                                }
+                                displayGroup = "Albedo"
+                                displayName = "Albedo Map"
+                                hidden = false
+                                renderType = "texture_2d"
+                            )
+                            color3f inputs:diffuse_tint = (0.7181467, 0.6450638, 0.56841725) (
+                                customData = {
+                                    float3 default = (1, 1, 1)
+                                }
+                                displayGroup = "Albedo"
+                                displayName = "Color Tint"
+                                doc = "When enabled, this color value is multiplied over the final albedo color"
+                                hidden = false
+                            )
+                            float inputs:reflection_roughness_constant = 0.099999994 (
+                                customData = {
+                                    float default = 0.5
+                                    dictionary range = {
+                                        float max = 1
+                                        float min = 0
+                                    }
+                                }
+                                displayGroup = "Reflectivity"
+                                displayName = "Roughness Amount"
+                                doc = "Higher roughness values lead to more blurry reflections"
+                                hidden = false
+                            )
+                            token outputs:out (
+                                renderType = "material"
+                            )
+                        }
+                    }
+                }
+
+                over "Lights"
+                {
+                    def SphereLight "BackgrounLight" (
+                        prepend apiSchemas = ["ShapingAPI"]
+                    )
+                    {
+                        float3[] extent = [(-50, -50, -50), (50, 50, 50)]
+                        color3f inputs:color = (0.6988417, 0.89187497, 1)
+                        float inputs:intensity = 50000
+                        float inputs:radius = 50
+                        float inputs:shaping:cone:angle = 180
+                        float inputs:shaping:cone:softness
+                        float inputs:shaping:focus
+                        color3f inputs:shaping:focusTint
+                        asset inputs:shaping:ies:file
+                        token visibility = "inherited"
+                        double3 xformOp:rotateXYZ = (90, -0, 0)
+                        double3 xformOp:scale = (0.009999999776482582, 0.009999999776482582, 0.009999999776482582)
+                        double3 xformOp:translate = (-0.31444292842758154, 4.101028388329899, 2.101467916055138)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                    }
+                }
+
+                def Xform "Wall_Decorative_01" (
+                    instanceable = false
+                    prepend payload = @./Vintage.usd@</root/Wall_Decorative>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (2, 1.200000047683716, -9.860761315262648e-32)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Wall_Decorative"
+                    {
+                        over "WallDecoration"
+                        {
+                            rel material:binding = </World/Looks/WallDecoration> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Wall"
+                        {
+                            rel material:binding = </World/Looks/Wall> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                def Xform "Wall_Decorative_02" (
+                    instanceable = false
+                    prepend payload = @./Vintage.usd@</root/Wall_Decorative>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-2, 1.200000047683716, -9.860761315262648e-32)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Wall_Decorative"
+                    {
+                        over "WallDecoration"
+                        {
+                            rel material:binding = </World/Looks/WallDecoration> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Wall"
+                        {
+                            rel material:binding = </World/Looks/Wall> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                def Xform "WallLamp_Vintage_01" (
+                    instanceable = false
+                    prepend payload = @./Vintage.usd@</root/WallLamp_Vintage>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0.57352, 1.2000000476837158, 1.946189284324646)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "WallLamp_Vintage"
+                    {
+                        over "LampShade"
+                        {
+                            rel material:binding = </World/Vintage/materials/LampShade> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "LampMetal"
+                        {
+                            rel material:binding = </World/Vintage/materials/LampMetal> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                def Xform "Ceiling_01" (
+                    instanceable = false
+                    prepend payload = @./Vintage.usd@</root/Ceiling>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (2, 0.2000000029802323, 2.4999999999999996)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Ceiling"
+                    {
+                        rel material:binding = </World/Vintage/materials/Wall_Neutral> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Xform "Ceiling_02" (
+                    instanceable = false
+                    prepend payload = @./Vintage.usd@</root/Ceiling>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-2, 0.2000000029802323, 2.4999999999999996)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Ceiling"
+                    {
+                        rel material:binding = </World/Vintage/materials/Wall_Neutral> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Xform "Ceiling_03" (
+                    instanceable = false
+                    prepend payload = @./Vintage.usd@</root/Ceiling>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (1.9999999999999563, -1.8, 2.499999999999997)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Ceiling"
+                    {
+                        rel material:binding = </World/Vintage/materials/Wall_Neutral> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Xform "Ceiling_04" (
+                    instanceable = false
+                    prepend payload = @./Vintage.usd@</root/Ceiling>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-1.9999999999999563, -1.8, 2.499999999999997)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Ceiling"
+                    {
+                        rel material:binding = </World/Vintage/materials/Wall_Neutral> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Xform "Ceiling_05" (
+                    instanceable = false
+                    prepend payload = @./Vintage.usd@</root/Ceiling>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0, -1.8, 2.499999999999997)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Ceiling"
+                    {
+                        rel material:binding = </World/Vintage/materials/Wall_Neutral> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                over "Wall_Decorative"
+                {
+                    over "Wall_Decorative"
+                    {
+                        over "WallDecoration"
+                        {
+                            rel material:binding = </World/Looks/WallDecoration> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Wall"
+                        {
+                            rel material:binding = </World/Looks/Wall> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                over "Column_Decorative1"
+                {
+                    over "Column_Decorative1"
+                    {
+                        rel material:binding = </World/Looks/WallDecoration> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                over "Column_Decorative2"
+                {
+                    over "Column_Decorative2"
+                    {
+                        rel material:binding = </World/Looks/WallDecoration> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                over "Desk_Vintage"
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-0.4, -0.5, -9.965391612573258e-17)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Desk_Vintage"
+                    {
+                        over "Desk2a"
+                        {
+                            rel material:binding = </World/Looks/Desk2a> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Desk2b"
+                        {
+                            rel material:binding = </World/Looks/Desk2b> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+
+                    over "Desk_Vintage_Logo_Plate"
+                    {
+                        token visibility = "invisible"
+                    }
+                }
+
+                 def Xform "Floor_Dark_02" (
+                    instanceable = false
+                    delete payload = @./Vintage.usd@</root/Ceiling>
+                    prepend payload = @./Vintage.usd@</root/Floor_Dark>
+                )
+                {
+                    token visibility = "inherited"
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-6, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Ceiling"
+                    {
+                        rel material:binding = </World/Vintage/materials/Wall_Neutral> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+
+                    over "Floor_Dark" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </World/Vintage/materials/Floor_Dark> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Xform "Ceiling_08" (
+                    instanceable = false
+                    prepend payload = @./Vintage.usd@</root/Ceiling>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-4, -1.7999999999999996, 2.499999999999997)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Ceiling"
+                    {
+                        rel material:binding = </World/Vintage/materials/Wall_Neutral> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Xform "Ceiling_09" (
+                    instanceable = false
+                    prepend payload = @./Vintage.usd@</root/Ceiling>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-4, 0.2, 2.4999999999999973)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Ceiling"
+                    {
+                        rel material:binding = </World/Vintage/materials/Wall_Neutral> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Xform "SideWall_01" (
+                    instanceable = false
+                    prepend payload = @./Vintage.usd@</root/Wall_Decorative>
+                )
+                {
+                    token visibility = "inherited"
+                    float3 xformOp:rotateXYZ = (0, 0, 90)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-4.999999999999999, 4.2, 7.254630881933777e-16)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Wall_Decorative"
+                    {
+                        over "WallDecoration"
+                        {
+                            rel material:binding = </World/Looks/WallDecoration> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Wall"
+                        {
+                            rel material:binding = </World/Looks/Wall> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                def Xform "SideWall_02" (
+                    instanceable = false
+                    prepend payload = @./Vintage.usd@</root/Wall_Decorative>
+                )
+                {
+                    token visibility = "inherited"
+                    float3 xformOp:rotateXYZ = (0, 0, 90)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-5, 2.200000000000077, 2.753061788159358e-16)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Wall_Decorative"
+                    {
+                        over "WallDecoration"
+                        {
+                            rel material:binding = </World/Looks/WallDecoration> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Wall"
+                        {
+                            rel material:binding = </World/Looks/Wall> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                def Xform "SideWall_03" (
+                    instanceable = false
+                    prepend payload = @./Vintage.usd@</root/Wall_Decorative>
+                )
+                {
+                    token visibility = "inherited"
+                    float3 xformOp:rotateXYZ = (0, 0, 90)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-5, 0.20000000000001783, -1.6926565191337146e-16)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Wall_Decorative"
+                    {
+                        over "WallDecoration"
+                        {
+                            rel material:binding = </World/Looks/WallDecoration> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Wall"
+                        {
+                            rel material:binding = </World/Looks/Wall> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                def Xform "SideWall_04" (
+                    instanceable = false
+                    prepend payload = @./Vintage.usd@</root/Wall_Decorative>
+                )
+                {
+                    token visibility = "inherited"
+                    float3 xformOp:rotateXYZ = (0, 0, 90)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-5, -1.7999999999999687, -6.228930927645322e-16)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Wall_Decorative"
+                    {
+                        over "WallDecoration"
+                        {
+                            rel material:binding = </World/Looks/WallDecoration> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Wall"
+                        {
+                            rel material:binding = </World/Looks/Wall> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+
+                def Xform "SideColumn_03" (
+                    instanceable = false
+                    delete payload = @./Vintage.usd@</root/Wall_Decorative>
+                    prepend payload = @./Vintage.usd@</root/Column_Decorative1>
+                )
+                {
+                    token visibility = "inherited"
+                    float3 xformOp:rotateXYZ = (0, 0, 90)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-5, -1.7999999999999687, -6.228930927645322e-16)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Column_Decorative1" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </World/Looks/WallDecoration> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Xform "SideColumn_02" (
+                    instanceable = false
+                    delete payload = @./Vintage.usd@</root/Wall_Decorative>
+                    prepend payload = @./Vintage.usd@</root/Column_Decorative1>
+                )
+                {
+                    token visibility = "inherited"
+                    float3 xformOp:rotateXYZ = (0, 0, 90)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-4.999999999999999, 0.2, -1.737224785968439e-16)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Column_Decorative1" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </World/Looks/WallDecoration> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Xform "SideColumn_04" (
+                    instanceable = false
+                    delete payload = @./Vintage.usd@</root/Wall_Decorative>
+                    prepend payload = @./Vintage.usd@</root/Column_Decorative1>
+                )
+                {
+                    token visibility = "inherited"
+                    float3 xformOp:rotateXYZ = (0, 0, 90)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-4.999999999999997, 2.2, 2.7221627084095727e-16)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Column_Decorative1" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </World/Looks/WallDecoration> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Xform "Floor_Dark_03" (
+                    instanceable = false
+                    delete payload = @./Vintage.usd@</root/Ceiling>
+                    prepend payload = @./Vintage.usd@</root/Floor_Dark>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-5.999999999999994, 6, 1.3482589228034404e-15)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Ceiling"
+                    {
+                        rel material:binding = </World/Vintage/materials/Wall_Neutral> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+
+                    over "Floor_Dark" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </World/Vintage/materials/Floor_Dark> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Xform "Ceiling_10" (
+                    instanceable = false
+                    prepend payload = @./Vintage.usd@</root/Ceiling>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-3.999999999999998, 2.2, 2.4999999999999973)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Ceiling"
+                    {
+                        rel material:binding = </World/Vintage/materials/Wall_Neutral> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Xform "Ceiling_11" (
+                    instanceable = false
+                    prepend payload = @./Vintage.usd@</root/Ceiling>
+                )
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-3.999999999999998, 4.2, 2.4999999999999982)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Ceiling"
+                    {
+                        rel material:binding = </World/Vintage/materials/Wall_Neutral> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Xform "Column_Decorative_01" (
+                    instanceable = false
+                    delete payload = @./Vintage.usd@</root/Wall_Decorative>
+                    prepend payload = @./Vintage.usd@</root/Column_Decorative1>
+                )
+                {
+                    token visibility = "inherited"
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-3, 1.20986, 1.3417521895492282e-14)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Column_Decorative1" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </World/Looks/WallDecoration> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Xform "Column_Decorative_03" (
+                    instanceable = false
+                    delete payload = @./Vintage.usd@</root/Wall_Decorative>
+                    prepend payload = @./Vintage.usd@</root/Column_Decorative1>
+                )
+                {
+                    token visibility = "inherited"
+                    float3 xformOp:rotateXYZ = (0, 0, -90)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (2.8621466111353273, 0.9759996505929095, -8.434727942488652e-15)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Column_Decorative1" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </World/Looks/WallDecoration> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Xform "Column_Decorative_04" (
+                    instanceable = false
+                    delete payload = @./Vintage.usd@</root/Wall_Decorative>
+                    prepend payload = @./Vintage.usd@</root/Column_Decorative1>
+                )
+                {
+                    token visibility = "inherited"
+                    float3 xformOp:rotateXYZ = (0, 0, 90)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (2.8621466111353273, 0.9759996505929095, -8.434727942488652e-15)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Column_Decorative1" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </World/Looks/WallDecoration> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Xform "Column_Decorative_05" (
+                    instanceable = false
+                    delete payload = @./Vintage.usd@</root/Wall_Decorative>
+                    prepend payload = @./Vintage.usd@</root/Column_Decorative1>
+                )
+                {
+                    token visibility = "inherited"
+                    float3 xformOp:rotateXYZ = (0, 90, -90)
+                    float3 xformOp:scale = (1, 1, 2)
+                    double3 xformOp:translate = (2.9275902237389797, 1.4192133567315377, -0.13077322857425344)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Column_Decorative1" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </World/Looks/WallDecoration> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                        over "Floor_Dark"
+                {
+                    float3 xformOp:rotateXYZ = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+
+                def Xform "Column_Decorative_06" (
+                    instanceable = false
+                    delete payload = @./Vintage.usd@</root/Wall_Decorative>
+                    prepend payload = @./Vintage.usd@</root/Column_Decorative1>
+                )
+                {
+                    token visibility = "inherited"
+                    float3 xformOp:rotateXYZ = (0, 0, 90)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (2.862146611135328, -0.800000011920929, -8.813662290060286e-15)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Column_Decorative1" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </World/Looks/WallDecoration> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Xform "Column_Decorative_07" (
+                    instanceable = false
+                    delete payload = @./Vintage.usd@</root/Wall_Decorative>
+                    prepend payload = @./Vintage.usd@</root/Column_Decorative1>
+                )
+                {
+                    token visibility = "inherited"
+                    float3 xformOp:rotateXYZ = (0, 0, -90)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (2.862146611135328, -0.800000011920929, -8.813662290060286e-15)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Column_Decorative1" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </World/Looks/WallDecoration> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Xform "Column_Decorative_08" (
+                    instanceable = false
+                    delete payload = @./Vintage.usd@</root/Wall_Decorative>
+                    prepend payload = @./Vintage.usd@</root/Column_Decorative1>
+                )
+                {
+                    token visibility = "inherited"
+                    float3 xformOp:rotateXYZ = (0, 90, -90)
+                    float3 xformOp:scale = (1, 1, 2)
+                    double3 xformOp:translate = (2.9275902237389753, 1.4192133567315333, 2.5383227984009857)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "Column_Decorative1" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </World/Looks/WallDecoration> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+
+                def Mesh "Curved_BG" (
+                    active = true
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    float3[] extent = [(-70.71068, 70.71068, -50), (70.71068, 100, 50)]
+                    int[] faceVertexCounts = [4, 4, 4, 4, 4, 4, 4, 4]
+                    int[] faceVertexIndices = [0, 2, 3, 1, 2, 4, 5, 3, 4, 6, 7, 5, 6, 8, 9, 7, 8, 10, 11, 9, 10, 12, 13, 11, 12, 14, 15, 13, 14, 16, 17, 15]
+                    rel material:binding = </World/Vintage/materials/Outside> (
+                        bindMaterialAs = "weakerThanDescendants"
+                    )
+                    normal3f[] normals = [(0.6343931, -0.77301055, 0), (0.55557007, -0.8314697, 0), (0.55557007, -0.8314697, 0), (0.6343931, -0.77301055, 0), (0.55557007, -0.8314697, 0), (0.38268337, -0.9238796, 0), (0.38268337, -0.9238796, 0), (0.55557007, -0.8314697, 0), (0.38268337, -0.9238796, 0), (0.1950905, -0.98078525, 0), (0.1950905, -0.98078525, 0), (0.38268337, -0.9238796, 0), (0.1950905, -0.98078525, 0), (0, -1, 0), (0, -1, 0), (0.1950905, -0.98078525, 0), (0, -1, 0), (-0.19509056, -0.98078525, 0), (-0.19509056, -0.98078525, 0), (0, -1, 0), (-0.19509056, -0.98078525, 0), (-0.38268337, -0.9238796, 0), (-0.38268337, -0.9238796, 0), (-0.19509056, -0.98078525, 0), (-0.38268337, -0.9238796, 0), (-0.55557, -0.8314698, 0), (-0.55557, -0.8314698, 0), (-0.38268337, -0.9238796, 0), (-0.55557, -0.8314698, 0), (-0.6343931, -0.77301055, 0), (-0.6343931, -0.77301055, 0), (-0.55557, -0.8314698, 0)] (
+                        interpolation = "faceVarying"
+                    )
+                    point3f[] points = [(-70.71068, 70.71068, -50), (-70.71068, 70.71068, 50), (-55.557022, 83.14696, -50), (-55.557022, 83.14696, 50), (-38.268337, 92.38795, -50), (-38.268337, 92.38795, 50), (-19.50903, 98.07852, -50), (-19.50903, 98.07852, 50), (0, 100, -50), (0, 100, 50), (19.50903, 98.07852, -50), (19.50903, 98.07852, 50), (38.268333, 92.38795, -50), (38.268333, 92.38795, 50), (55.557022, 83.14696, -50), (55.557022, 83.14696, 50), (70.71068, 70.71068, -50), (70.71068, 70.71068, 50)]
+                    bool primvars:doNotCastShadows = 1
+                    texCoord2f[] primvars:st = [(0.99875414, 0.0012661815), (0.87406564, 0.0012661815), (0.87406564, 0.9987338), (0.99875414, 0.9987338), (0.87406564, 0.0012661815), (0.7493771, 0.0012661815), (0.7493771, 0.9987338), (0.87406564, 0.9987338), (0.7493771, 0.0012661815), (0.6246885, 0.0012661815), (0.6246885, 0.9987338), (0.7493771, 0.9987338), (0.6246885, 0.0012661815), (0.5, 0.0012661815), (0.5, 0.9987338), (0.6246885, 0.9987338), (0.5, 0.0012661815), (0.37531146, 0.0012661815), (0.37531146, 0.9987338), (0.5, 0.9987338), (0.37531146, 0.0012661815), (0.25062293, 0.0012661815), (0.25062293, 0.9987338), (0.37531146, 0.9987338), (0.25062293, 0.0012661815), (0.12593439, 0.0012661815), (0.12593439, 0.9987338), (0.25062293, 0.9987338), (0.12593439, 0.0012661815), (0.0012458563, 0.0012661815), (0.0012458563, 0.9987338), (0.12593439, 0.9987338)] (
+                        interpolation = "faceVarying"
+                    )
+                    uniform token subdivisionScheme = "none"
+                    custom string userProperties:blenderName:data = "Curved_BG"
+                    custom string userProperties:blenderName:data:st = "UVMap"
+                    float3 xformOp:rotateXYZ = (0, 0, -90)
+                    float3 xformOp:scale = (0.1, 0.1, 0.1)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                }
+
+                def "PictureFrame_01" (
+                    instanceable = false
+                    prepend payload = @./PictureFrame.usd@
+                )
+                {
+                    float3 xformOp:rotateXYZ = (-1.192708e-16, -6.8974384e-15, -90)
+                    float3 xformOp:scale = (4, 4, 4)
+                    double3 xformOp:translate = (-5, 1.2, 1.4)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                    over "PictureFrame"
+                    {
+                        over "PictureFrame"
+                        {
+                            rel material:binding = </World/Vintage/materials/LampMetal> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+
+                        over "Picture"
+                        {
+                            over "Picture" (
+                                prepend apiSchemas = ["MaterialBindingAPI"]
+                            )
+                            {
+                                rel material:binding = </World/Vintage/materials/PictureOnWall> (
+                                    bindMaterialAs = "weakerThanDescendants"
+                                )
+                            }
+                        }
+
+                        over "Background"
+                        {
+                            token visibility = "invisible"
+
+                            over "Background"
+                            {
+                                rel material:binding = </World/Looks/Paper> (
+                                    bindMaterialAs = "weakerThanDescendants"
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    variantSet "backgroundImageVariant" = {
+        "Disabled" {
+
+        }
+        "Enabled" {
+            def Mesh "Logo"
+            {
+                int[] faceVertexCounts = [4]
+                int[] faceVertexIndices = [0, 2, 3, 1]
+                rel material:binding = </World/Looks/Background> (
+                    bindMaterialAs = "weakerThanDescendants"
+                )
+                normal3f[] normals = [(0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0)] (
+                    interpolation = "faceVarying"
+                )
+                point3f[] points = [(-50, 0, -50), (50, 0, -50), (-50, 0, 50), (50, 0, 50)]
+                float2[] primvars:st = [(1, 0), (1, 1), (0, 1), (0, 0)] (
+                    interpolation = "faceVarying"
+                )
+                uniform token subdivisionScheme = "none"
+                double3 xformOp:rotateXYZ = (90, 8.46991696749769e-15, 180)
+                double3 xformOp:scale = (0.800000011920929, 0.800000011920929, 0.44999998807907104)
+                double3 xformOp:translate = (-50.02454321979803, 160.00000000000003, -119.20791838829896)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def "PictureFrame" (
+                instanceable = false
+                prepend payload = @./PictureFrame.usd@
+            )
+            {
+                float3 xformOp:rotateXYZ = (90, 8.469917e-15, 180)
+                float3 xformOp:scale = (240.00002, 240.00002, 240.00002)
+                double3 xformOp:translate = (-99.9999999999946, 163.20386928186505, -113.16918201627081)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "PictureFrame"
+                {
+                    over "PictureFrame"
+                    {
+                        rel material:binding = </World/Vintage/materials/LampMetal> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+
+                    over "Picture"
+                    {
+                        over "Picture"
+                        {
+                            rel material:binding = </World/Looks/Background> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+
+                    over "Background"
+                    {
+                        over "Background"
+                        {
+                            rel material:binding = </World/Looks/Paper> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}
+

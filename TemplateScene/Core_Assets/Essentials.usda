@@ -1,0 +1,92 @@
+#usda 1.0
+(
+    upAxis = "Y"
+)
+
+over "World"
+{  
+    def Camera "camera_main" (
+        hide_in_stage_window = false
+        kind = "model"
+        no_delete = false
+    )
+    {
+        float2 clippingRange = (10, 10000)
+        float focalLength = 35
+        float focusDistance = 665
+        float fStop = 1
+        float horizontalAperture = 20.955
+        float horizontalApertureOffset = 0
+        custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -698.5699678629193)
+        token projection = "perspective"
+        double shutter:close = 0.25
+        double shutter:open = -0.25
+        custom string userProperties:blenderName:data = "Camera"
+        float verticalAperture = 15.2908
+        float verticalApertureOffset = 0
+        token visibility = "invisible"
+        float3 xformOp:rotateXYZ = (-5, 0, 0)
+        float3 xformOp:scale = (1, 0.9999997, 0.99999875)
+        double3 xformOp:translate = (0, 160, 680)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+    }
+
+    def Camera "camera_start" (
+        hide_in_stage_window = false
+        kind = "model"
+        no_delete = false
+    )
+    {
+        float2 clippingRange = (10, 10000)
+        float focalLength = 35
+        float focusDistance = 665
+        float fStop = 1
+        float horizontalAperture = 20.955
+        float horizontalApertureOffset = 0
+        custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -317.32560202936753)
+        token projection = "perspective"
+        double shutter:close = 0.25
+        double shutter:open = -0.25
+        custom string userProperties:blenderName:data = "Camera"
+        float verticalAperture = 15.2908
+        float verticalApertureOffset = 0
+        token visibility = "invisible"
+        float3 xformOp:rotateXYZ = (-5, 0, 0)
+        float3 xformOp:scale = (1, 0.9999997, 0.99999875)
+        double3 xformOp:translate = (0, 160, 680)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+    }
+
+    def Camera "camera_end" (
+        hide_in_stage_window = false
+        kind = "model"
+        no_delete = false
+    )
+    {
+        float2 clippingRange = (10, 10000)
+        float focalLength = 35
+        float focusDistance = 385
+        float fStop = 1
+        float horizontalAperture = 20.955
+        float horizontalApertureOffset = 0
+        custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -430.8131845707597)
+        token projection = "perspective"
+        double shutter:close = 0.25
+        double shutter:open = -0.25
+        custom string userProperties:blenderName:data = "Camera"
+        float verticalAperture = 15.2908
+        float verticalApertureOffset = 0
+        token visibility = "invisible"
+        float3 xformOp:rotateXYZ = (-5, 0, 0)
+        float3 xformOp:scale = (1, 0.9999997, 0.99999875)
+        double3 xformOp:translate = (0, 159.99999999999744, 400.0000000000001)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+    }
+
+    def "Animations" (
+        instanceable = false
+        prepend references = @./Animations.usda@
+    )
+    {
+    }
+}

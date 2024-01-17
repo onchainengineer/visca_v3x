@@ -1,0 +1,245 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (0, 0, 50000)
+                double radius = 500
+            }
+            dictionary Perspective = {
+                double3 position = (500, 500, 500)
+                double3 target = (-0.00000397803842133726, 0.000007956076785831101, -0.000003978038307650422)
+            }
+            dictionary Right = {
+                double3 position = (-50000, 0, 0)
+                double radius = 500
+            }
+            dictionary Top = {
+                double3 position = (0, 50000, 0)
+                double radius = 500
+            }
+            string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary renderSettings = {
+            double "rtx:hydra:points:defaultWidth" = 1
+        }
+    }
+    defaultPrim = "Skin_SSS"
+    endTimeCode = 100
+    metersPerUnit = 0.01
+    startTimeCode = 0
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def Material "Skin_SSS"
+{
+    token outputs:mdl:displacement.connect = </Skin_SSS/Shader.outputs:out>
+    token outputs:mdl:surface.connect = </Skin_SSS/Shader.outputs:out>
+    token outputs:mdl:volume.connect = </Skin_SSS/Shader.outputs:out>
+
+    def Shader "Shader"
+    {
+        uniform token info:implementationSource = "sourceAsset"
+        uniform asset info:mdl:sourceAsset = @OmniSurface.mdl@
+        uniform token info:mdl:sourceAsset:subIdentifier = "OmniSurface"
+        asset inputs:diffuse_reflection_color_image = @@ (
+            colorSpace = "sRGB"
+            customData = {
+                asset default = @@
+            }
+            displayGroup = "Base"
+            displayName = "Color Image"
+            hidden = false
+        )
+        float inputs:diffuse_reflection_weight = 1 (
+            customData = {
+                float default = 0.8
+                dictionary range = {
+                    float max = 1
+                    float min = 0
+                }
+            }
+            displayGroup = "Base"
+            displayName = "Weight"
+            hidden = false
+        )
+        color3f inputs:emission_color = (0.000001, 3.0379678e-7, 0) (
+            customData = {
+                float3 default = (1, 1, 1)
+            }
+            displayGroup = "Emission"
+            displayName = "Color"
+            hidden = false
+        )
+        asset inputs:emission_color_image = @@ (
+            colorSpace = "sRGB"
+            customData = {
+                asset default = @@
+            }
+            displayGroup = "Emission"
+            displayName = "Color Image"
+            hidden = false
+        )
+        float inputs:emission_intensity = 1 (
+            customData = {
+                float default = 1
+                dictionary soft_range = {
+                    float max = 1000
+                    float min = 0
+                }
+            }
+            displayGroup = "Emission"
+            displayName = "Intensity"
+            hidden = false
+        )
+        bool inputs:emission_use_temperature = 0 (
+            customData = {
+                bool default = 0
+            }
+            displayGroup = "Emission"
+            displayName = "Use Temperature"
+            hidden = false
+        )
+        float inputs:emission_weight = 0 (
+            customData = {
+                float default = 0
+                dictionary range = {
+                    float max = 1
+                    float min = 0
+                }
+            }
+            displayGroup = "Emission"
+            displayName = "Weight"
+            hidden = false
+        )
+        bool inputs:enable_diffuse_transmission = 1 (
+            customData = {
+                bool default = 0
+            }
+            displayGroup = "Subsurface"
+            displayName = "Enable Subsurface"
+            doc = "Enables the use of subsurface"
+            hidden = false
+        )
+        float inputs:specular_reflection_ior = 1.44 (
+            customData = {
+                float default = 1.5
+                dictionary range = {
+                    float max = 3.4028235e38
+                    float min = 0
+                }
+                dictionary soft_range = {
+                    float max = 5
+                    float min = 1
+                }
+            }
+            displayGroup = "Specular"
+            displayName = "IOR"
+            hidden = false
+        )
+        float inputs:specular_reflection_roughness = 0.19999999 (
+            customData = {
+                float default = 0.2
+                dictionary range = {
+                    float max = 1
+                    float min = 0
+                }
+            }
+            displayGroup = "Specular"
+            displayName = "Roughness"
+            hidden = false
+        )
+        asset inputs:specular_reflection_roughness_image = @../Violet/textures/Violet_Roughness.png@ (
+            colorSpace = "raw"
+            customData = {
+                asset default = @@
+            }
+            displayGroup = "Specular"
+            displayName = "Roughness Image"
+            hidden = false
+        )
+        int inputs:specular_reflection_roughness_image_alpha_mode = 1 (
+            customData = {
+                int default = 0
+            }
+            displayGroup = "Specular"
+            displayName = "Roughness Image Alpha Mode"
+            hidden = false
+            renderType = "::OmniSurface::OmniImage::alpha_mode"
+            sdrMetadata = {
+                string __SDR__enum_value = "alpha_default"
+                string options = "alpha_default:0|alpha_red:1|alpha_green:2|alpha_blue:3|alpha_white:4|alpha_black:5|alpha_luminance:6|alpha_average:7"
+            }
+        )
+        float inputs:specular_reflection_weight = 0.7 (
+            customData = {
+                float default = 1
+                dictionary range = {
+                    float max = 1
+                    float min = 0
+                }
+            }
+            displayGroup = "Specular"
+            displayName = "Weight"
+            hidden = false
+        )
+        float inputs:subsurface_scale = 1.8 (
+            customData = {
+                float default = 1
+                dictionary range = {
+                    float max = 3.4028235e38
+                    float min = 0
+                }
+                dictionary soft_range = {
+                    float max = 10
+                    float min = 0
+                }
+            }
+            displayGroup = "Subsurface"
+            displayName = "Scale"
+            hidden = false
+        )
+        color3f inputs:subsurface_scattering_color = (0.44224423, 0.09903267, 0.077356264) (
+            customData = {
+                float3 default = (1, 1, 1)
+            }
+            displayGroup = "Subsurface"
+            displayName = "Radius (mfp)"
+            hidden = false
+        )
+        asset inputs:subsurface_scattering_color_image = @@ (
+            colorSpace = "sRGB"
+            customData = {
+                asset default = @@
+            }
+            displayGroup = "Subsurface"
+            displayName = "Radius Image"
+            hidden = false
+        )
+        asset inputs:subsurface_transmission_color_image = @../Violet/textures/Violet_Albedo_Light.png@ (
+            colorSpace = "auto"
+            customData = {
+                asset default = @@
+            }
+            displayGroup = "Subsurface"
+            displayName = "Color Image"
+            hidden = false
+        )
+        float inputs:subsurface_weight = 1 (
+            customData = {
+                float default = 0
+                dictionary range = {
+                    float max = 1
+                    float min = 0
+                }
+            }
+            displayGroup = "Subsurface"
+            displayName = "Weight"
+            hidden = false
+        )
+        token outputs:out
+        uniform token ui:nodegraph:node:expansionState = "open"
+    }
+}
+

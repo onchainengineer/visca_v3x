@@ -1,0 +1,162 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (0, 0, 50000)
+                double radius = 500
+            }
+            dictionary Perspective = {
+                double3 position = (500, 500, 500)
+                double3 target = (-0.0000039780385918675165, 0.00000795607684267452, -0.000003978038364493841)
+            }
+            dictionary Right = {
+                double3 position = (-50000, 0, 0)
+                double radius = 500
+            }
+            dictionary Top = {
+                double3 position = (0, 50000, 0)
+                double radius = 500
+            }
+            string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary renderSettings = {
+            double "rtx:hydra:points:defaultWidth" = 1
+        }
+    }
+    defaultPrim = "eyes"
+    endTimeCode = 100
+    metersPerUnit = 0.01
+    startTimeCode = 0
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def Material "eyes"
+{
+    token outputs:mdl:displacement.connect = </eyes/Shader.outputs:out>
+    token outputs:mdl:surface.connect = </eyes/Shader.outputs:out>
+    token outputs:mdl:volume.connect = </eyes/Shader.outputs:out>
+
+    def Shader "Shader"
+    {
+        uniform token info:implementationSource = "sourceAsset"
+        uniform asset info:mdl:sourceAsset = @OmniSurface.mdl@
+        uniform token info:mdl:sourceAsset:subIdentifier = "OmniSurface"
+        bool inputs:enable_diffuse_transmission = 1 (
+            customData = {
+                bool default = 0
+            }
+            displayGroup = "Subsurface"
+            displayName = "Enable Subsurface"
+            doc = "Enables the use of subsurface"
+            hidden = false
+        )
+        asset inputs:geometry_normal_image = @./Eye_Green_NORM.png@ (
+            colorSpace = "raw"
+            customData = {
+                asset default = @@
+            }
+            displayGroup = "Geometry"
+            displayName = "Geometry Normal Map Image"
+            hidden = false
+        )
+        bool inputs:geometry_normal_image_flip_g_channel = 1 (
+            customData = {
+                bool default = 0
+            }
+            displayGroup = "Geometry"
+            displayName = "Normal Map Flip G Channel"
+            hidden = false
+        )
+        float inputs:geometry_normal_strength = 0.5 (
+            customData = {
+                float default = 1
+                dictionary range = {
+                    float max = 3.4028235e38
+                    float min = 0
+                }
+                dictionary soft_range = {
+                    float max = 1
+                    float min = 0
+                }
+            }
+            displayGroup = "Geometry"
+            displayName = "Geometry Normal Strength"
+            hidden = false
+        )
+        asset inputs:specular_reflection_roughness_image = @./Eye_Green_Roughness.png@ (
+            colorSpace = "auto"
+            customData = {
+                asset default = @@
+            }
+            displayGroup = "Specular"
+            displayName = "Roughness Image"
+            hidden = false
+        )
+        asset inputs:specular_transmission_color_image = @@ (
+            colorSpace = "auto"
+            customData = {
+                asset default = @@
+            }
+            displayGroup = "Transmission"
+            displayName = "Color Image"
+            hidden = false
+        )
+        float inputs:subsurface_scale = 0.3 (
+            customData = {
+                float default = 1
+                dictionary range = {
+                    float max = 3.4028235e38
+                    float min = 0
+                }
+                dictionary soft_range = {
+                    float max = 10
+                    float min = 0
+                }
+            }
+            displayGroup = "Subsurface"
+            displayName = "Scale"
+            hidden = false
+        )
+        color3f inputs:subsurface_scattering_color = (0.87341774, 0.60877544, 0.53068423) (
+            customData = {
+                float3 default = (1, 1, 1)
+            }
+            displayGroup = "Subsurface"
+            displayName = "Radius (mfp)"
+            hidden = false
+        )
+        color3f inputs:subsurface_transmission_color = (1, 1, 1) (
+            customData = {
+                float3 default = (1, 1, 1)
+            }
+            displayGroup = "Subsurface"
+            displayName = "Color"
+            hidden = false
+        )
+        asset inputs:subsurface_transmission_color_image = @./Eye_Blue.png@ (
+            colorSpace = "sRGB"
+            customData = {
+                asset default = @@
+            }
+            displayGroup = "Subsurface"
+            displayName = "Color Image"
+            hidden = false
+        )
+        float inputs:subsurface_weight = 1 (
+            customData = {
+                float default = 0
+                dictionary range = {
+                    float max = 1
+                    float min = 0
+                }
+            }
+            displayGroup = "Subsurface"
+            displayName = "Weight"
+            hidden = false
+        )
+        token outputs:out
+    }
+}
+

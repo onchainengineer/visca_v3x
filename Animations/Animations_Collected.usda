@@ -1,0 +1,470 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    endTimeCode = 1000
+    metersPerUnit = 0.01
+    startTimeCode = 0
+    timeCodesPerSecond = 25
+    upAxis = "Y"
+)
+
+def Xform "World"
+{
+    def Scope "Gestures"
+    {
+        def "Goodbye" (
+            instanceable = false
+            prepend payload = @./Goodbye.usda@
+        )
+        {
+        }
+
+        def "Welcome" (
+            instanceable = false
+            prepend payload = @./Welcome.usda@
+        )
+        {
+        }
+
+        def "Attraction_1" (
+            instanceable = false
+            prepend payload = @./Attraction_1.usda@
+        )
+        {
+        }
+
+        def "Attraction_2" (
+            instanceable = false
+            prepend payload = @./Attraction_2.usda@
+        )
+        {
+        }
+
+        def "Bowing_1" (
+            instanceable = false
+            prepend payload = @./Bowing_1.usda@
+        )
+        {
+        }
+
+        def "Bowing_2" (
+            instanceable = false
+            prepend payload = @./Bowing_2.usda@
+        )
+        {
+        }
+
+        def "Come_Here_1" (
+            instanceable = false
+            prepend payload = @./Come_Here_1.usda@
+        )
+        {
+        }
+
+        def "Dont_Understand_1" (
+            instanceable = false
+            prepend payload = @./Dont_Understand_1.usda@
+        )
+        {
+        }
+
+        def "Driving_Mime" (
+            instanceable = false
+            prepend payload = @./Driving_Mime.usda@
+        )
+        {
+        }
+
+        def "Exhausted" (
+            instanceable = false
+            prepend payload = @./Exhausted.usda@
+        )
+        {
+        }
+
+        def "Fistbump_Offer" (
+            instanceable = false
+            prepend payload = @./Fistbump_Offer.usda@
+        )
+        {
+        }
+
+        def "No_1" (
+            instanceable = false
+            prepend payload = @./No_1.usda@
+        )
+        {
+        }
+
+        def "Nodding_1" (
+            instanceable = false
+            prepend payload = @./Nodding_1.usda@
+        )
+        {
+        }
+
+        def "Open_Question_1" (
+            instanceable = false
+            prepend payload = @./Open_Question_1.usda@
+        )
+        {
+        }
+
+        def "Personal_Statement_1" (
+            instanceable = false
+            prepend payload = @./Personal_Statement_1.usda@
+        )
+        {
+        }
+
+        def "Personal_Statement_2" (
+            instanceable = false
+            prepend payload = @./Personal_Statement_2.usda@
+        )
+        {
+        }
+
+        def "Phone_Dialing" (
+            instanceable = false
+            prepend payload = @./Phone_Dialing.usda@
+        )
+        {
+        }
+
+        def "Please_Repeat_1" (
+            instanceable = false
+            prepend payload = @./Please_Repeat_1.usda@
+        )
+        {
+        }
+
+        def "Please_Repeat_2" (
+            instanceable = false
+            prepend payload = @./Please_Repeat_2.usda@
+        )
+        {
+        }
+
+        def "Pointing_Backward_1" (
+            instanceable = false
+            prepend payload = @./Pointing_Backward_1.usda@
+        )
+        {
+        }
+
+        def "Pointing_Down_1" (
+            instanceable = false
+            prepend payload = @./Pointing_Down_1.usda@
+        )
+        {
+        }
+
+        def "Pointing_Down_2" (
+            instanceable = false
+            prepend payload = @./Pointing_Down_2.usda@
+        )
+        {
+        }
+
+        def "Pointing_Left_1" (
+            instanceable = false
+            prepend payload = @./Pointing_Left_1.usda@
+        )
+        {
+        }
+
+        def "Pointing_Left_2" (
+            instanceable = false
+            prepend payload = @./Pointing_Left_2.usda@
+        )
+        {
+        }
+
+        def "Pointing_To_Self_1" (
+            instanceable = false
+            prepend payload = @./Pointing_To_Self_1.usda@
+        )
+        {
+        }
+
+        def "Pointing_To_User_1" (
+            instanceable = false
+            prepend payload = @./Pointing_To_User_1.usda@
+        )
+        {
+        }
+
+        def "Pointing_To_User_2" (
+            instanceable = false
+            prepend payload = @./Pointing_To_User_2.usda@
+        )
+        {
+        }
+
+        def "Presenting_Options_1" (
+            instanceable = false
+            prepend payload = @./Presenting_Options_1.usda@
+        )
+        {
+        }
+
+        def "Presenting_Options_2" (
+            instanceable = false
+            prepend payload = @./Presenting_Options_2.usda@
+        )
+        {
+        }
+
+        def "Pulling_Mime" (
+            instanceable = false
+            prepend payload = @./Pulling_Mime.usda@
+        )
+        {
+        }
+
+        def "Raise_Both_Arms" (
+            instanceable = false
+            prepend payload = @./Raise_Both_Arms.usda@
+        )
+        {
+        }
+
+        def "Stupid_1" (
+            instanceable = false
+            prepend payload = @./Stupid_1.usda@
+        )
+        {
+        }
+
+        def "Success_1" (
+            instanceable = false
+            prepend payload = @./Success_1.usda@
+        )
+        {
+        }
+
+        def "Tell_Secret" (
+            instanceable = false
+            prepend payload = @./Tell_Secret.usda@
+        )
+        {
+        }
+
+        def "The_Robot" (
+            instanceable = false
+            prepend payload = @./The_Robot.usda@
+        )
+        {
+        }
+
+        def "Toss" (
+            instanceable = false
+            prepend payload = @./Toss.usda@
+        )
+        {
+        }
+
+        def "Trying_To_See" (
+            instanceable = false
+            prepend payload = @./Trying_To_See.usda@
+        )
+        {
+        }
+    }
+
+    def Scope "Postures"
+    {
+        def Scope "Idle"
+        {
+            def "Idle_Loop" (
+                instanceable = false
+                prepend payload = @./Idle_Loop.usda@
+            )
+            {
+            }
+
+            def "Idle1" (
+                instanceable = false
+                prepend payload = @./Idle1.usda@
+            )
+            {
+            }
+
+            def "Idle2" (
+                instanceable = false
+                prepend payload = @./Idle2.usda@
+            )
+            {
+            }
+
+            def "Idle3" (
+                instanceable = false
+                prepend payload = @./Idle3.usda@
+            )
+            {
+            }
+
+            def "Idle4" (
+                instanceable = false
+                prepend payload = @./Idle4.usda@
+            )
+            {
+            }
+        }
+
+        def Scope "Head_Idle"
+        {
+            def "Idle_FaceMotion" (
+                instanceable = false
+                prepend payload = @./Idle_FaceMotion.usda@
+            )
+            {
+            }
+        }
+
+        def Scope "Listening"
+        {
+            def "Listening_Loop" (
+                instanceable = false
+                prepend payload = @./Listening_Loop.usda@
+            )
+            {
+            }
+
+            def "Listening1" (
+                instanceable = false
+                prepend payload = @./Listening1.usda@
+            )
+            {
+            }
+
+            def "Listening2" (
+                instanceable = false
+                prepend payload = @./Listening2.usda@
+            )
+            {
+            }
+
+            def "Listening3" (
+                instanceable = false
+                prepend payload = @./Listening3.usda@
+            )
+            {
+            }
+
+            def "Listening4" (
+                instanceable = false
+                prepend payload = @./Listening4.usda@
+            )
+            {
+            }
+        }
+
+        def Scope "Talking"
+        {
+            def "Talking_Loop" (
+                instanceable = false
+                prepend payload = @./Talking_Loop.usda@
+            )
+            {
+            }
+
+            def "Talking1" (
+                instanceable = false
+                prepend payload = @./Talking1.usda@
+            )
+            {
+            }
+
+            def "Talking2" (
+                instanceable = false
+                prepend payload = @./Talking2.usda@
+            )
+            {
+            }
+
+            def "Talking3" (
+                instanceable = false
+                prepend payload = @./Talking3.usda@
+            )
+            {
+            }
+
+            def "Talking4" (
+                instanceable = false
+                prepend payload = @./Talking4.usda@
+            )
+            {
+            }
+        }
+
+        def Scope "Attentive"
+        {
+            def "Attentive_Active" (
+                instanceable = false
+                prepend payload = @./Attentive_Active.usda@
+            )
+            {
+            }
+
+            def "Attentive_Neutral" (
+                instanceable = false
+                prepend payload = @./Attentive_Neutral.usda@
+            )
+            {
+            }
+        }
+
+        def Scope "Thinking"
+        {
+            def "Thinking" (
+                instanceable = false
+                prepend payload = @./Thinking.usda@
+            )
+            {
+            }
+        }
+    }
+ 
+    def Scope "Partial"
+    {
+        def "Blinking_Darting" (
+            instanceable = false
+            prepend payload = @./Blinking_Darting.usda@
+        )
+        {
+        }
+    }
+
+    def Scope "Tests"
+    {
+        def "Test_1" (
+            instanceable = false
+            prepend payload = @./Test_1.usda@
+        )
+        {
+        }
+
+        def "Test_2" (
+            instanceable = false
+            prepend payload = @./Test_2.usda@
+        )
+        {
+        }
+
+        def "Test_3" (
+            instanceable = false
+            prepend payload = @./Test_3.usda@
+        )
+        {
+        }
+
+        def "Test_4" (
+            instanceable = false
+            prepend payload = @./Test_4.usda@
+        )
+        {
+        }
+    }
+}
+

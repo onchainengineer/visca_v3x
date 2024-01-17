@@ -1,0 +1,71 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary audio2faceSettings = {
+            int export_fps = 60
+        }
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (0, 0, 50000)
+                double radius = 500
+            }
+            dictionary Perspective = {
+                double3 position = (1.5873738705858642, 169.25639288579941, 126.58178554486253)
+                double3 target = (-27.6992360039066, 127.35129919471035, -199.36140306392528)
+            }
+            dictionary Right = {
+                double3 position = (-50000, 0, -1.1102230246251565e-11)
+                double radius = 500
+            }
+            dictionary Top = {
+                double3 position = (-4.329780281177466e-12, 50000, 1.1102230246251565e-11)
+                double radius = 500
+            }
+            string boundCamera = "/World/camera_main"
+        }
+        dictionary omni_layer = {
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+            int "rtx:ambientOcclusion:maxSamples" = 2
+            int "rtx:ambientOcclusion:minSamples" = 2
+            bool "rtx:directLighting:domeLight:enabled" = 0
+            int "rtx:directLighting:domeLight:sampleCount" = 1
+            bool "rtx:directLighting:sampledLighting:autoEnable" = 0
+            int "rtx:directLighting:sampledLighting:autoEnableLightCountThreshold" = 2
+            bool "rtx:matteObject:enabled" = 0
+            double "rtx:post:aa:sharpness" = 0.4999999888241291
+            int "rtx:post:dlss:execMode" = 0
+            bool "rtx:post:dof:enabled" = 1
+            double "rtx:post:dof:fNumber" = 1.5
+            bool "rtx:post:dof:overrideEnabled" = 1
+            double "rtx:post:dof:focalLength" = 35
+            double "rtx:post:dof:subjectDistance" = 665
+            bool "rtx:raytracing:subsurface:enabled" = 1
+            int "rtx:raytracing:subsurface:maxSamplePerFrame" = 64
+            bool "rtx:raytracing:subsurface:transmission:enabled" = 0
+            int "rtx:realtime:mgpu:tileOverlap" = 24
+            double "rtx:reflections:maxRoughness" = 0.09999999776482582
+            double "rtx:sceneDb:ambientLightIntensity" = 0
+            int "rtx:translucency:maxRefractionBounces" = 6
+        }
+    }
+    defaultPrim = "World"
+    endTimeCode = 5000
+    metersPerUnit = 0.01
+    startTimeCode = 0
+    timeCodesPerSecond = 25
+    upAxis = "Y"
+    subLayers = [
+        @./Custom_Scene.usda@
+    ]
+)
+
+def Xform "World"
+{
+    over "camera_main"
+    {
+    }
+}
+

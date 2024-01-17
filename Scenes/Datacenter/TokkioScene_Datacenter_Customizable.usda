@@ -1,0 +1,532 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary MovieCaptureSettings = {
+            int batch_count = 1
+            string camera_name = "/World/camera_main"
+            int capture_every_nth_frames = 20
+            bool capture_every_nth_frames_checked = 0
+            int capture_frame_end = 215
+            int capture_frame_start = 0
+            string capture_name = "Violet_Excited2"
+            string capture_range = "Custom Range - Frames"
+            double capture_time_end = 10
+            double capture_time_start = 0
+            int fps = 24
+            bool hdr_for_exr_checked = 0
+            bool hdr_for_exr_visible = 0
+            int iray_pathtrace_spp = 1
+            int iray_subframes_per_frame = 32
+            string movie_type = "Sequence"
+            string output_format = ".mp4"
+            string output_path = "C:/Users/bandermatt/OneDrive - NVIDIA Corporation/Documents/Kit/shared/capture"
+            bool overwrite_existing_frame_checked = 0
+            bool pathtrace_mb_checked = 1
+            double pathtrace_mb_frame_shutter_close = 0.5
+            double pathtrace_mb_frame_shutter_open = 0
+            int pathtrace_mb_subframes = 64
+            int pathtrace_spp_per_iteration_mgpu = 1
+            int pathtrace_spp_per_subframe = 1
+            string queue_instance = "localhost Queue"
+            int realtime_settle_latency = 0
+            string render_preset = "RaytracedLighting"
+            bool render_style = 1
+            bool renumber_negtive_frames_checked = 0
+            int resolution_aspect_ratio_selected = 0
+            string resolution_aspect_ratios = '["16:9", "4:3"]'
+            int resolution_height = 2160
+            string resolution_type = "Custom"
+            bool resolution_w_h_linked = 1
+            int resolution_width = 3840
+            int run_n_frames_before_start = 20
+            bool run_n_frames_before_start_checked = 0
+            bool save_alpha_checked = 0
+            int start_delay_seconds = 10
+            double sunstudy_end = 18
+            int sunstudy_movie_minutes = 1
+            int sunstudy_movie_seconds = 1
+            double sunstudy_start = 6
+            string task_comment = ""
+            string task_priority = ""
+            string task_type = "create-render"
+            bool upload_to_s3 = 0
+        }
+        dictionary audio2faceSettings = {
+            int export_fps = 60
+        }
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (0, 0, 50847.77357657052)
+                double radius = 500
+            }
+            dictionary Perspective = {
+                double3 position = (-370.21699988352094, 482.4634677622412, 773.3601481201924)
+                double3 target = (86.94194238032412, -391.2520911186077, -1923.7023293918335)
+            }
+            dictionary Right = {
+                double3 position = (-50591.31202474496, 0, -1.1233527891173481e-11)
+                double radius = 500
+            }
+            dictionary Top = {
+                double3 position = (-4.368788867939017e-12, 50450.46843290329, 1.1202254331466774e-11)
+                double radius = 500
+            }
+            string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary omni_layer = {
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+            float3 "rtx:debugView:pixelDebug:textColor" = (0, 1e18, 0)
+            bool "rtx:directLighting:domeLight:enabled" = 0
+            bool "rtx:directLighting:sampledLighting:enabled" = 1
+            float3 "rtx:dynamicDiffuseGI:probeCounts" = (6, 6, 6)
+            float3 "rtx:dynamicDiffuseGI:probeGridOrigin" = (-210, -250, -10)
+            float3 "rtx:dynamicDiffuseGI:volumeSize" = (600, 440, 300)
+            int "rtx:externalFrameCounter" = 215
+            float3 "rtx:fog:fogColor" = (0.75, 0.75, 0.75)
+            int "rtx:hydra:curves:splits" = 2
+            float3 "rtx:iray:environment_dome_ground_position" = (0, 0, 0)
+            float3 "rtx:iray:environment_dome_ground_reflectivity" = (0, 0, 0)
+            float3 "rtx:iray:environment_dome_rotation_axis" = (0, 1, 0)
+            float3 "rtx:lightspeed:material:overrideAlbedo" = (0.5, 0.5, 0.5)
+            float3 "rtx:lightspeed:material:overrideEmissiveColor" = (0.5, 0.5, 0.5)
+            bool "rtx:matteObject:enabled" = 0
+            int "rtx:post:aa:op" = 4
+            double "rtx:post:aa:sharpness" = 0.04999999888241291
+            float3 "rtx:post:backgroundZeroAlpha:backgroundDefaultColor" = (0, 0, 0)
+            float3 "rtx:post:colorcorr:contrast" = (1, 1, 1)
+            float3 "rtx:post:colorcorr:gain" = (1, 1, 1)
+            float3 "rtx:post:colorcorr:gamma" = (1, 1, 1)
+            float3 "rtx:post:colorcorr:offset" = (0, 0, 0)
+            float3 "rtx:post:colorcorr:saturation" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:blackpoint" = (0, 0, 0)
+            float3 "rtx:post:colorgrad:contrast" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:gain" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:gamma" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:lift" = (0, 0, 0)
+            float3 "rtx:post:colorgrad:multiply" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:offset" = (0, 0, 0)
+            float3 "rtx:post:colorgrad:whitepoint" = (1, 1, 1)
+            int "rtx:post:dlss:execMode" = 0
+            bool "rtx:post:dof:enabled" = 1
+            double "rtx:post:dof:fNumber" = 0.800000011920929
+            double "rtx:post:dof:focalLength" = 35
+            double "rtx:post:dof:subjectDistance" = 429.8999938964844
+            float3 "rtx:post:lensDistortion:lensFocalLengthArray" = (10, 30, 50)
+            float3 "rtx:post:lensFlares:anisoFlareFalloffX" = (450, 475, 500)
+            float3 "rtx:post:lensFlares:anisoFlareFalloffY" = (10, 10, 10)
+            float3 "rtx:post:lensFlares:cutoffPoint" = (2, 2, 2)
+            float3 "rtx:post:lensFlares:haloFlareFalloff" = (10, 10, 10)
+            float3 "rtx:post:lensFlares:haloFlareRadius" = (75, 75, 75)
+            float3 "rtx:post:lensFlares:isotropicFlareFalloff" = (50, 50, 50)
+            float3 "rtx:post:tonemap:whitepoint" = (1, 1, 1)
+            float3 "rtx:raytracing:inscattering:singleScatteringAlbedo" = (0.9, 0.9, 0.9)
+            float3 "rtx:raytracing:inscattering:transmittanceColor" = (0.5, 0.5, 0.5)
+            bool "rtx:raytracing:subsurface:enabled" = 1
+            int "rtx:raytracing:subsurface:maxSamplePerFrame" = 128
+            bool "rtx:raytracing:subsurface:transmission:enabled" = 0
+            int "rtx:realtime:mgpu:tileOverlap" = 48
+            double "rtx:reflections:maxRoughness" = 0.2
+            float3 "rtx:sceneDb:ambientLightColor" = (0.1, 0.1, 0.1)
+            int "rtx:translucency:maxRefractionBounces" = 3
+        }
+    }
+    defaultPrim = "World"
+    endTimeCode = 215
+    metersPerUnit = 0.01
+    upAxis = "Y"
+)
+
+def Xform "World" (
+    variants = {
+        string sceneMoodVariant = "mood1"
+        string backgroundImageVariant = "Enabled"
+    }
+    prepend variantSets = "sceneMoodVariant"
+    append variantSets = "backgroundImageVariant"
+)
+{
+    color3f primvars:sceneColor1 = (0.015686275, 0.015686275, 0.015686275)
+    color3f primvars:sceneColor2 = (0.47451, 0.44314, 0.25882)
+    color3f primvars:sceneColor3 = (0.06493335, 0.076, 0.0720824)
+
+    over "Datacenter_Background_Scene"
+    {
+        float3 xformOp:rotateXYZ = (0, 90, 1.2722219e-14)
+        float3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (48.70000072568654, 1.0813572420983802e-14, 59.028400000000005)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+    }
+
+    variantSet "backgroundImageVariant" = {
+        "Enabled" {
+            def "Screen" (
+                instanceable = false
+                prepend payload = @./ScreenSmall.usd@
+            )
+            {
+                float3 xformOp:rotateXYZ = (0, -45, 0)
+                float3 xformOp:scale = (50, 50, 50)
+                double3 xformOp:translate = (71.16, 147.74, -168.88)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "ScreenFrame"
+                {
+                    over "ScreenPicture_Background"
+                    {
+                        over "ScreenPicture_Background"
+                        {
+                            rel material:binding = </World/Looks/Background_secondary> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+
+                    over "ScreenPicture"
+                    {
+                        over "ScreenPicture"
+                        {
+                            rel material:binding = </World/Looks/Background> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                        }
+                    }
+
+                    over "ScreenFrame"
+                    {
+                        rel material:binding = </World/Looks/ScreenFrame> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                    }
+                }
+            }
+        }
+        "Disabled"
+        {
+
+        }
+    }
+
+    def Scope "Looks"
+    {
+        def Material "Background"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/Background/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/Background/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/Background/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniSurface.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniSurface"
+                asset inputs:diffuse_reflection_color_image = @../_general/Logo_Background.png@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Base"
+                    displayName = "Color Image"
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                float inputs:diffuse_reflection_weight = 1 (
+                    customData = {
+                        float default = 0.8
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base"
+                    displayName = "Weight"
+                    hidden = false
+                )
+                asset inputs:diffuse_reflection_weight_image = @@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Base"
+                    displayName = "Weight Image"
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                bool inputs:enable_opacity = 1 (
+                    customData = {
+                        bool default = 0
+                    }
+                    displayGroup = "Geometry"
+                    displayName = "Enable Opacity"
+                    hidden = false
+                )
+                asset inputs:emission_color_image = @../_general/ExampleBackground.jpg@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Emission"
+                    displayName = "Color Image"
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                asset inputs:geometry_opacity_image = @../_general/Logo_Background.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Geometry"
+                    displayName = "Opacity Image"
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                float inputs:specular_reflection_roughness = 0.18 (
+                    customData = {
+                        float default = 0.2
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Specular"
+                    displayName = "Roughness"
+                    hidden = false
+                )
+                token outputs:out (
+                    renderType = "material"
+                )
+            }
+        }
+
+        def Material "Background_secondary"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/Background_secondary/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/Background_secondary/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/Background_secondary/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (0.03, 0.03, 0.03) (
+                    customData = {
+                        float3 default = (0.2, 0.2, 0.2)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Color"
+                    doc = "This is the albedo base color"
+                    hidden = false
+                )
+                asset inputs:diffuse_texture = @@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Map"
+                    hidden = false
+                )
+                color3f inputs:diffuse_tint = (0.8, 0.799992, 0.799992) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Color Tint"
+                    doc = "When enabled, this color value is multiplied over the final albedo color"
+                    hidden = false
+                )
+                asset inputs:emissive_color_texture = @@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Emissive"
+                    displayName = "Emissive Color map"
+                    doc = "The emissive color texture"
+                    hidden = false
+                )
+                float inputs:emissive_intensity = 3000 (
+                    customData = {
+                        float default = 40
+                    }
+                    displayGroup = "Emissive"
+                    displayName = "Emissive Intensity"
+                    doc = "Intensity of the emission"
+                    hidden = false
+                )
+                bool inputs:enable_emission = 0 (
+                    customData = {
+                        bool default = 0
+                    }
+                    displayGroup = "Emissive"
+                    displayName = "Enable Emission"
+                    doc = "Enables the emission of light from the material"
+                    hidden = false
+                )
+                bool inputs:enable_opacity = 0 (
+                    customData = {
+                        bool default = 0
+                    }
+                    displayGroup = "Opacity"
+                    displayName = "Enable Opacity"
+                    doc = "Enables the use of cutout opacity"
+                    hidden = false
+                )
+                bool inputs:enable_opacity_texture = 1 (
+                    customData = {
+                        bool default = 0
+                    }
+                    displayGroup = "Opacity"
+                    displayName = "Enable Opacity Texture"
+                    doc = "Enables or disables the usage of the opacity texture map"
+                    hidden = false
+                )
+                int inputs:opacity_mode = 0 (
+                    customData = {
+                        int default = 1
+                    }
+                    displayGroup = "Opacity"
+                    displayName = "Opacity Mono Source"
+                    doc = "Determines how to lookup opacity from the supplied texture. mono_alpha, mono_average, mono_luminance, mono_maximum"
+                    hidden = false
+                    renderType = "::base::mono_mode"
+                    sdrMetadata = {
+                        string __SDR__enum_value = "mono_average"
+                        string options = "mono_alpha:0|mono_average:1|mono_luminance:2|mono_maximum:3"
+                    }
+                )
+                asset inputs:opacity_texture = @@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Opacity"
+                    displayName = "Opacity Map"
+                    hidden = false
+                )
+                float inputs:reflection_roughness_constant = 0.18 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Amount"
+                    doc = "Higher roughness values lead to more blurry reflections"
+                    hidden = false
+                )
+                token outputs:out (
+                    renderType = "material"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+            }
+        }
+
+        def Material "ScreenFrame"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/ScreenFrame/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/ScreenFrame/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/ScreenFrame/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (0.2, 0.2, 0.2) (
+                    customData = {
+                        float3 default = (0.2, 0.2, 0.2)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Color"
+                    doc = "This is the albedo base color"
+                    hidden = false
+                )
+                color3f inputs:diffuse_color_constant.connect = </World/Looks/ScreenFrame/data_lookup_color.outputs:out>
+                color3f inputs:diffuse_tint = (1, 1, 1) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Color Tint"
+                    doc = "When enabled, this color value is multiplied over the final albedo color"
+                    hidden = false
+                )
+                float inputs:metallic_constant = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Metallic Amount"
+                    doc = "Metallic Material"
+                    hidden = false
+                )
+                token outputs:out
+                uniform token ui:nodegraph:node:expansionState = "open"
+            }
+
+            def Shader "data_lookup_color" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:name", "inputs:default_value"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color"
+                color3f inputs:default_value = (1, 0.9224423, 0.68976897) (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                string inputs:name = "sceneColor2" (
+                    hidden = false
+                    renderType = "string"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-923.31854, 158.51465)
+            }
+        }
+    }
+
+    variantSet "sceneMoodVariant" = {
+        "mood1" {
+            def "Datacenter_Background_Scene" (
+                instanceable = false
+                prepend payload = @./Datacenter_Background_Scene.usda@
+                variants = {
+                    string moodVariant = "mood1"
+                }
+            )
+            {
+            }
+
+        }
+        "mood2" {
+            def "Datacenter_Background_Scene" (
+                instanceable = false
+                prepend payload = @./Datacenter_Background_Scene.usda@
+                variants = {
+                    string moodVariant = "mood2"
+                }
+            )
+            {
+            }
+
+        }
+    }
+}
+

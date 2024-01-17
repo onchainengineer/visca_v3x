@@ -1,0 +1,560 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary audio2faceSettings = {
+            int export_fps = 60
+        }
+        dictionary audioSettings = {
+            double dopplerLimit = 2
+            double dopplerScale = 1
+            double nonSpatialTimeScale = 1
+            double spatialTimeScale = 1
+            double speedOfSound = 340
+        }
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (0, 0, 50847.77357657052)
+                double radius = 500
+            }
+            dictionary Perspective = {
+                double3 position = (32.741476976108764, 306.6903699679282, 488.92320856462595)
+                double3 target = (-22.329132326768566, 48.1648800683721, -199.32697582995013)
+            }
+            dictionary Right = {
+                double3 position = (-50591.31202474496, 0, -1.1233527891173481e-11)
+                double radius = 500
+            }
+            dictionary Top = {
+                double3 position = (-4.368788867939017e-12, 50450.46843290329, 1.1202254331466774e-11)
+                double radius = 500
+            }
+            string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary omni_layer = {
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+            int "rtx:ambientOcclusion:maxSamples" = 2
+            int "rtx:ambientOcclusion:minSamples" = 2
+            bool "rtx:directLighting:domeLight:enabled" = 0
+            int "rtx:directLighting:domeLight:sampleCount" = 1
+            bool "rtx:directLighting:sampledLighting:autoEnable" = 0
+            int "rtx:directLighting:sampledLighting:autoEnableLightCountThreshold" = 2
+            bool "rtx:matteObject:enabled" = 0
+            int "rtx:post:dlss:execMode" = 0
+            bool "rtx:post:dof:enabled" = 1
+            double "rtx:post:dof:focalLength" = 24
+            double "rtx:post:dof:subjectDistance" = 348.3999938964844
+            bool "rtx:raytracing:subsurface:enabled" = 1
+            int "rtx:raytracing:subsurface:maxSamplePerFrame" = 64
+            bool "rtx:raytracing:subsurface:transmission:enabled" = 0
+            int "rtx:realtime:mgpu:tileOverlap" = 24
+            double "rtx:reflections:maxRoughness" = 0.09999999776482582
+            double "rtx:sceneDb:ambientLightIntensity" = 0
+            int "rtx:translucency:maxRefractionBounces" = 4
+            bool "rtx:translucency:virtualDepth" = 0
+        }
+    }
+    defaultPrim = "World"
+    metersPerUnit = 0.01
+    upAxis = "Y"
+)
+
+def Xform "World" (
+    variants = {
+        string sceneMoodVariant = "mood1"
+        string backgroundImageVariant = "Enabled"
+    }
+    prepend variantSets = "sceneMoodVariant"
+    append variantSets = "backgroundImageVariant"
+)
+{
+    color3f primvars:sceneColor1 = (1, 1, 1)
+    color3f primvars:sceneColor2 = (0.965, 0.598, 0.309)
+    color3f primvars:sceneColor3 = (0.456, 0.206, 0.11)
+
+    def Scope "transfer_data"
+    {
+        string mm:axis_fwd = "Z"
+        string mm:axis_up = "Y"
+        bool mm:axis_vis = 0
+        string[] mm:extra_dynamic = []
+        string[] mm:extra_static = []
+        string[] mm:gums = []
+        string[] mm:l_eye = []
+        string[] mm:r_eye = []
+    }
+    
+    variantSet "sceneMoodVariant" = {
+        "mood1" {
+            def "QSR_Scene_mood1" (
+                instanceable = false
+                prepend payload = @./QSR_Scene_SA_flattened.usd@
+            )
+            {
+                token visibility = "inherited"
+                float3 xformOp:rotateXYZ = (180, -21.899994, 180)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (6.499999515712261, 1.4432898244792266e-15, -20.899999430775647)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "camera"
+                {
+                    custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -89.93940785653146)
+                    token visibility = "invisible"
+                    double3 xformOp:rotateYXZ = (-1.9409414529800415, -170.7449188232422, 0.3161734640598297)
+                    double3 xformOp:scale = (0.9999997615814209, 1.0000009536743164, 1.000000238418579)
+                    double3 xformOp:translate = (30.34, 100.532, 14.4244)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateYXZ", "xformOp:scale"]
+                }
+
+                over "QSR_Scene_Assets"
+                {
+
+                    over "SodaFridge"
+                    {
+                        double3 xformOp:translate = (1.3323826789855957, -1, 0.005457060411572456)
+                    }
+
+                    over "FoamCup"
+                    {
+                    }
+
+                    over "FoamCupStack_01"
+                    {
+                        over "FoamCupStack_05"
+                        {
+                            float3 xformOp:rotateXYZ = (180, 4.943568e-15, 140.6653)
+                            float3 xformOp:scale = (1.0000008, 1.0000008, 1)
+                            double3 xformOp:translate = (-0.136255, -0.934137, 1.21209)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                        }
+
+                        over "FoamCupStack_03"
+                        {
+                            float3 xformOp:rotateXYZ = (180, 4.943568e-15, 140.6653)
+                            float3 xformOp:scale = (1.0000008, 1.0000008, 1)
+                            double3 xformOp:translate = (-0.286961, -0.930887, 1.21252)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+                        }
+                    }
+                }
+
+                over "Buger_CO"
+                {
+                    token visibility = "inherited"
+
+                    over "Burger_CutOUT"
+                    {
+                        over "Burger_CO1"
+                        {
+                            token visibility = "inherited"
+                        }
+                    }
+                }
+
+                over "Looks"
+                {
+                    over "Marble_Tile_12"
+                    {
+                        over "Shader"
+                        {
+                            color3f inputs:diffuse_tint = (1, 1, 1) (
+                                customData = {
+                                    float3 default = (1, 1, 1)
+                                }
+                                displayGroup = "Albedo"
+                                displayName = "Color Tint"
+                                doc = "When enabled, this color value is multiplied over the final albedo color"
+                                hidden = false
+                            )
+                            color3f inputs:diffuse_tint.connect = </World/QSR_Scene_mood1/Looks/Marble_Tile_12/data_lookup_color.outputs:out>
+                            uniform token ui:nodegraph:node:expansionState = "open"
+                        }
+
+                        def Shader "data_lookup_color" (
+                            prepend apiSchemas = ["NodeGraphNodeAPI"]
+                        )
+                        {
+                            reorder properties = ["inputs:name", "inputs:default_value"]
+                            uniform token info:implementationSource = "sourceAsset"
+                            uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                            uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color"
+                            color3f inputs:default_value = (1, 0.9999928, 0.99999) (
+                                customData = {
+                                    float3 default = (0, 0, 0)
+                                }
+                                hidden = false
+                                renderType = "color"
+                            )
+                            string inputs:name = "sceneColor1" (
+                                hidden = false
+                                renderType = "string"
+                            )
+                            color3f outputs:out (
+                                renderType = "color"
+                            )
+                            uniform token ui:nodegraph:node:expansionState = "open"
+                            uniform float2 ui:nodegraph:node:pos = (-849.44727, 75.834755)
+                        }
+                    }
+
+                    over "Marble_Tile_13"
+                    {
+                        over "Shader"
+                        {
+                            color3f inputs:diffuse_tint (
+                                doc = "When enabled, this color value is multiplied over the final albedo color"
+                                hidden = false
+                            )
+                            color3f inputs:diffuse_tint.connect = </World/QSR_Scene_mood1/Looks/Marble_Tile_13/data_lookup_color.outputs:out>
+                            uniform token ui:nodegraph:node:expansionState = "open"
+                        }
+
+                        def Shader "data_lookup_color" (
+                            prepend apiSchemas = ["NodeGraphNodeAPI"]
+                        )
+                        {
+                            reorder properties = ["inputs:name", "inputs:default_value"]
+                            uniform token info:implementationSource = "sourceAsset"
+                            uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                            uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color"
+                            color3f inputs:default_value = (0.4556, 0.2054, 0.1091) (
+                                customData = {
+                                    float3 default = (0, 0, 0)
+                                }
+                                hidden = false
+                                renderType = "color"
+                            )
+                            string inputs:name = "sceneColor3" (
+                                hidden = false
+                                renderType = "string"
+                            )
+                            color3f outputs:out (
+                                renderType = "color"
+                            )
+                            uniform token ui:nodegraph:node:expansionState = "open"
+                            uniform float2 ui:nodegraph:node:pos = (-818.19824, 130.67326)
+                        }
+                    }
+
+                    over "Ash"
+                    {
+                        over "Shader"
+                        {
+                            color3f inputs:diffuse_tint (
+                                doc = "When enabled, this color value is multiplied over the final albedo color"
+                                hidden = false
+                            )
+                            color3f inputs:diffuse_tint.connect = </World/QSR_Scene_mood1/Looks/Ash/data_lookup_color.outputs:out>
+                            uniform token ui:nodegraph:node:expansionState = "open"
+                        }
+
+                        def Shader "data_lookup_color" (
+                            prepend apiSchemas = ["NodeGraphNodeAPI"]
+                        )
+                        {
+                            reorder properties = ["inputs:name", "inputs:default_value"]
+                            uniform token info:implementationSource = "sourceAsset"
+                            uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                            uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color"
+                            color3f inputs:default_value = (0.96525, 0.59825, 0.30933) (
+                                customData = {
+                                    float3 default = (0, 0, 0)
+                                }
+                                hidden = false
+                                renderType = "color"
+                            )
+                            string inputs:name = "sceneColor2" (
+                                hidden = false
+                                renderType = "string"
+                            )
+                            color3f outputs:out (
+                                renderType = "color"
+                            )
+                            uniform token ui:nodegraph:node:expansionState = "open"
+                            uniform float2 ui:nodegraph:node:pos = (-874.0887, 183.22374)
+                        }
+                    }
+
+                    over "Ash_Planks_01"
+                    {
+                        over "Shader"
+                        {
+                            float inputs:albedo_brightness = 0.5 (
+                                customData = {
+                                    float default = 1
+                                    dictionary soft_range = {
+                                        float max = 1
+                                        float min = 0
+                                    }
+                                }
+                                displayGroup = "Albedo"
+                                displayName = "Albedo Brightness"
+                                doc = "Multiplier for the diffuse color "
+                                hidden = false
+                            )
+                            color3f inputs:diffuse_tint = (0.5096525, 0.35229924, 0.21645474) (
+                                doc = "When enabled, this color value is multiplied over the final albedo color"
+                                hidden = false
+                            )
+                            color3f inputs:diffuse_tint.connect = </World/QSR_Scene_mood1/Looks/Ash_Planks_01/data_lookup_color.outputs:out>
+                            uniform token ui:nodegraph:node:expansionState = "open"
+                        }
+
+                        def Shader "data_lookup_color" (
+                            prepend apiSchemas = ["NodeGraphNodeAPI"]
+                        )
+                        {
+                            reorder properties = ["inputs:name", "inputs:default_value"]
+                            uniform token info:implementationSource = "sourceAsset"
+                            uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                            uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_color"
+                            color3f inputs:default_value = (0.96525, 0.59825, 0.30933) (
+                                customData = {
+                                    float3 default = (0, 0, 0)
+                                }
+                                hidden = false
+                                renderType = "color"
+                            )
+                            string inputs:name = "sceneColor2" (
+                                hidden = false
+                                renderType = "string"
+                            )
+                            color3f outputs:out (
+                                renderType = "color"
+                            )
+                            uniform token ui:nodegraph:node:expansionState = "open"
+                            uniform float2 ui:nodegraph:node:pos = (-1375.279, 207.19363)
+                        }
+                    }
+
+                    over "Ash_01"
+                    {
+                        over "Shader"
+                        {
+                            color3f inputs:diffuse_tint = (0.55212355, 0.29618168, 0.15988132) (
+                                doc = "When enabled, this color value is multiplied over the final albedo color"
+                                hidden = false
+                            )
+                        }
+                    }
+
+                    over "Ash_Planks"
+                    {
+                        over "Shader"
+                        {
+                            uniform token ui:nodegraph:node:expansionState = "open"
+                        }
+                    }
+                }
+            }
+            over "Logo_mood2"
+            {
+                token visibility = "invisible"
+            }
+        }
+        "mood2" {
+            def "QSR_Scene_mood2" (
+                instanceable = false
+                prepend payload = @./mood2.usda@
+            )
+            {
+            }
+            over "Logo_mood1"
+            {
+                token visibility = "invisible"
+            }
+        }
+    }
+
+    variantSet "backgroundImageVariant" = {
+        "Enabled"
+        {
+            def Mesh "Logo_mood1"
+            {
+                int[] faceVertexCounts = [4]
+                int[] faceVertexIndices = [0, 2, 3, 1]
+                rel material:binding = </World/Looks/Background> (
+                    bindMaterialAs = "weakerThanDescendants"
+                )
+                normal3f[] normals = [(0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0)] (
+                    interpolation = "faceVarying"
+                )
+                point3f[] points = [(-50, 0, -50), (50, 0, -50), (-50, 0, 50), (50, 0, 50)]
+                float2[] primvars:st = [(1, 0), (1, 1), (0, 1), (0, 0)] (
+                    interpolation = "faceVarying"
+                )
+                uniform token subdivisionScheme = "none"
+                double3 xformOp:rotateXYZ = (90, -21.899986267089844, -180)
+                double3 xformOp:scale = (0.24291358888149261, 0.13689692318439484, 0.13689599931240082)
+                double3 xformOp:translate = (-31.0764, 176.651, -107.48)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+            def Mesh "Logo_mood2"
+            {
+                int[] faceVertexCounts = [4]
+                int[] faceVertexIndices = [0, 2, 3, 1]
+                rel material:binding = </World/Looks/Background> (
+                    bindMaterialAs = "weakerThanDescendants"
+                )
+                normal3f[] normals = [(0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0)] (
+                    interpolation = "faceVarying"
+                )
+                point3f[] points = [(-50, 0, -50), (50, 0, -50), (-50, 0, 50), (50, 0, 50)]
+                float2[] primvars:st = [(1, 0), (1, 1), (0, 1), (0, 0)] (
+                    interpolation = "faceVarying"
+                )
+                uniform token subdivisionScheme = "none"
+                double3 xformOp:rotateXYZ = (90, -25, 180)
+                double3 xformOp:scale = (0.5436422228813171, 0.3063746392726898, 0.3063746392726898)
+                double3 xformOp:translate = (63.871441095635824, 158.9266061966365, -169.25094195522428)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+        }
+        "Disabled"
+        {
+        }
+    }
+
+    def Scope "Looks"
+    {
+        token visibility = "inherited"
+
+        def Material "OmniGlass"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/OmniGlass/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/OmniGlass/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/OmniGlass/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniGlass.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniGlass"
+                float inputs:glass_ior = 1.15 (
+                    customData = {
+                        float default = 1.491
+                        dictionary soft_range = {
+                            float max = 4
+                            float min = 1
+                        }
+                    }
+                    displayGroup = "Refraction"
+                    displayName = "Glass IOR"
+                    doc = "Sets IOR of the glass material "
+                    hidden = false
+                )
+                color3f inputs:reflection_color = (0.2070064, 0.20700432, 0.20700432) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Reflection"
+                    displayName = "Reflection Color"
+                    hidden = false
+                )
+                bool inputs:thin_walled = 0 (
+                    customData = {
+                        bool default = 0
+                    }
+                    displayGroup = "Refraction"
+                    displayName = "Thin Walled"
+                    doc = "When enabled, the material is considered thin-walled. Use this, when you have glass surfaces that are modeled with a single plane"
+                    hidden = false
+                )
+                token outputs:out
+            }
+        }
+
+        def Material "Background"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/Background/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/Background/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/Background/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniSurface.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniSurface"
+                asset inputs:diffuse_reflection_color_image = @../_general/Logo_Background.png@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Base"
+                    displayName = "Color Image"
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                float inputs:diffuse_reflection_weight = 0.79999995 (
+                    customData = {
+                        float default = 0.8
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base"
+                    displayName = "Weight"
+                    hidden = false
+                )
+                asset inputs:diffuse_reflection_weight_image = @@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Base"
+                    displayName = "Weight Image"
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                asset inputs:emission_color_image = @../_general/ExampleBackground.jpg@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Emission"
+                    displayName = "Color Image"
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                bool inputs:enable_opacity = 1 (
+                    customData = {
+                        bool default = 0
+                    }
+                    displayGroup = "Geometry"
+                    displayName = "Enable Opacity"
+                    hidden = false
+                )
+                asset inputs:geometry_opacity_image = @../_general/Logo_Background.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Geometry"
+                    displayName = "Opacity Image"
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                float inputs:specular_reflection_roughness = 0.05 (
+                    customData = {
+                        float default = 0.2
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Specular"
+                    displayName = "Roughness"
+                    hidden = false
+                )
+                token outputs:out (
+                    renderType = "material"
+                )
+            }
+        }
+    }
+}
+
